@@ -1482,8 +1482,7 @@ a { color: var(--vp-blue); }
    script adds and animations.js removes the instant it takes over. If GSAP never
    arrives, a failsafe drops the class after 2.5s and the page renders normally. */
 .vp-anim [data-anim]:not([data-anim-group]),
-.vp-anim [data-anim-group] > *,
-.vp-anim [data-decode] {
+.vp-anim [data-anim-group] > * {
   opacity: 0;
   visibility: hidden;
 }

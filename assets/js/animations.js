@@ -341,7 +341,7 @@
       // opacity. Whichever reveal the child asked for by name wins.
       var targets = el.hasAttribute('data-anim-group')
         ? Array.prototype.slice.call(el.children).filter(function (c) {
-            return !c.hasAttribute('data-decode') && !c.hasAttribute('data-anim');
+            return !c.hasAttribute('data-anim');
           })
         : [el];
       if (!targets.length) return;
@@ -388,103 +388,6 @@
           scrub: 0.8
         }
       });
-    });
-  }
-
-  /* --------------------------------------------------------- decoding labels */
-
-  // The small capitalised labels resolve out of noise rather than fading in: every
-  // character is a random glyph to begin with and they settle left to right. The string
-  // keeps its own length the whole way through, so nothing reflows around it.
-  // Symbols only, and deliberately none that appear in any of the six languages' copy.
-  // That is what lets a half-finished scramble be recognised for what it is further down,
-  // instead of being mistaken for the label's real wording.
-  var GLYPHS = '#%&/\\<>*+=:;[]{}?!~^|';
-  var NOISE = /[#%&/\\<>*+=:;[\]{}?!~^|]/;
-
-  function glyph() {
-    return GLYPHS.charAt((Math.random() * GLYPHS.length) | 0);
-  }
-
-  // Take a copy of what each label really says. Only ever called at a point where the
-  // text is known to be clean: before the first reveal, and inside the language-change
-  // handler, where the translation engine has just written the new wording and no frame
-  // has rendered since.
-  //
-  // This exists because the alternative - reading the text when the reveal starts - is
-  // wrong. The engine announces its first pass just after this file has run, which lands
-  // in the middle of the opening scramble; the label would then bank a snapshot of its
-  // own noise as the truth and resolve into garbage for good.
-  function snapshotDecode() {
-    document.querySelectorAll('[data-decode]').forEach(function (el) {
-      if (el._vpRaf) { cancelAnimationFrame(el._vpRaf); el._vpRaf = 0; }
-
-      var seen = el.textContent;
-      var kept = el.getAttribute('data-decode-text');
-
-      // A scramble still painting when this runs would otherwise be banked as the
-      // label's real wording, and it would resolve into nonsense for the rest of the
-      // visit. Noise is recognisable because the scramble alphabet is symbols the copy
-      // never uses - so keep what was already known good and put it back on screen.
-      if (NOISE.test(seen)) {
-        if (kept !== null) el.textContent = kept;
-        return;
-      }
-      el.setAttribute('data-decode-text', seen);
-    });
-  }
-
-  function decode(el) {
-    var text = el.getAttribute('data-decode-text');
-    if (text === null) return;        // never snapshotted; leave the label alone
-
-    if (el._vpRaf) cancelAnimationFrame(el._vpRaf);
-    var letters = text.split('');
-    var started = 0;
-    var span = 520 + letters.length * 16;
-
-    function frame(now) {
-      if (!started) started = now;
-      var t = (now - started) / span;
-      var out = '';
-      for (var i = 0; i < letters.length; i++) {
-        var c = letters[i];
-        // Spaces and punctuation are left alone. Scrambling those reads as broken text
-        // rather than as a word resolving, and it keeps the word shapes recognisable
-        // the whole way through.
-        if (c === ' ' || c === '.' || c === ',') out += c;
-        else if (t >= (i / letters.length) * 0.7 + 0.3) out += c;
-        else out += glyph();
-      }
-      el.textContent = out;
-      if (t < 1) el._vpRaf = requestAnimationFrame(frame);
-      else { el.textContent = text; el._vpRaf = 0; }
-    }
-    el._vpRaf = requestAnimationFrame(frame);
-  }
-
-  function initDecode() {
-    document.querySelectorAll('[data-decode]').forEach(function (el) {
-      if (el._vpRaf) { cancelAnimationFrame(el._vpRaf); el._vpRaf = 0; }
-      gsap.killTweensOf(el);
-
-      var tween = gsap.fromTo(el,
-        { autoAlpha: 0 },
-        {
-          autoAlpha: 1,
-          duration: 0.25,
-          delay: parseFloat(el.getAttribute('data-anim-delay')) || 0,
-          paused: true,
-          onStart: function () { decode(el); },
-          // Rewinding mid-resolve would leave half a word of noise on screen.
-          onReverseComplete: function () {
-            if (el._vpRaf) { cancelAnimationFrame(el._vpRaf); el._vpRaf = 0; }
-            var t = el.getAttribute('data-decode-text');
-            if (t !== null) el.textContent = t;
-          }
-        });
-
-      scrollPlay(tween, el);
     });
   }
 
@@ -607,8 +510,6 @@
 
   function build() {
     initChars();
-    snapshotDecode();
-    initDecode();
     initCounters();
     initReveals();
     initParallax();
@@ -631,11 +532,6 @@
   // parallax and the progress rail alone, since clearing those would leave the page
   // with no depth and a dead progress bar after the first language switch.
   document.addEventListener('vp:languagechange', function () {
-    // First thing, before a frame can render: the labels have just been rewritten in the
-    // new language and that wording is the truth. Any scramble still in flight is stopped
-    // here so it cannot paint over it.
-    snapshotDecode();
-
     // A translated figure ("4.8/5" becomes "4,8/5") is now sitting in the element, so
     // take it as the new target - unless what is sitting there is a count this file
     // wound back to zero, which would otherwise become the new target.
@@ -654,7 +550,6 @@
     tweens.length = 0;
 
     initChars();
-    initDecode();
     initCounters();
     initReveals();
 
