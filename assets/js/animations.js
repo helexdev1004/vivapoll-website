@@ -391,6 +391,15 @@
     });
   }
 
+  // Pinning at the very top of the viewport parks the section behind the sticky menu bar
+  // and the first line of its heading is lost under it. Everything pinned starts below
+  // the bar instead, measured rather than assumed so it follows the header's own sizes.
+  function pinStart() {
+    var header = document.querySelector('.vp-header');
+    var h = header ? Math.round(header.getBoundingClientRect().height) : 0;
+    return 'top ' + h + 'px';
+  }
+
   /* ------------------------------------------------------------- pinned steps */
 
   // The four steps stop being a row you scroll past and become a sequence you drive: the
@@ -428,7 +437,7 @@
         defaults: { ease: 'power1.inOut', duration: 1 },
         scrollTrigger: {
           trigger: section,
-          start: 'top top',
+          start: pinStart,
           end: '+=' + ((cards.length - 1) * 58) + '%',
           pin: true,
           pinSpacing: true,
@@ -446,6 +455,109 @@
         // Put the cards back exactly as the stylesheet left them when the query stops
         // matching, so a narrow window never inherits a half-played sequence.
         gsap.set(cards, { clearProps: 'all' });
+      };
+    });
+  }
+
+  /* ---------------------------------------------------------- travelling quotes */
+
+  // The quotes stop being a strip you swipe and become something the page scroll carries
+  // sideways: the section holds still while the rail travels across, the card in the
+  // middle lifted and the rest set back. The distance is measured from the track itself,
+  // so adding or removing a quote needs no arithmetic here.
+  //
+  // Without this - narrow screens, no JavaScript, reduced motion - the same markup is an
+  // ordinary snapping strip you swipe by hand. Nothing is only reachable by scrolling.
+  function initQuoteRail() {
+    var rail = document.querySelector('[data-quote-rail]');
+    if (!rail) return;
+    var track = rail.querySelector('[data-quote-track]');
+    var meter = rail.querySelector('[data-quote-meter]');
+    var cards = track ? track.querySelectorAll('.vp-quote') : [];
+    if (!track || cards.length < 2) return;
+
+    var section = rail.closest('section') || rail;
+
+    gsap.matchMedia().add('(min-width: 1200px) and (min-height: 640px)', function () {
+      rail.classList.add('vp-quotes--driven');
+
+      // Half a rail's width of padding at each end, less half a card. Without it the first
+      // card starts hard against the left edge and the last one finishes against the
+      // right, so neither ever reaches the middle and the last quote is never the one
+      // being read. With it the travel runs from first-card-centred to last-card-centred.
+      function pad() {
+        var gap = Math.max(0, (rail.clientWidth - cards[0].getBoundingClientRect().width) / 2);
+        track.style.paddingLeft = gap + 'px';
+        track.style.paddingRight = gap + 'px';
+      }
+      pad();
+
+      // How far the track must move for the LAST card to sit in the middle of the rail,
+      // measured off that card rather than derived from widths and gaps. Deriving it got
+      // the distance wrong and the fifth quote was never the one being read.
+      function travel() {
+        var was = gsap.getProperty(track, 'x') || 0;
+        gsap.set(track, { x: 0 });
+        var last = cards[cards.length - 1].getBoundingClientRect();
+        var box = rail.getBoundingClientRect();
+        var d = (last.left + last.width / 2) - (box.left + box.width / 2);
+        gsap.set(track, { x: was });
+        return Math.max(0, d);
+      }
+
+      // Only the card in the middle is lit; the rest wait dimmed. Set before the first
+      // scroll so the section never appears with all five at once.
+      gsap.set(cards, { scale: 0.94, opacity: 0.55 });
+      gsap.set(cards[0], { scale: 1, opacity: 1 });
+
+      var tween = gsap.to(track, {
+        x: function () { return -travel(); },
+        ease: 'none',
+        scrollTrigger: {
+          trigger: section,
+          start: pinStart,
+          end: function () { return '+=' + (travel() + window.innerHeight * 0.4); },
+          pin: true,
+          pinSpacing: true,
+          scrub: 0.6,
+          invalidateOnRefresh: true,
+          onRefresh: pad,
+          onUpdate: function (self) {
+            if (meter) meter.style.transform = 'scaleX(' + Math.max(0.06, self.progress).toFixed(3) + ')';
+
+            // Nearest the middle of the RAIL, not of the window. The rail sits inside a
+            // container with its own margins, and measuring against the window puts the
+            // lit card off to one side.
+            var rb = rail.getBoundingClientRect();
+            var mid = rb.left + rb.width / 2;
+            var best = 0;
+            var bestGap = Infinity;
+            for (var i = 0; i < cards.length; i++) {
+              var b = cards[i].getBoundingClientRect();
+              var gap = Math.abs(b.left + b.width / 2 - mid);
+              if (gap < bestGap) { bestGap = gap; best = i; }
+            }
+            for (var j = 0; j < cards.length; j++) {
+              gsap.to(cards[j], {
+                scale: j === best ? 1 : 0.94,
+                opacity: j === best ? 1 : 0.55,
+                duration: 0.35,
+                ease: 'power2.out',
+                overwrite: 'auto'
+              });
+            }
+          }
+        }
+      });
+
+      return function () {
+        rail.classList.remove('vp-quotes--driven');
+        track.style.paddingLeft = '';
+        track.style.paddingRight = '';
+        gsap.set(track, { clearProps: 'all' });
+        gsap.set(cards, { clearProps: 'all' });
+        if (meter) meter.style.transform = '';
+        tween.kill();
       };
     });
   }
@@ -574,6 +686,7 @@
     initParallax();
     initDepth();
     initPinnedSteps();
+    initQuoteRail();
     initMagnets();
     // The side index says everything the thin bar at the top said and more, so the bar
     // is only built where there is no index to replace it.

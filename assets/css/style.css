@@ -764,6 +764,116 @@ a { color: var(--vp-blue); }
 
 .vp-testimonials .vp-section-head { margin-bottom: 2.25rem; }
 
+/* A rail of quote cards. With no JavaScript, or on anything narrower than a desktop, it
+   is an ordinary horizontal strip you swipe, snapping card to card. On wide screens
+   animations.js pins the section and drives the same track sideways from the scrollbar -
+   the markup and the layout are identical either way, only what moves it changes. */
+.vp-quotes { position: relative; margin-top: 0.5rem; }
+
+.vp-quotes__track {
+  display: flex;
+  gap: 1.5rem;
+  padding: 0.5rem 0 1.25rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: thin;
+  -webkit-overflow-scrolling: touch;
+}
+
+.vp-quotes__item {
+  flex: 0 0 min(30rem, 82vw);
+  scroll-snap-align: center;
+}
+
+/* Under the rail: how far along the quotes you are. */
+.vp-quotes__meter {
+  height: 3px;
+  margin: 0.5rem auto 0;
+  max-width: 22rem;
+  border-radius: 3px;
+  background: var(--vp-divider);
+  overflow: hidden;
+}
+
+.vp-quotes__meter-fill {
+  display: block;
+  height: 100%;
+  border-radius: 3px;
+  background: var(--vp-blue);
+  transform: scaleX(0.2);
+  transform-origin: left center;
+}
+
+.vp-quote {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  margin: 0;
+  padding: 2.75rem 2.1rem 2rem;
+  background: #fff;
+  border: 1px solid var(--vp-border);
+  border-radius: var(--vp-radius);
+  box-shadow: 0 10px 30px rgba(28, 82, 160, 0.06);
+  /* The accent runs down the leading edge rather than around a portrait. */
+  border-left: 4px solid var(--vp-quote-accent, var(--vp-blue));
+}
+
+.vp-quote__mark {
+  position: absolute;
+  top: 1rem;
+  right: 1.35rem;
+  font-size: 2.6rem;
+  line-height: 1;
+  color: var(--vp-quote-accent, var(--vp-blue));
+  opacity: 0.16;
+}
+
+.vp-quote .vp-stars { justify-content: flex-start; margin-bottom: 0.9rem; }
+
+.vp-quote__text {
+  flex: 1;
+  margin: 0 0 1.5rem;
+  font-size: 1.08rem;
+  line-height: 1.72;
+  color: var(--vp-text);
+}
+
+.vp-quote__author { display: flex; align-items: center; gap: 0.9rem; }
+
+.vp-quote__photo {
+  flex: none;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+}
+
+.vp-quote__who { display: flex; flex-direction: column; line-height: 1.35; }
+.vp-quote__name { font-size: 1.03rem; font-weight: 700; color: var(--vp-dark); }
+.vp-quote__role { font-size: 0.92rem; color: var(--vp-text); }
+.vp-quote__place { font-size: 0.86rem; color: var(--vp-muted); }
+
+.vp-quote--blue   { --vp-quote-accent: #0874fc; }
+.vp-quote--violet { --vp-quote-accent: #6b46e5; }
+.vp-quote--rose   { --vp-quote-accent: #e0356a; }
+.vp-quote--mint   { --vp-quote-accent: #12a86e; }
+.vp-quote--amber  { --vp-quote-accent: #ef8b1f; }
+
+/* Pinned mode. animations.js adds this once it has taken the track over, which also
+   turns the native scrolling off - two things moving the same strip would fight. */
+.vp-quotes--driven .vp-quotes__track {
+  overflow: visible;
+  scroll-snap-type: none;
+  padding-left: 0;
+  will-change: transform;
+}
+
+@media (max-width: 575.98px) {
+  .vp-quote { padding: 2.25rem 1.35rem 1.6rem; }
+  .vp-quote__text { font-size: 1rem; }
+  .vp-quotes__item { flex-basis: 86vw; }
+}
+
 /* Centred cards: the portrait sits on top inside a coloured ring, the person is named
    under it, then the rating, then what they said. */
 .vp-testimonial {
@@ -1506,7 +1616,6 @@ a { color: var(--vp-blue); }
    holding children that arrive with `tilt` or `flip` needs one. */
 .vp-steps,
 .vp-stats__list,
-.vp-testimonials__list,
 [data-anim="tilt"],
 [data-anim="flip"] { perspective: 1200px; }
 

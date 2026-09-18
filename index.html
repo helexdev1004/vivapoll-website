@@ -255,49 +255,102 @@
                data-section-label="Stories" data-i18n-attr="data-section-label:rail.testimonials">
         <div class="container">
           <div class="vp-testimonials__panel">
-            <div class="vp-section-head vp-section-head--center" data-anim="mask" data-anim-stagger="0.12" data-anim-group>
+            <!-- once, not bidirectional: this section is pinned on wide screens while the
+                 quotes travel, and a reveal that rewound partway through would empty the
+                 heading while it was still on screen. -->
+            <div class="vp-section-head vp-section-head--center" data-anim="mask" data-anim-stagger="0.12" data-anim-once data-anim-group>
               <p class="vp-eyebrow" data-i18n="testi.eyebrow">Real people. Real rewards.</p>
               <h2 id="vp-testimonials-title" class="vp-section-title" data-i18n-html="testi.title">Join thousands of <span class="d-sm-block">happy VivaPoll users</span></h2>
               <p class="vp-section-sub" data-i18n-html="testi.sub">Take surveys, play games, complete tasks <span class="d-sm-block">and get real rewards.</span></p>
             </div>
 
-            <div class="row g-4 vp-testimonials__list" data-anim="tilt" data-anim-group>
-              <div class="col-12 col-md-6 col-lg-4">
-                <figure class="vp-testimonial vp-testimonial--peach">
-                  <img src="assets/images/avatar-bruno.png" class="vp-testimonial__photo" width="240" height="240" alt="Portrait of Bruno" data-i18n-attr="alt:testi.alt1">
-                  <figcaption class="vp-testimonial__author">
-                    <strong class="vp-testimonial__name" data-i18n="testi.author1">Bruno</strong>
-                    <span class="vp-testimonial__role" data-i18n="testi.role1">Brazil</span>
-                  </figcaption>
-                  <div class="vp-stars" role="img" aria-label="Rated 5 out of 5" data-i18n-attr="aria-label:testi.rating"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
-                  <blockquote class="vp-testimonial__quote" data-i18n="testi.quote1">“A simple and genuine way to earn extra money. I love the variety of surveys and games!”</blockquote>
-                </figure>
-              </div>
-              <div class="col-12 col-md-6 col-lg-4">
-                <figure class="vp-testimonial vp-testimonial--mint">
-                  <img src="assets/images/avatar-hemangi.png" class="vp-testimonial__photo" width="240" height="240" alt="Portrait of Hemangi" data-i18n-attr="alt:testi.alt2">
-                  <figcaption class="vp-testimonial__author">
-                    <strong class="vp-testimonial__name" data-i18n="testi.author2">Hemangi</strong>
-                    <span class="vp-testimonial__role" data-i18n="testi.role2">India</span>
-                  </figcaption>
-                  <div class="vp-stars" role="img" aria-label="Rated 5 out of 5" data-i18n-attr="aria-label:testi.rating"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
-                  <blockquote class="vp-testimonial__quote" data-i18n="testi.quote2">“Fast rewards and easy to use. VivaPoll fits perfectly into my daily routine.”</blockquote>
-                </figure>
-              </div>
-              <div class="col-12 col-md-6 col-lg-4">
-                <figure class="vp-testimonial vp-testimonial--sky">
-                  <img src="assets/images/avatar-leonardo.png" class="vp-testimonial__photo" width="240" height="240" alt="Portrait of Leonardo" data-i18n-attr="alt:testi.alt3">
-                  <figcaption class="vp-testimonial__author">
-                    <strong class="vp-testimonial__name" data-i18n="testi.author3">Leonardo</strong>
-                    <span class="vp-testimonial__role" data-i18n="testi.role3">Colombia</span>
-                  </figcaption>
-                  <div class="vp-stars" role="img" aria-label="Rated 5 out of 5" data-i18n-attr="aria-label:testi.rating"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
-                  <blockquote class="vp-testimonial__quote" data-i18n="testi.quote3">“I enjoy using VivaPoll during my free time. It’s fun, easy, and the rewards are real!”</blockquote>
-                </figure>
-              </div>
+            <!-- A rail rather than a grid. On wide screens animations.js pins the section
+                 and drives this sideways as the page is scrolled; everywhere else it stays
+                 an ordinary swipeable strip that snaps card to card, so the section works
+                 identically with no JavaScript at all. -->
+            <div class="vp-quotes" data-quote-rail>
+              <ul class="vp-quotes__track list-unstyled mb-0" data-quote-track>
+                <li class="vp-quotes__item">
+                  <figure class="vp-quote vp-quote--blue">
+                    <i class="bi bi-quote vp-quote__mark" aria-hidden="true"></i>
+                    <div class="vp-stars" role="img" aria-label="Rated 5 out of 5" data-i18n-attr="aria-label:testi.rating"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
+                    <blockquote class="vp-quote__text" data-i18n="testi.quote1">“VivaPoll changed the way we collect feedback during our team meetings. Instead of waiting for people to share their opinions one by one, we can instantly see responses and make better decisions together.”</blockquote>
+                    <figcaption class="vp-quote__author">
+                      <img src="assets/images/avatar-emily.svg" class="vp-quote__photo" width="240" height="240" alt="">
+                      <span class="vp-quote__who">
+                        <strong class="vp-quote__name">Emily Carter</strong>
+                        <span class="vp-quote__role" data-i18n="testi.role1">Product Manager</span>
+                        <span class="vp-quote__place" data-i18n="testi.place1">Austin, Texas, USA</span>
+                      </span>
+                    </figcaption>
+                  </figure>
+                </li>
+                <li class="vp-quotes__item">
+                  <figure class="vp-quote vp-quote--violet">
+                    <i class="bi bi-quote vp-quote__mark" aria-hidden="true"></i>
+                    <div class="vp-stars" role="img" aria-label="Rated 5 out of 5" data-i18n-attr="aria-label:testi.rating"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
+                    <blockquote class="vp-quote__text" data-i18n="testi.quote2">“We started using VivaPoll for our online workshops and training sessions. The live polling feature keeps participants engaged and gives us immediate insights into what our audience thinks.”</blockquote>
+                    <figcaption class="vp-quote__author">
+                      <img src="assets/images/avatar-daniel.svg" class="vp-quote__photo" width="240" height="240" alt="">
+                      <span class="vp-quote__who">
+                        <strong class="vp-quote__name">Daniel Rodriguez</strong>
+                        <span class="vp-quote__role" data-i18n="testi.role2">Learning &amp; Development Specialist</span>
+                        <span class="vp-quote__place" data-i18n="testi.place2">Miami, Florida, USA</span>
+                      </span>
+                    </figcaption>
+                  </figure>
+                </li>
+                <li class="vp-quotes__item">
+                  <figure class="vp-quote vp-quote--rose">
+                    <i class="bi bi-quote vp-quote__mark" aria-hidden="true"></i>
+                    <div class="vp-stars" role="img" aria-label="Rated 5 out of 5" data-i18n-attr="aria-label:testi.rating"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
+                    <blockquote class="vp-quote__text" data-i18n="testi.quote3">“The biggest advantage for us was simplicity. Our marketing team can create polls, share them with customers and analyze responses without needing technical support.”</blockquote>
+                    <figcaption class="vp-quote__author">
+                      <img src="assets/images/avatar-sophia.svg" class="vp-quote__photo" width="240" height="240" alt="">
+                      <span class="vp-quote__who">
+                        <strong class="vp-quote__name">Sophia Williams</strong>
+                        <span class="vp-quote__role" data-i18n="testi.role3">Marketing Director</span>
+                        <span class="vp-quote__place" data-i18n="testi.place3">London, United Kingdom</span>
+                      </span>
+                    </figcaption>
+                  </figure>
+                </li>
+                <li class="vp-quotes__item">
+                  <figure class="vp-quote vp-quote--mint">
+                    <i class="bi bi-quote vp-quote__mark" aria-hidden="true"></i>
+                    <div class="vp-stars" role="img" aria-label="Rated 5 out of 5" data-i18n-attr="aria-label:testi.rating"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
+                    <blockquote class="vp-quote__text" data-i18n="testi.quote4">“VivaPoll helped us make virtual events much more interactive. Attendees participate more because sharing their opinions only takes a few seconds.”</blockquote>
+                    <figcaption class="vp-quote__author">
+                      <img src="assets/images/avatar-michael.svg" class="vp-quote__photo" width="240" height="240" alt="">
+                      <span class="vp-quote__who">
+                        <strong class="vp-quote__name">Michael Thompson</strong>
+                        <span class="vp-quote__role" data-i18n="testi.role4">Event Coordinator</span>
+                        <span class="vp-quote__place" data-i18n="testi.place4">Toronto, Canada</span>
+                      </span>
+                    </figcaption>
+                  </figure>
+                </li>
+                <li class="vp-quotes__item">
+                  <figure class="vp-quote vp-quote--amber">
+                    <i class="bi bi-quote vp-quote__mark" aria-hidden="true"></i>
+                    <div class="vp-stars" role="img" aria-label="Rated 5 out of 5" data-i18n-attr="aria-label:testi.rating"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
+                    <blockquote class="vp-quote__text" data-i18n="testi.quote5">“Real-time feedback has become an important part of our decision-making process. VivaPoll gives our team a simple way to understand customer opinions while conversations are happening.”</blockquote>
+                    <figcaption class="vp-quote__author">
+                      <img src="assets/images/avatar-olivia.svg" class="vp-quote__photo" width="240" height="240" alt="">
+                      <span class="vp-quote__who">
+                        <strong class="vp-quote__name">Olivia Chen</strong>
+                        <span class="vp-quote__role" data-i18n="testi.role5">Operations Manager</span>
+                        <span class="vp-quote__place" data-i18n="testi.place5">Singapore</span>
+                      </span>
+                    </figcaption>
+                  </figure>
+                </li>
+              </ul>
+
+              <div class="vp-quotes__meter" aria-hidden="true"><span class="vp-quotes__meter-fill" data-quote-meter></span></div>
             </div>
 
-            <div class="vp-testimonials__more" data-anim="up" data-anim-delay="0.1">
+            <div class="vp-testimonials__more" data-anim="up" data-anim-delay="0.1" data-anim-once>
               <a href="#" class="btn vp-btn vp-btn--primary vp-testimonials__btn" data-i18n="testi.more">See more stories</a>
             </div>
           </div>
