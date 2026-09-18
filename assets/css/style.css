@@ -1502,10 +1502,13 @@ a { color: var(--vp-blue); }
 
 .vp-char { display: inline-block; will-change: transform; }
 
-/* Cards need a camera before rotateX reads as a hinge rather than a squash. */
+/* Cards need a camera before a rotation reads as a hinge rather than a squash. Anything
+   holding children that arrive with `tilt` or `flip` needs one. */
 .vp-steps,
 .vp-stats__list,
-.vp-testimonials__list { perspective: 1200px; }
+.vp-testimonials__list,
+[data-anim="tilt"],
+[data-anim="flip"] { perspective: 1200px; }
 
 /* How far down the page you are. */
 .vp-progress {

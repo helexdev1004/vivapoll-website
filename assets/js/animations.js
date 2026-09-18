@@ -13,10 +13,12 @@
  *   · a progress bar across the top tracks how far down the page you are
  *
  * Markup drives the simple cases:
- *   data-anim="up|down|left|right|zoom|fade|tilt|chars"
+ *   data-anim="up|down|left|right|zoom|fade|tilt|mask|focus|flip|swing|chars"
  *   data-anim-group      animate this element's children in sequence
  *   data-anim-delay="0.15"
+ *   data-anim-stagger="0.14"   gap between a group's children
  *   data-anim-once       reveal once and never rewind (used by the legal pages)
+ *   data-parallax="-70"  drift this far, tied to the scrollbar, the whole way past
  *   data-count           count this number up
  *
  * The homepage-only pieces - the hero parallax, the counting statistics - look for their
@@ -59,16 +61,57 @@
     zoom:  { scale: 0.9 },
     fade:  {},
     // Hinged along its own top edge, so the card swings up out of the page.
-    tilt:  { y: 38, rotateX: -32, transformOrigin: '50% 0%' }
+    tilt:  { y: 38, rotateX: -32, transformOrigin: '50% 0%' },
+
+    // Wiped in from its own bottom edge. The element is not moving into place behind a
+    // hole in the page - it is being uncovered, which is why the inner shift is small.
+    mask:  { yPercent: 6, clipPath: 'inset(100% 0% 0% 0%)' },
+    // Arrives out of focus and slightly too large, the way a camera settles onto it.
+    focus: { scale: 1.07, y: 26, filter: 'blur(16px)' },
+    // Turned on its own vertical axis, seen at an angle. Rotated about its centre and
+    // with no sideways offset on purpose: hinging on the left edge swings the right edge
+    // toward the viewer, and perspective then projects it wider than its own column -
+    // which puts the last card in a row over the edge of the page.
+    flip:  { rotateY: -34, y: 24, transformOrigin: '50% 50%' },
+    // Dropped and rocked upright on its base.
+    swing: { rotate: -5, y: 54, scale: 0.94, transformOrigin: '50% 100%' }
+  };
+
+  // What each animated property has to be put back to. `to` is built from whatever the
+  // preset actually touched, so a new preset needs no changes anywhere else.
+  var NEUTRAL = {
+    x: 0, y: 0, yPercent: 0, xPercent: 0,
+    scale: 1, rotate: 0, rotateX: 0, rotateY: 0,
+    clipPath: 'inset(0% 0% 0% 0%)',
+    filter: 'blur(0px)'
   };
 
   function startVars(name) {
-    if (narrow.matches && (name === 'left' || name === 'right')) name = 'up';
-    if (narrow.matches && name === 'tilt') name = 'up';
     var preset = FROM[name] || FROM.up;
     var vars = { autoAlpha: 0 };
     for (var k in preset) vars[k] = preset[k];
     return vars;
+  }
+
+  function endVars(name) {
+    var preset = FROM[name] || FROM.up;
+    var vars = { autoAlpha: 1 };
+    for (var k in preset) {
+      if (k === 'transformOrigin') continue;      // carried over, not reset
+      if (k in NEUTRAL) vars[k] = NEUTRAL[k];
+    }
+    return vars;
+  }
+
+  // Narrow screens get the plain rise instead of anything sideways or three-dimensional:
+  // a horizontal offset pushes a full-width column off the edge, and perspective effects
+  // are wasted on a phone. Blur is dropped too - it is the most expensive of these to
+  // paint, and least worth it at that size.
+  function forWidth(name) {
+    if (!narrow.matches) return name;
+    if (name === 'left' || name === 'right' || name === 'tilt' ||
+        name === 'flip' || name === 'focus') return 'up';
+    return name;
   }
 
   // Built paused and driven from the four callbacks by hand. `toggleActions` on a
@@ -111,7 +154,10 @@
       // those sections blank until something else happened to nudge them.
       triggers.push(ScrollTrigger.create({
         trigger: trigger,
-        start: start || 'top 88%',
+        // Started as the element clears the bottom edge rather than at 88%, so it is
+        // already most of the way in by the time the reader's eye reaches it. On a long
+        // document that difference is what stops a quick scroll finding empty blocks.
+        start: start || 'top 99%',
         end: end || 'bottom top',
         onEnter: play,
         onEnterBack: play,
@@ -120,7 +166,7 @@
       }));
       // Already scrolled past before this was even built - a reload partway down the
       // page, or a deep link.
-      if (trigger.getBoundingClientRect().top < window.innerHeight * 0.88) tween.play();
+      if (trigger.getBoundingClientRect().top < window.innerHeight * 0.99) tween.play();
       return;
     }
 
@@ -265,29 +311,99 @@
 
   /* -------------------------------------------------------- generic reveals */
 
+  // How long each one wants to take, and how it should feel arriving. The dimensional
+  // ones are given longer and allowed to overshoot; a wipe is given none, because a mask
+  // that springs past its own edge tears.
+  var SHAPE = {
+    tilt:  { duration: 0.85, ease: 'power3.out' },
+    flip:  { duration: 0.95, ease: 'power3.out' },
+    swing: { duration: 0.9,  ease: 'back.out(1.4)' },
+    focus: { duration: 0.85, ease: 'power2.out' },
+    // Front-loaded on purpose. An in-out ease looks better in isolation but holds the
+    // element near-blank for its first third, and on a long document that is exactly
+    // when a fast scroll arrives at it - the reader meets an empty block. Easing out
+    // puts most of the reveal in the first few frames.
+    mask:  { duration: 0.68, ease: 'power2.out' },
+    zoom:  { duration: 0.75, ease: 'back.out(1.2)' }
+  };
+
   function initReveals() {
     document.querySelectorAll('[data-anim]').forEach(function (el) {
       var name = el.getAttribute('data-anim') || 'up';
       if (name === 'chars') return;   // initChars handles these, letter by letter
+      name = forWidth(name);
+
       var delay = parseFloat(el.getAttribute('data-anim-delay')) || 0;
       var targets = el.hasAttribute('data-anim-group') ? Array.prototype.slice.call(el.children) : [el];
       if (!targets.length) return;
 
+      var shape = SHAPE[name] || { duration: 0.7, ease: 'power2.out' };
+      var to = endVars(name);
+      to.duration = shape.duration;
+      to.ease = shape.ease;
+      to.delay = delay;
+      to.paused = true;
+      // A row of cards arrives one after another rather than all at once. `data-anim-stagger`
+      // overrides the gap where a particular group wants to be tighter or looser.
+      to.stagger = targets.length > 1
+        ? (parseFloat(el.getAttribute('data-anim-stagger')) || 0.1)
+        : 0;
+
       gsap.killTweensOf(targets);   // this function runs again on a language change
-      var tween = gsap.fromTo(targets, startVars(name), {
-        autoAlpha: 1,
-        x: 0,
-        y: 0,
-        scale: 1,
-        rotateX: 0,
-        duration: name === 'tilt' ? 0.85 : 0.7,
-        ease: name === 'tilt' ? 'power3.out' : 'power2.out',
-        delay: delay,
-        stagger: targets.length > 1 ? 0.1 : 0,
-        paused: true
-      });
+      var tween = gsap.fromTo(targets, startVars(name), to);
 
       scrollPlay(tween, el);
+    });
+  }
+
+  /* ------------------------------------------------------------- depth layers */
+
+  // `data-parallax="-70"` ties an element's drift to the scrollbar itself rather than to
+  // a trigger that fires once, so it keeps moving the whole time it is on screen. That
+  // continuous link to the scroll is what separates this from a reveal.
+  //
+  // Never put this on the same element as `data-anim` - both write `y`, and the last one
+  // to run wins. Put the reveal on a wrapper and the drift on what is inside it.
+  function initDepth() {
+    if (narrow.matches) return;
+    document.querySelectorAll('[data-parallax]').forEach(function (el) {
+      var dist = parseFloat(el.getAttribute('data-parallax'));
+      if (!dist) return;
+      gsap.to(el, {
+        y: dist,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: el.closest('section') || el,
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: 0.8
+        }
+      });
+    });
+  }
+
+  /* ------------------------------------------------------------ magnetic keys */
+
+  // The main call to action leans toward the pointer as it comes near, and springs back
+  // when it leaves. Mouse only - there is no hover on a touch screen to lean into.
+  function initMagnets() {
+    if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+
+    document.querySelectorAll('.vp-btn-cta, .vp-auth-submit, .vp-support-contact__btn').forEach(function (el) {
+      var pull = 0.28;
+      el.addEventListener('mousemove', function (e) {
+        var b = el.getBoundingClientRect();
+        gsap.to(el, {
+          x: (e.clientX - (b.left + b.width / 2)) * pull,
+          y: (e.clientY - (b.top + b.height / 2)) * pull,
+          duration: 0.4,
+          ease: 'power3.out',
+          overwrite: 'auto'
+        });
+      });
+      el.addEventListener('mouseleave', function () {
+        gsap.to(el, { x: 0, y: 0, duration: 0.6, ease: 'elastic.out(1, 0.4)', overwrite: 'auto' });
+      });
     });
   }
 
@@ -347,6 +463,8 @@
     initCounters();
     initReveals();
     initParallax();
+    initDepth();
+    initMagnets();
     initProgress();
 
     root.classList.add('vp-anim-ready');

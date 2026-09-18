@@ -95,11 +95,13 @@
             <div class="col-12 col-lg-6 vp-legal-hero__content">
               <p class="vp-eyebrow vp-legal-hero__eyebrow" data-anim="up" data-i18n="ab.eyebrow">Who we are</p>
               <h1 id="vp-about-title" class="vp-legal-hero__title" data-anim="chars" data-i18n-html="ab.title">About <span class="vp-text-blue">VivaPoll</span></h1>
-              <p class="vp-legal-hero__lead" data-anim="up" data-anim-delay="0.4" data-i18n="ab.lead">VivaPoll is a rewards platform that gives you different ways to earn — from sharing your opinions through surveys to discovering and playing games.</p>
-              <p class="vp-about-owner" data-anim="up" data-anim-delay="0.52"><i class="bi bi-building" aria-hidden="true"></i> <span data-i18n="ab.owner">The website is owned and operated by Main Frame Ltd.</span></p>
+              <p class="vp-legal-hero__lead" data-anim="mask" data-anim-delay="0.38" data-i18n="ab.lead">VivaPoll is a rewards platform that gives you different ways to earn — from sharing your opinions through surveys to discovering and playing games.</p>
+              <p class="vp-about-owner" data-anim="up" data-anim-delay="0.54"><i class="bi bi-building" aria-hidden="true"></i> <span data-i18n="ab.owner">The website is owned and operated by Main Frame Ltd.</span></p>
             </div>
-            <div class="col-12 col-lg-6">
-              <div class="vp-legal-hero__visual vp-legal-hero__visual--about" data-anim="zoom" data-anim-delay="0.3">
+            <!-- The reveal sits on the column, not on the visual: below 992px the visual
+                 itself carries a CSS translateX that a tween would overwrite. -->
+            <div class="col-12 col-lg-6" data-anim="focus" data-anim-delay="0.28">
+              <div class="vp-legal-hero__visual vp-legal-hero__visual--about">
                 <img src="assets/images/hero-about.png" class="vp-legal-hero__img" width="859" height="1044"
                      alt="Smiling girl in a blue hoodie presenting with both hands"
                      data-i18n-attr="alt:ab.imgAlt">
@@ -113,9 +115,9 @@
       <!-- ============ MISSION ============ -->
       <section class="vp-section vp-about-mission" aria-labelledby="vp-about-mission-title">
         <div class="container">
-          <div class="vp-about-mission__panel" data-anim="zoom">
+          <div class="vp-about-mission__panel" data-anim="mask">
             <h2 id="vp-about-mission-title" class="visually-hidden" data-i18n="ab.missionAria">What we do</h2>
-            <div class="vp-about-flow" aria-hidden="true" data-anim="up" data-anim-delay="0.18" data-anim-group>
+            <div class="vp-about-flow" aria-hidden="true" data-anim="swing" data-anim-delay="0.24" data-anim-stagger="0.09" data-anim-group>
               <span class="vp-about-flow__node"><i class="bi bi-buildings"></i><span data-i18n="ab.flow.companies">Companies</span></span>
               <i class="bi bi-arrow-left-right vp-about-flow__arrow"></i>
               <span class="vp-about-flow__node vp-about-flow__node--brand"><img src="assets/images/icons/mark-inverse.png" alt="" width="28" height="28"><span>VivaPoll</span></span>
@@ -131,13 +133,13 @@
       <!-- ============ EARN YOUR WAY ============ -->
       <section class="vp-section vp-about-earn" aria-labelledby="vp-about-earn-title">
         <div class="container">
-          <div class="vp-section-head vp-about-head" data-anim="up" data-anim-group>
+          <div class="vp-section-head vp-about-head" data-anim="mask" data-anim-stagger="0.12" data-anim-group>
             <p class="vp-eyebrow" data-i18n="ab.earn.eyebrow">Earn your way</p>
             <h2 id="vp-about-earn-title" class="vp-section-title" data-i18n="ab.earn.title">More than one way to earn</h2>
             <p class="vp-section-sub" data-i18n="ab.earn.intro">Everyone has different interests and different amounts of free time. That’s why VivaPoll isn’t limited to just one way of earning.</p>
           </div>
 
-          <div class="row g-3 g-lg-4" data-anim="tilt" data-anim-group>
+          <div class="row g-3 g-lg-4" data-anim="flip" data-anim-stagger="0.15" data-anim-group>
             <div class="col-12 col-lg-4">
               <article class="vp-about-card vp-about-card--blue">
                 <span class="vp-about-card__icon"><i class="bi bi-ui-checks" aria-hidden="true"></i></span>
@@ -171,13 +173,13 @@
         <div class="container">
           <div class="vp-panel vp-about-steps__panel">
             <div class="row g-4 align-items-center">
-              <div class="col-12 col-lg-4" data-anim="left" data-anim-group>
+              <div class="col-12 col-lg-4" data-anim="mask" data-anim-stagger="0.12" data-anim-group>
                 <p class="vp-eyebrow" data-i18n="ab.steps.eyebrow">How it works</p>
                 <h2 id="vp-about-steps-title" class="vp-section-title" data-i18n="ab.steps.title">It’s simple.</h2>
                 <p class="vp-section-sub" data-i18n="ab.steps.sub">Three steps from choosing an offer to getting your reward.</p>
               </div>
               <div class="col-12 col-lg-8">
-                <ol class="vp-timeline list-unstyled mb-0" data-anim="right" data-anim-delay="0.14" data-anim-group>
+                <ol class="vp-timeline list-unstyled mb-0" data-anim="swing" data-anim-delay="0.16" data-anim-stagger="0.14" data-anim-group>
                   <li class="vp-timeline__item">
                     <span class="vp-timeline__num">1</span>
                     <div>
@@ -209,7 +211,7 @@
       <!-- ============ REDEEM ============ -->
       <section class="vp-section vp-about-redeem" aria-labelledby="vp-about-redeem-title">
         <div class="container">
-          <div class="vp-about-split" data-anim="up" data-anim-group>
+          <div class="vp-about-split" data-anim="focus" data-anim-stagger="0.14" data-anim-group>
             <div class="vp-about-split__icon vp-about-split__icon--orange" aria-hidden="true"><i class="bi bi-gift"></i></div>
             <div>
               <h2 id="vp-about-redeem-title" class="vp-about-split__title" data-i18n="ab.redeem.title">Redeem your rewards</h2>
@@ -225,13 +227,13 @@
         <div class="container">
           <div class="vp-panel vp-about-why__panel">
             <div class="row g-4">
-              <div class="col-12 col-lg-5" data-anim="left" data-anim-group>
+              <div class="col-12 col-lg-5" data-anim="mask" data-anim-stagger="0.12" data-anim-group>
                 <p class="vp-eyebrow" data-i18n="ab.why.eyebrow">It’s a fair question</p>
                 <h2 id="vp-about-why-title" class="vp-section-title" data-i18n="ab.why.title">Why do companies pay you?</h2>
                 <p class="vp-about-why__lead" data-i18n="ab.why.p1">The rewards you receive come from the companies and partners behind the activities available on VivaPoll.</p>
               </div>
               <div class="col-12 col-lg-7">
-                <ul class="vp-about-why__list list-unstyled mb-0" data-anim="right" data-anim-delay="0.14" data-anim-group>
+                <ul class="vp-about-why__list list-unstyled mb-0" data-anim="flip" data-anim-delay="0.16" data-anim-stagger="0.13" data-anim-group>
                   <li><i class="bi bi-clipboard-data" aria-hidden="true"></i><p data-i18n="ab.why.p2">Researchers need people to participate in surveys and provide genuine feedback. Game developers and app companies want to introduce their products to new users and grow their audiences.</p></li>
                   <li><i class="bi bi-diagram-3" aria-hidden="true"></i><p data-i18n="ab.why.p3">VivaPoll helps connect these companies with people who are interested in participating.</p></li>
                   <li><i class="bi bi-coin" aria-hidden="true"></i><p data-i18n="ab.why.p4">When you successfully complete an eligible activity, the value generated from that activity is shared with you as a reward.</p></li>
@@ -245,7 +247,7 @@
       <!-- ============ PRIVACY ============ -->
       <section class="vp-section vp-about-privacy" aria-labelledby="vp-about-privacy-title">
         <div class="container">
-          <div class="vp-about-split vp-about-split--privacy" data-anim="up" data-anim-group>
+          <div class="vp-about-split vp-about-split--privacy" data-anim="focus" data-anim-stagger="0.14" data-anim-group>
             <div class="vp-about-split__icon" aria-hidden="true"><i class="bi bi-shield-lock"></i></div>
             <div>
               <h2 id="vp-about-privacy-title" class="vp-about-split__title" data-i18n="ab.privacy.title">Your privacy matters</h2>
@@ -262,14 +264,14 @@
       <!-- ============ CTA ============ -->
       <section class="vp-section vp-cta" aria-labelledby="vp-cta-title">
         <div class="container">
-          <div class="vp-panel vp-cta__panel" data-anim="zoom">
+          <div class="vp-panel vp-cta__panel" data-anim="mask">
             <div class="vp-cta__content">
               <div>
                 <h2 id="vp-cta-title" class="vp-cta__title" data-i18n="cta.title">Get started today</h2>
                 <p class="vp-cta__text" data-i18n="cta.text">Join VivaPoll and turn your opinions into real rewards.</p>
               </div>
             </div>
-            <div class="vp-store-badges vp-cta__badges" data-anim="up" data-anim-delay="0.22" data-anim-group>
+            <div class="vp-store-badges vp-cta__badges" data-anim="swing" data-anim-delay="0.3" data-anim-stagger="0.11" data-anim-group>
               <a href="#" class="vp-store-badge" aria-label="Download on the App Store" data-i18n-attr="aria-label:badge.appStoreAria">
                 <i class="bi bi-apple vp-store-badge__icon" aria-hidden="true"></i>
                 <span class="vp-store-badge__text"><small data-i18n="badge.appStoreSmall">Download on the</small><strong>App Store</strong></span>

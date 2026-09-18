@@ -94,10 +94,12 @@
             <div class="col-12 col-lg-6 vp-legal-hero__content">
               <p class="vp-eyebrow vp-legal-hero__eyebrow" data-anim="up" data-i18n="sp.eyebrow">Help center</p>
               <h1 id="vp-support-title" class="vp-legal-hero__title" data-anim="chars" data-i18n-html="sp.title">How can we <span class="vp-text-blue">help?</span></h1>
-              <p class="vp-legal-hero__lead" data-anim="up" data-anim-delay="0.4" data-i18n="sp.lead">Find answers to common questions or get in touch with our support team. We’re here to help you get the most out of VivaPoll.</p>
+              <p class="vp-legal-hero__lead" data-anim="mask" data-anim-delay="0.38" data-i18n="sp.lead">Find answers to common questions or get in touch with our support team. We’re here to help you get the most out of VivaPoll.</p>
             </div>
-            <div class="col-12 col-lg-6">
-              <div class="vp-legal-hero__visual" data-anim="zoom" data-anim-delay="0.3">
+            <!-- Reveal on the column, drift on the visual: they would fight over `y` on
+                 the same element. -->
+            <div class="col-12 col-lg-6" data-anim="focus" data-anim-delay="0.28">
+              <div class="vp-legal-hero__visual" data-parallax="-44">
                 <img src="assets/images/hero-support.png" class="vp-legal-hero__img" width="500" height="318"
                      alt="Smiling girl hugging a blue chat bubble"
                      data-i18n-attr="alt:sp.imgAlt">
@@ -113,7 +115,7 @@
       <!-- ============ HELP TOPICS ============ -->
       <section class="vp-support" aria-label="Help topics" data-i18n-attr="aria-label:sp.topicsAria">
         <div class="container">
-          <ul class="nav vp-support-tabs" id="vpSupportTabs" role="tablist" data-anim="up" data-anim-group>
+          <ul class="nav vp-support-tabs" id="vpSupportTabs" role="tablist" data-anim="swing" data-anim-stagger="0.07" data-anim-group>
             <li class="nav-item" role="presentation">
               <button class="nav-link active" id="vp-tab-faq" data-bs-toggle="pill" data-bs-target="#vp-pane-faq" type="button" role="tab" aria-controls="vp-pane-faq" aria-selected="true" data-i18n="sp.tab.faq">FAQ</button>
             </li>
@@ -137,7 +139,7 @@
           <!-- Animated as one block, never item by item: the inactive tab panes are
                display:none, so anything measured inside them would be measured wrong and
                could be left hidden when its tab is finally opened. -->
-          <div class="tab-content" data-anim="up" data-anim-delay="0.14">
+          <div class="tab-content" data-anim="mask" data-anim-delay="0.2">
             <!-- FAQ -->
             <div class="tab-pane fade show active" id="vp-pane-faq" role="tabpanel" aria-labelledby="vp-tab-faq" tabindex="0">
               <div class="accordion vp-accordion vp-accordion--support" id="vpAccFaq">
@@ -264,7 +266,7 @@
           </div>
 
           <!-- Contact callout -->
-          <div class="vp-panel vp-cta__panel vp-support-contact" data-anim="zoom">
+          <div class="vp-panel vp-cta__panel vp-support-contact" data-anim="mask">
             <div class="vp-cta__content">
               <div>
                 <h2 class="vp-cta__title" data-i18n="sp.contact.title">Still need help?</h2>
