@@ -1,0 +1,16 @@
+# Design references and mockups — working material, not part of the site
+references/
+photo_*.jpg
+
+# Local machine settings
+.claude/settings.local.json
+
+# Dependencies (none are committed; the site loads Bootstrap and GSAP from a CDN)
+node_modules/
+
+# OS and editor noise
+Thumbs.db
+desktop.ini
+.DS_Store
+*.swp
+*~

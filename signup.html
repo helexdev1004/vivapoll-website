@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Create your account – VivaPoll</title>
+  <meta name="description" content="Create your free VivaPoll account and start earning rewards for your opinions.">
+  <meta name="theme-color" content="#0874fc">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32.png">
+  <link rel="apple-touch-icon" href="assets/images/apple-touch-icon.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link href="assets/css/style.css" rel="stylesheet">
+</head>
+<body class="vp-auth-page" data-i18n-title="auth.up.metaTitle">
+  <a class="visually-hidden-focusable vp-skip-link" href="#main" data-i18n="skip">Skip to main content</a>
+
+  <div class="vp-page vp-auth">
+    <div class="vp-decor" aria-hidden="true">
+      <span class="vp-circle vp-circle--1"></span>
+      <span class="vp-circle vp-circle--2"></span>
+      <span class="vp-circle vp-circle--4"></span>
+      <span class="vp-circle vp-circle--11"></span>
+    </div>
+
+    <!-- ============ HEADER (same menu bar as every other page) ============ -->
+    <header class="vp-header">
+      <nav class="navbar navbar-expand-md vp-navbar" aria-label="Main navigation">
+        <div class="container">
+          <a class="navbar-brand vp-brand" href="index.html">
+            <img src="assets/images/logo.png" alt="VivaPoll" width="236" height="46">
+          </a>
+
+          <button class="navbar-toggler vp-navbar__toggler" type="button" data-bs-toggle="collapse" data-bs-target="#vpNav" aria-controls="vpNav" aria-expanded="false" aria-label="Toggle navigation" data-i18n-attr="aria-label:nav.toggle">
+            <i class="bi bi-list" aria-hidden="true"></i>
+          </button>
+
+          <div class="collapse navbar-collapse" id="vpNav">
+            <ul class="navbar-nav vp-nav me-auto">
+              <li class="nav-item"><a class="nav-link" href="index.html" data-i18n="nav.home">Home</a></li>
+              <li class="nav-item"><a class="nav-link" href="about-us.html" data-i18n="nav.about">About us</a></li>
+              <li class="nav-item"><a class="nav-link" href="support.html" data-i18n="nav.support">Support</a></li>
+            </ul>
+
+            <div class="vp-nav-actions">
+              <div class="dropdown vp-lang">
+                <button class="btn vp-lang__toggle dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Select language" data-i18n-attr="aria-label:nav.lang">
+                  <i class="bi bi-globe2" aria-hidden="true"></i>
+                  <span class="vp-lang__label">English</span>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-md-end vp-lang__menu">
+                  <li><a class="dropdown-item active" aria-current="true" href="#" data-lang="en" lang="en" hreflang="en">English</a></li>
+                  <li><a class="dropdown-item" href="#" data-lang="nl" lang="nl" hreflang="nl">Nederlands</a></li>
+                  <li><a class="dropdown-item" href="#" data-lang="fr" lang="fr" hreflang="fr">Français</a></li>
+                  <li><a class="dropdown-item" href="#" data-lang="de" lang="de" hreflang="de">Deutsch</a></li>
+                  <li><a class="dropdown-item" href="#" data-lang="es" lang="es" hreflang="es">Español</a></li>
+                  <li><a class="dropdown-item" href="#" data-lang="it" lang="it" hreflang="it">Italiano</a></li>
+                </ul>
+              </div>
+              <a href="signin.html" class="btn vp-btn vp-btn--outline" data-i18n="nav.login">Log in</a>
+              <a href="signup.html" class="btn vp-btn vp-btn--primary" aria-current="page" data-i18n="nav.signup">Sign up</a>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main id="main" class="vp-auth-main">
+      <div class="container">
+        <div class="row align-items-center justify-content-center g-4 g-xl-5">
+          <div class="d-none d-lg-block col-lg-5">
+            <div class="vp-auth-visual vp-auth-visual--signup">
+              <img src="assets/images/hero-signup.png" alt="Excited girl sitting cross-legged, cheering with her phone in her hand" data-i18n-attr="alt:auth.up.imgAlt">
+            </div>
+          </div>
+
+          <div class="col-12 col-md-10 col-lg-7">
+            <section class="vp-auth-card vp-auth-card--wide" aria-labelledby="vp-signup-title">
+              <h1 id="vp-signup-title" class="vp-auth-title" data-i18n="auth.up.title">Create your VivaPoll account</h1>
+
+              <div class="alert vp-auth-alert d-none" role="status" data-i18n="auth.demo">Everything looks good! Account features will be available soon.</div>
+
+              <form class="vp-auth-form needs-validation" novalidate data-vp-auth="signup">
+                <div class="row g-3">
+                  <div class="col-12 col-sm-6">
+                    <label for="vpFirstName" class="form-label vp-form-label" data-i18n="auth.firstName">First name</label>
+                    <input type="text" class="form-control vp-form-control vp-form-control--plain" id="vpFirstName" name="firstName" autocomplete="given-name" required
+                           placeholder="John" data-i18n-attr="placeholder:auth.firstNamePh">
+                    <div class="invalid-feedback" data-i18n="auth.err.required">This field is required.</div>
+                  </div>
+                  <div class="col-12 col-sm-6">
+                    <label for="vpLastName" class="form-label vp-form-label" data-i18n="auth.lastName">Last name</label>
+                    <input type="text" class="form-control vp-form-control vp-form-control--plain" id="vpLastName" name="lastName" autocomplete="family-name" required
+                           placeholder="Doe" data-i18n-attr="placeholder:auth.lastNamePh">
+                    <div class="invalid-feedback" data-i18n="auth.err.required">This field is required.</div>
+                  </div>
+
+                  <div class="col-12">
+                    <label for="vpSignupEmail" class="form-label vp-form-label" data-i18n="auth.email">Email address</label>
+                    <div class="vp-input">
+                      <i class="bi bi-envelope vp-input__icon" aria-hidden="true"></i>
+                      <input type="email" class="form-control vp-form-control" id="vpSignupEmail" name="email" autocomplete="email" required
+                             placeholder="you@example.com" data-i18n-attr="placeholder:auth.emailPh">
+                      <div class="invalid-feedback" data-i18n="auth.err.email">Please enter a valid email address.</div>
+                    </div>
+                  </div>
+
+                  <div class="col-12">
+                    <label for="vpSignupPassword" class="form-label vp-form-label" data-i18n="auth.password">Password</label>
+                    <div class="vp-input">
+                      <i class="bi bi-lock vp-input__icon" aria-hidden="true"></i>
+                      <input type="password" class="form-control vp-form-control vp-form-control--toggle" id="vpSignupPassword" name="password" autocomplete="new-password" minlength="8" required
+                             aria-describedby="vpPasswordHint" placeholder="Create a password" data-i18n-attr="placeholder:auth.up.passwordPh">
+                      <button type="button" class="vp-input__toggle" data-vp-toggle-password="vpSignupPassword" aria-label="Show password" data-i18n-attr="aria-label:auth.showPassword">
+                        <i class="bi bi-eye-slash" aria-hidden="true"></i>
+                      </button>
+                      <div class="invalid-feedback" data-i18n="auth.err.passwordLength">Your password must be at least 8 characters.</div>
+                    </div>
+                    <div id="vpPasswordHint" class="form-text vp-form-hint" data-i18n="auth.up.passwordHint">Minimum 8 characters required</div>
+                  </div>
+
+                  <div class="col-12 col-sm-6">
+                    <label for="vpGender" class="form-label vp-form-label" data-i18n="auth.gender">Gender</label>
+                    <select class="form-select vp-form-control vp-form-control--plain" id="vpGender" name="gender" required>
+                      <option value="" selected disabled data-i18n="auth.genderPh">-- Select gender --</option>
+                      <option value="female" data-i18n="auth.gender.female">Female</option>
+                      <option value="male" data-i18n="auth.gender.male">Male</option>
+                      <option value="other" data-i18n="auth.gender.other">Other</option>
+                      <option value="undisclosed" data-i18n="auth.gender.undisclosed">Prefer not to say</option>
+                    </select>
+                    <div class="invalid-feedback" data-i18n="auth.err.select">Please make a selection.</div>
+                  </div>
+                  <div class="col-12 col-sm-6">
+                    <label for="vpBirthdate" class="form-label vp-form-label" data-i18n="auth.birthdate">Birth date</label>
+                    <input type="date" class="form-control vp-form-control vp-form-control--plain" id="vpBirthdate" name="birthdate" autocomplete="bday" required>
+                    <div class="invalid-feedback" data-i18n="auth.err.birthdate">Please enter a valid birth date (minimum age 16).</div>
+                  </div>
+
+                  <div class="col-12">
+                    <label for="vpCountry" class="form-label vp-form-label" data-i18n="auth.country">Country</label>
+                    <select class="form-select vp-form-control vp-form-control--plain" id="vpCountry" name="country" autocomplete="country" required>
+                      <option value="" selected disabled data-i18n="auth.countryPh">-- Select country --</option>
+                    </select>
+                    <div class="invalid-feedback" data-i18n="auth.err.select">Please make a selection.</div>
+                  </div>
+
+                  <div class="col-12 col-sm-6">
+                    <label for="vpRegion" class="form-label vp-form-label" data-i18n="auth.region">Region</label>
+                    <select class="form-select vp-form-control vp-form-control--plain" id="vpRegion" name="region" required disabled>
+                      <option value="" selected disabled data-i18n="auth.regionPh">-- Select region --</option>
+                    </select>
+                    <div class="invalid-feedback" data-i18n="auth.err.select">Please make a selection.</div>
+                  </div>
+                  <div class="col-12 col-sm-6">
+                    <label for="vpPostal" class="form-label vp-form-label" data-i18n="auth.postal">Postal code</label>
+                    <input type="text" class="form-control vp-form-control vp-form-control--plain" id="vpPostal" name="postalCode" autocomplete="postal-code" required
+                           placeholder="Enter postal code" data-i18n-attr="placeholder:auth.postalPh">
+                    <div class="invalid-feedback" data-i18n="auth.err.required">This field is required.</div>
+                  </div>
+
+                  <div class="col-12 vp-auth-checks">
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" id="vpAcceptTerms" required>
+                      <label class="form-check-label" for="vpAcceptTerms" data-i18n-html="auth.acceptTerms">I accept the <a href="terms-and-conditions.html" target="_blank" rel="noopener">Terms and Conditions</a></label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" id="vpAcceptPrivacy" required>
+                      <label class="form-check-label" for="vpAcceptPrivacy" data-i18n-html="auth.acceptPrivacy">I accept the <a href="privacy-policy.html" target="_blank" rel="noopener">Privacy Policy</a></label>
+                    </div>
+                  </div>
+
+                  <div class="col-12">
+                    <button type="submit" class="btn vp-auth-submit" data-i18n="auth.up.submit">Create account</button>
+                  </div>
+                </div>
+              </form>
+
+              <p class="vp-auth-switch">
+                <span data-i18n="auth.up.haveAccount">Already have an account?</span>
+                <a href="signin.html" class="vp-auth-link vp-auth-link--strong" data-i18n="auth.up.loginLink">Log in</a>
+              </p>
+            </section>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- ============ AUTH FOOTER ============ -->
+    <footer class="vp-auth-footer">
+      <div class="container d-flex flex-column flex-md-row align-items-center justify-content-between gap-2">
+        <p class="mb-0" data-i18n="auth.copyright">© 2026 Main Frame Ltd. All rights reserved.</p>
+        <nav aria-label="Footer" data-i18n-attr="aria-label:footer.navAria">
+          <ul class="list-unstyled d-flex flex-wrap justify-content-center gap-3 gap-md-4 mb-0">
+            <li><a href="terms-and-conditions.html" data-i18n="footer.terms">Terms &amp; Conditions</a></li>
+            <li><a href="privacy-policy.html" data-i18n="footer.privacy">Privacy Policy</a></li>
+            <li><a href="support.html" data-i18n="footer.support">Support</a></li>
+          </ul>
+        </nav>
+      </div>
+    </footer>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  <script src="assets/js/i18n.js"></script>
+  <script src="assets/js/i18n-auth.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/auth.js"></script>
+  <script src="assets/js/cursor.js"></script>
+</body>
+</html>

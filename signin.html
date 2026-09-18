@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Log in – VivaPoll</title>
+  <meta name="description" content="Log in to your VivaPoll account and continue earning rewards.">
+  <meta name="theme-color" content="#0874fc">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32.png">
+  <link rel="apple-touch-icon" href="assets/images/apple-touch-icon.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link href="assets/css/style.css" rel="stylesheet">
+</head>
+<body class="vp-auth-page" data-i18n-title="auth.in.metaTitle">
+  <a class="visually-hidden-focusable vp-skip-link" href="#main" data-i18n="skip">Skip to main content</a>
+
+  <div class="vp-page vp-auth">
+    <div class="vp-decor" aria-hidden="true">
+      <span class="vp-circle vp-circle--1"></span>
+      <span class="vp-circle vp-circle--2"></span>
+      <span class="vp-circle vp-circle--4"></span>
+      <span class="vp-circle vp-circle--11"></span>
+    </div>
+
+    <!-- ============ HEADER (same menu bar as every other page) ============ -->
+    <header class="vp-header">
+      <nav class="navbar navbar-expand-md vp-navbar" aria-label="Main navigation">
+        <div class="container">
+          <a class="navbar-brand vp-brand" href="index.html">
+            <img src="assets/images/logo.png" alt="VivaPoll" width="236" height="46">
+          </a>
+
+          <button class="navbar-toggler vp-navbar__toggler" type="button" data-bs-toggle="collapse" data-bs-target="#vpNav" aria-controls="vpNav" aria-expanded="false" aria-label="Toggle navigation" data-i18n-attr="aria-label:nav.toggle">
+            <i class="bi bi-list" aria-hidden="true"></i>
+          </button>
+
+          <div class="collapse navbar-collapse" id="vpNav">
+            <ul class="navbar-nav vp-nav me-auto">
+              <li class="nav-item"><a class="nav-link" href="index.html" data-i18n="nav.home">Home</a></li>
+              <li class="nav-item"><a class="nav-link" href="about-us.html" data-i18n="nav.about">About us</a></li>
+              <li class="nav-item"><a class="nav-link" href="support.html" data-i18n="nav.support">Support</a></li>
+            </ul>
+
+            <div class="vp-nav-actions">
+              <div class="dropdown vp-lang">
+                <button class="btn vp-lang__toggle dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Select language" data-i18n-attr="aria-label:nav.lang">
+                  <i class="bi bi-globe2" aria-hidden="true"></i>
+                  <span class="vp-lang__label">English</span>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-md-end vp-lang__menu">
+                  <li><a class="dropdown-item active" aria-current="true" href="#" data-lang="en" lang="en" hreflang="en">English</a></li>
+                  <li><a class="dropdown-item" href="#" data-lang="nl" lang="nl" hreflang="nl">Nederlands</a></li>
+                  <li><a class="dropdown-item" href="#" data-lang="fr" lang="fr" hreflang="fr">Français</a></li>
+                  <li><a class="dropdown-item" href="#" data-lang="de" lang="de" hreflang="de">Deutsch</a></li>
+                  <li><a class="dropdown-item" href="#" data-lang="es" lang="es" hreflang="es">Español</a></li>
+                  <li><a class="dropdown-item" href="#" data-lang="it" lang="it" hreflang="it">Italiano</a></li>
+                </ul>
+              </div>
+              <a href="signin.html" class="btn vp-btn vp-btn--outline" aria-current="page" data-i18n="nav.login">Log in</a>
+              <a href="signup.html" class="btn vp-btn vp-btn--primary" data-i18n="nav.signup">Sign up</a>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main id="main" class="vp-auth-main">
+      <div class="container">
+        <div class="row align-items-center justify-content-center g-0">
+          <div class="d-none d-lg-block col-lg-3"></div>
+
+          <div class="col-12 col-md-9 col-lg-6 col-xl-5">
+            <section class="vp-auth-card" aria-labelledby="vp-signin-title">
+              <h1 id="vp-signin-title" class="vp-auth-title" data-i18n="auth.in.title">Welcome back!</h1>
+              <p class="vp-auth-sub" data-i18n="auth.in.sub">Log in to your VivaPoll account and continue earning rewards.</p>
+
+              <div class="alert vp-auth-alert d-none" role="status" data-i18n="auth.demo">Everything looks good! Account features will be available soon.</div>
+
+              <form class="vp-auth-form needs-validation" novalidate data-vp-auth="signin">
+                <div class="mb-3">
+                  <label for="vpSigninEmail" class="form-label vp-form-label" data-i18n="auth.email">Email address</label>
+                  <div class="vp-input">
+                    <i class="bi bi-envelope vp-input__icon" aria-hidden="true"></i>
+                    <input type="email" class="form-control vp-form-control" id="vpSigninEmail" name="email" autocomplete="email" required
+                           placeholder="you@example.com" data-i18n-attr="placeholder:auth.emailPh">
+                    <div class="invalid-feedback" data-i18n="auth.err.email">Please enter a valid email address.</div>
+                  </div>
+                </div>
+
+                <div class="mb-2">
+                  <label for="vpSigninPassword" class="form-label vp-form-label" data-i18n="auth.password">Password</label>
+                  <div class="vp-input">
+                    <i class="bi bi-lock vp-input__icon" aria-hidden="true"></i>
+                    <input type="password" class="form-control vp-form-control vp-form-control--toggle" id="vpSigninPassword" name="password" autocomplete="current-password" required
+                           placeholder="Enter your password" data-i18n-attr="placeholder:auth.in.passwordPh">
+                    <button type="button" class="vp-input__toggle" data-vp-toggle-password="vpSigninPassword" aria-label="Show password" data-i18n-attr="aria-label:auth.showPassword">
+                      <i class="bi bi-eye-slash" aria-hidden="true"></i>
+                    </button>
+                    <div class="invalid-feedback" data-i18n="auth.err.password">Please enter your password.</div>
+                  </div>
+                </div>
+
+                <div class="text-end mb-4">
+                  <a href="#" class="vp-auth-link" data-i18n="auth.forgot">Forgot your password?</a>
+                </div>
+
+                <button type="submit" class="btn vp-auth-submit" data-i18n="auth.in.submit">Log in</button>
+              </form>
+
+              <p class="vp-auth-switch">
+                <span data-i18n="auth.in.noAccount">Don’t have an account?</span>
+                <a href="signup.html" class="vp-auth-link vp-auth-link--strong" data-i18n="auth.in.signupLink">Sign up now</a>
+              </p>
+            </section>
+          </div>
+
+          <div class="d-none d-lg-block col-lg-3 col-xl-4">
+            <div class="vp-auth-visual vp-auth-visual--signin">
+              <img src="assets/images/hero-signin.png" alt="Smiling girl sitting cross-legged and using her phone" data-i18n-attr="alt:auth.in.imgAlt">
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- ============ AUTH FOOTER ============ -->
+    <footer class="vp-auth-footer">
+      <div class="container d-flex flex-column flex-md-row align-items-center justify-content-between gap-2">
+        <p class="mb-0" data-i18n="auth.copyright">© 2026 Main Frame Ltd. All rights reserved.</p>
+        <nav aria-label="Footer" data-i18n-attr="aria-label:footer.navAria">
+          <ul class="list-unstyled d-flex flex-wrap justify-content-center gap-3 gap-md-4 mb-0">
+            <li><a href="terms-and-conditions.html" data-i18n="footer.terms">Terms &amp; Conditions</a></li>
+            <li><a href="privacy-policy.html" data-i18n="footer.privacy">Privacy Policy</a></li>
+            <li><a href="support.html" data-i18n="footer.support">Support</a></li>
+          </ul>
+        </nav>
+      </div>
+    </footer>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  <script src="assets/js/i18n.js"></script>
+  <script src="assets/js/i18n-auth.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/auth.js"></script>
+  <script src="assets/js/cursor.js"></script>
+</body>
+</html>
