@@ -1,4 +1,4 @@
-/* VivaPoll – homepage motion (GSAP + ScrollTrigger).
+/* VivaPoll – page motion (GSAP + ScrollTrigger). Loaded on every page.
  *
  * Everything here is bidirectional: it plays as you scroll down and rewinds as you
  * scroll back up, so the page reads the same travelling either way.
@@ -16,7 +16,12 @@
  *   data-anim="up|down|left|right|zoom|fade|tilt|chars"
  *   data-anim-group      animate this element's children in sequence
  *   data-anim-delay="0.15"
+ *   data-anim-once       reveal once and never rewind (used by the legal pages)
  *   data-count           count this number up
+ *
+ * The homepage-only pieces - the hero parallax, the counting statistics - look for their
+ * own elements and simply do nothing on pages that have none, so this one file drives
+ * every page without knowing which it is on.
  *
  * Nothing here is load-bearing. The hidden start state only applies while `.vp-anim` is
  * on <html>, and that class comes off the moment this file runs - so a blocked CDN or a
@@ -89,15 +94,44 @@
       return;
     }
 
+    // `data-anim-once` reveals the element a single time and then leaves it alone. The
+    // legal pages use it throughout: a paragraph that faded itself out again as the
+    // reader scrolled past would be fighting them, not helping.
+    var once = !!(trigger.hasAttribute && trigger.hasAttribute('data-anim-once'));
+    var play = function () { tween.play(); };
+
     tweens.push(tween);
+
+    if (once) {
+      // All four crossings reveal it, and none of them rewind. Replaying a tween that
+      // has already finished costs nothing, and covering every crossing is what makes
+      // this safe: a short paragraph can be cleared entirely between two frames when
+      // somebody scrolls quickly or follows a link into the middle of the document, and
+      // ScrollTrigger then reports only the leave. Waiting for `onEnter` alone left
+      // those sections blank until something else happened to nudge them.
+      triggers.push(ScrollTrigger.create({
+        trigger: trigger,
+        start: start || 'top 88%',
+        end: end || 'bottom top',
+        onEnter: play,
+        onEnterBack: play,
+        onLeave: play,
+        onLeaveBack: play
+      }));
+      // Already scrolled past before this was even built - a reload partway down the
+      // page, or a deep link.
+      if (trigger.getBoundingClientRect().top < window.innerHeight * 0.88) tween.play();
+      return;
+    }
+
     triggers.push(ScrollTrigger.create({
       trigger: trigger,
       start: start || 'top 88%',
       // `bottom top` and not a percentage: short elements would otherwise rewind while
       // still on screen.
       end: end || 'bottom top',
-      onEnter: function () { tween.play(); },
-      onEnterBack: function () { tween.play(); },
+      onEnter: play,
+      onEnterBack: play,
       onLeave: function () { tween.reverse(); },
       onLeaveBack: function () { tween.reverse(); }
     }));

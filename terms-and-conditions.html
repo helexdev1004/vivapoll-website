@@ -15,6 +15,21 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
   <link href="assets/css/style.css" rel="stylesheet">
+
+  <!-- Arms the scroll animations before first paint, so nothing flashes into place.
+       Skipped entirely when the visitor asks for reduced motion, and a failsafe drops
+       the class again if GSAP has not started within 2.5s - the page must never be
+       left with hidden content because a CDN was slow or blocked. -->
+  <script>
+    (function () {
+      if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      var root = document.documentElement;
+      root.classList.add('vp-anim');
+      window.setTimeout(function () {
+        if (!root.classList.contains('vp-anim-ready')) root.classList.remove('vp-anim');
+      }, 2500);
+    })();
+  </script>
 </head>
 <body class="vp-legal-page" data-bs-spy="scroll" data-bs-target="#vpTocNav" data-bs-root-margin="0px 0px -65%" data-bs-smooth-scroll="true">
   <a class="visually-hidden-focusable vp-skip-link" href="#main" data-i18n="skip">Skip to main content</a>
@@ -78,13 +93,13 @@
         <div class="container">
           <div class="row align-items-center">
             <div class="col-12 col-lg-7 vp-legal-hero__content">
-              <p class="vp-eyebrow vp-legal-hero__eyebrow" data-i18n="tc.eyebrow">Our rules together</p>
-              <h1 id="vp-legal-title" class="vp-legal-hero__title" data-i18n-html="tc.title">Terms &amp; <span class="vp-text-blue">Conditions</span></h1>
-              <p class="vp-legal-hero__lead" data-i18n="tc.lead">Please read the following Terms and Conditions carefully before using this website.</p>
-              <p class="vp-legal-hero__updated" data-i18n="tc.updated">These Terms and Conditions were last updated on October 5, 2026</p>
+              <p class="vp-eyebrow vp-legal-hero__eyebrow" data-anim="up" data-i18n="tc.eyebrow">Our rules together</p>
+              <h1 id="vp-legal-title" class="vp-legal-hero__title" data-anim="chars" data-i18n-html="tc.title">Terms &amp; <span class="vp-text-blue">Conditions</span></h1>
+              <p class="vp-legal-hero__lead" data-anim="up" data-anim-delay="0.42" data-i18n="tc.lead">Please read the following Terms and Conditions carefully before using this website.</p>
+              <p class="vp-legal-hero__updated" data-anim="up" data-anim-delay="0.52" data-i18n="tc.updated">These Terms and Conditions were last updated on October 5, 2026</p>
             </div>
             <div class="col-12 col-lg-5">
-              <div class="vp-legal-hero__visual">
+              <div class="vp-legal-hero__visual" data-anim="zoom" data-anim-delay="0.26">
                 <img src="assets/images/hero-terms.png" class="vp-legal-hero__img" width="436" height="324"
                      alt="Smiling girl holding a clipboard with a checklist"
                      data-i18n-attr="alt:tc.imgAlt">
@@ -100,7 +115,9 @@
         <div class="container">
           <div class="row g-3 g-lg-4">
             <div class="col-12 col-lg-3">
-              <nav class="vp-toc" aria-label="On this page" data-i18n-attr="aria-label:legal.toc">
+              <!-- fade, not a slide: this panel is sticky, and a plain opacity change
+                   leaves its positioning alone. -->
+              <nav class="vp-toc" aria-label="On this page" data-anim="fade" data-anim-once data-i18n-attr="aria-label:legal.toc">
                 <button class="vp-toc__toggle d-lg-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#vpTocList" aria-expanded="false" aria-controls="vpTocList">
                   <span data-i18n="legal.toc">On this page</span>
                   <i class="bi bi-chevron-down" aria-hidden="true"></i>
@@ -139,7 +156,7 @@
 
             <div class="col-12 col-lg-9">
               <article class="vp-legal__card">
-                <section id="introduction" class="vp-legal__section">
+                <section id="introduction" class="vp-legal__section" data-anim="fade" data-anim-once>
                   <h2 class="vp-legal__heading"><span class="vp-legal__num">1.</span> <span data-i18n="tc.s1.title">Introduction</span></h2>
                   <div class="vp-legal__body" data-i18n-html="tc.s1.body">
                     <p>This website: <a href="https://www.vivapoll.com/">https://www.vivapoll.com/</a> (the “Website”) is provided, owned, and controlled by Main Frame Ltd. (“VivaPoll”, “we”, “our”, or “us”).</p>
@@ -148,7 +165,7 @@
                   </div>
                 </section>
 
-                <section id="about-us" class="vp-legal__section">
+                <section id="about-us" class="vp-legal__section" data-anim="fade" data-anim-once>
                   <h2 class="vp-legal__heading"><span class="vp-legal__num">2.</span> <span data-i18n="tc.s2.title">About us</span></h2>
                   <div class="vp-legal__body" data-i18n-html="tc.s2.body">
                     <ul>
@@ -161,42 +178,42 @@
                   </div>
                 </section>
 
-                <section id="copyright" class="vp-legal__section">
+                <section id="copyright" class="vp-legal__section" data-anim="fade" data-anim-once>
                   <h2 class="vp-legal__heading"><span class="vp-legal__num">3.</span> <span data-i18n="tc.s3.title">Copyright</span></h2>
                   <div class="vp-legal__body" data-i18n-html="tc.s3.body">
                     <p>All information available on the Website, including the content of a graphic nature, is the property of Main Frame Ltd., unless the content is marked or generally acknowledged to be the property of a third party. You may not copy, duplicate, print, or circulate the information of the Website without Main Frame Ltd.’s prior written consent.</p>
                   </div>
                 </section>
 
-                <section id="disclaimer" class="vp-legal__section">
+                <section id="disclaimer" class="vp-legal__section" data-anim="fade" data-anim-once>
                   <h2 class="vp-legal__heading"><span class="vp-legal__num">4.</span> <span data-i18n="tc.s4.title">Disclaimer</span></h2>
                   <div class="vp-legal__body" data-i18n-html="tc.s4.body">
                     <p>Main Frame Ltd. does not assume any liability for damages or losses resulting from a user’s visiting the Website, including the use of information made available on the Website. We are also not liable for the content of hyperlinks to websites of third parties (if any).</p>
                   </div>
                 </section>
 
-                <section id="website-changes" class="vp-legal__section">
+                <section id="website-changes" class="vp-legal__section" data-anim="fade" data-anim-once>
                   <h2 class="vp-legal__heading"><span class="vp-legal__num">5.</span> <span data-i18n="tc.s5.title">Changes to the Website</span></h2>
                   <div class="vp-legal__body" data-i18n-html="tc.s5.body">
                     <p>The information made available on the Website may be altered or removed at any time without prior notice.</p>
                   </div>
                 </section>
 
-                <section id="policy-changes" class="vp-legal__section">
+                <section id="policy-changes" class="vp-legal__section" data-anim="fade" data-anim-once>
                   <h2 class="vp-legal__heading"><span class="vp-legal__num">6.</span> <span data-i18n="tc.s6.title">Changes to Terms and Privacy Policy</span></h2>
                   <div class="vp-legal__body" data-i18n-html="tc.s6.body">
                     <p>Main Frame Ltd. reserves the right to change, amend or modify the Terms and Conditions and/or Privacy Policy without notice at any time and from time to time, including as needed to comply with the appropriate laws and regulations. Any changes, amendments, or modifications will be posted on the Website. The new terms may be displayed on-screen and you may be required to read and accept them to continue your use of the Website. We also may notify you about any changes, amendments, or modifications to the Terms and Conditions and/or Privacy Policy by email.</p>
                   </div>
                 </section>
 
-                <section id="contacting-us" class="vp-legal__section">
+                <section id="contacting-us" class="vp-legal__section" data-anim="fade" data-anim-once>
                   <h2 class="vp-legal__heading"><span class="vp-legal__num">7.</span> <span data-i18n="tc.s7.title">Contacting us</span></h2>
                   <div class="vp-legal__body" data-i18n-html="tc.s7.body">
                     <p>If you have any questions, you may contact us by email: <a href="mailto:support@vivapoll.com">support@vivapoll.com</a></p>
                   </div>
                 </section>
 
-                <section id="your-use" class="vp-legal__section">
+                <section id="your-use" class="vp-legal__section" data-anim="fade" data-anim-once>
                   <h2 class="vp-legal__heading"><span class="vp-legal__num">8.</span> <span data-i18n="tc.s8.title">Your use of the Website</span></h2>
                   <div class="vp-legal__body" data-i18n-html="tc.s8.body">
                     <p>We and our content providers own all of the content on the Website. Information provided by us on the Website, as well as the manner in which we have compiled, arranged and assembled our content, is protected by copyright and other applicable laws. You may use the content which is available on the Website only for your personal, non-commercial, and information purposes. Copying, publishing, broadcasting, modification, distribution, or transmission of any portion of information or materials of the Website in any way without our prior written consent is strictly prohibited.</p>
@@ -204,14 +221,14 @@
                   </div>
                 </section>
 
-                <section id="eligibility" class="vp-legal__section">
+                <section id="eligibility" class="vp-legal__section" data-anim="fade" data-anim-once>
                   <h2 class="vp-legal__heading"><span class="vp-legal__num">9.</span> <span data-i18n="tc.s9.title">Eligibility</span></h2>
                   <div class="vp-legal__body" data-i18n-html="tc.s9.body">
                     <p>The Website is not intended for use by persons who are younger than age 16.</p>
                   </div>
                 </section>
 
-                <section id="our-services" class="vp-legal__section">
+                <section id="our-services" class="vp-legal__section" data-anim="fade" data-anim-once>
                   <h2 class="vp-legal__heading"><span class="vp-legal__num">10.</span> <span data-i18n="tc.s10.title">Our services</span></h2>
                   <div class="vp-legal__body" data-i18n-html="tc.s10.body">
                     <p>The Website is intended to provide its users with the opportunity to participate in surveys. Participation in any survey is always voluntary. In order to be able to participate in surveys, you will have to register your user account on the Website. Generally, all persons above the age of 16 are free to register a user account and get access to the surveys we offer. However, please note that we reserve the right to refuse the registration of a user account for certain people at our own discretion and without justifying our decision.</p>
@@ -220,7 +237,7 @@
                   </div>
                 </section>
 
-                <section id="activities" class="vp-legal__section">
+                <section id="activities" class="vp-legal__section" data-anim="fade" data-anim-once>
                   <h2 class="vp-legal__heading"><span class="vp-legal__num">11.</span> <span data-i18n="tc.s11.title">VivaPoll activities and third-party offers</span></h2>
                   <div class="vp-legal__body" data-i18n-html="tc.s11.body">
                     <p>You can earn rewards by participating in surveys and games.</p>
@@ -244,7 +261,7 @@
                   </div>
                 </section>
 
-                <section id="rewards" class="vp-legal__section">
+                <section id="rewards" class="vp-legal__section" data-anim="fade" data-anim-once>
                   <h2 class="vp-legal__heading"><span class="vp-legal__num">12.</span> <span data-i18n="tc.s12.title">Earnings and rewards</span></h2>
                   <div class="vp-legal__body" data-i18n-html="tc.s12.body">
                     <p>Rewards are added to your VivaPoll account only after an Activity has been confirmed as successfully completed by VivaPoll and/or the applicable third-party Activity Provider.</p>
@@ -266,7 +283,7 @@
                   </div>
                 </section>
 
-                <section id="advertising" class="vp-legal__section">
+                <section id="advertising" class="vp-legal__section" data-anim="fade" data-anim-once>
                   <h2 class="vp-legal__heading"><span class="vp-legal__num">13.</span> <span data-i18n="tc.s13.title">Advertising, offers and third-party content</span></h2>
                   <div class="vp-legal__body" data-i18n-html="tc.s13.body">
                     <p>VivaPoll may display or provide access to advertisements, promotional content, links, tasks, games, offers, and other materials supplied by third parties. Such content is provided by the relevant third party, and VivaPoll does not guarantee that it will be accurate, complete, current, available, or suitable for your needs.</p>
@@ -275,7 +292,7 @@
                   </div>
                 </section>
 
-                <section id="account" class="vp-legal__section">
+                <section id="account" class="vp-legal__section" data-anim="fade" data-anim-once>
                   <h2 class="vp-legal__heading"><span class="vp-legal__num">14.</span> <span data-i18n="tc.s14.title">Your account registration, deactivation and deletion</span></h2>
                   <div class="vp-legal__body" data-i18n-html="tc.s14.body">
                     <p>You can access VivaPoll surveys even if you don’t have a registered user account with us. However, in order to be able to receive rewards for your survey participation, the registration of a user account is required. During the user account registration we will ask you to provide us with some of your personal details: your full legal name, home address, valid email address and other information if required. Please note that there can be only one (1) registration on the Website with the same email address.</p>
@@ -290,7 +307,7 @@
                   </div>
                 </section>
 
-                <section id="consumer-protection" class="vp-legal__section">
+                <section id="consumer-protection" class="vp-legal__section" data-anim="fade" data-anim-once>
                   <h2 class="vp-legal__heading"><span class="vp-legal__num">15.</span> <span data-i18n="tc.s15.title">Consumer protection and cancellation policy</span></h2>
                   <div class="vp-legal__body" data-i18n-html="tc.s15.body">
                     <p>We value our customers and always undertake our best efforts to make our customers happy when they use our services. At the same time, as a business, we keep an eye on the best industry standards and aim to comply with applicable consumer protection legislation. Thus, our customers who are considered consumers under the terms of applicable law shall have the right to withdraw from this contract (i.e. to cancel the contract) within 14 days without giving reasons. Certain exceptions shall apply. The withdrawal period is 14 days from the day on which the customer has acquired physical possession of the goods. To exercise the right of withdrawal, the customer must inform VivaPoll of their decision to withdraw from this contract by sending written notification via email to: <a href="mailto:support@vivapoll.com">support@vivapoll.com</a>.</p>
@@ -298,42 +315,42 @@
                   </div>
                 </section>
 
-                <section id="confidentiality" class="vp-legal__section">
+                <section id="confidentiality" class="vp-legal__section" data-anim="fade" data-anim-once>
                   <h2 class="vp-legal__heading"><span class="vp-legal__num">16.</span> <span data-i18n="tc.s16.title">Your confidentiality obligations</span></h2>
                   <div class="vp-legal__body" data-i18n-html="tc.s16.body">
                     <p>In the surveys, we and/or our clients may disclose commercially confidential, sensitive or proprietary information, and such information must remain the exclusive property of its respective owner. By registering your user account with us and becoming a member of VivaPoll, you agree that you will not collect, post or share any information that forms a part of a survey with any third parties. By breaching this obligation, you might be liable for monetary damages to our clients.</p>
                   </div>
                 </section>
 
-                <section id="terms-changes" class="vp-legal__section">
+                <section id="terms-changes" class="vp-legal__section" data-anim="fade" data-anim-once>
                   <h2 class="vp-legal__heading"><span class="vp-legal__num">17.</span> <span data-i18n="tc.s17.title">Changes to these Terms and Conditions</span></h2>
                   <div class="vp-legal__body" data-i18n-html="tc.s17.body">
                     <p>From time to time, we may change these Terms and Conditions. We will make our best efforts to inform you about any changes made to these Terms and Conditions by posting a relevant notification on the Website. Please note that it is your sole responsibility to review these Terms and Conditions regularly. Your continued use of the Website or our services following the posting of changes to the Terms and Conditions will be deemed your acceptance of those changes.</p>
                   </div>
                 </section>
 
-                <section id="third-party-sites" class="vp-legal__section">
+                <section id="third-party-sites" class="vp-legal__section" data-anim="fade" data-anim-once>
                   <h2 class="vp-legal__heading"><span class="vp-legal__num">18.</span> <span data-i18n="tc.s18.title">Third-party websites and services</span></h2>
                   <div class="vp-legal__body" data-i18n-html="tc.s18.body">
                     <p>The Website and our services may contain links to other websites or services available on the Internet which are neither owned nor controlled by VivaPoll. Links to such websites or services are provided only for your convenience and you access or use them solely at your own risk.</p>
                   </div>
                 </section>
 
-                <section id="liability" class="vp-legal__section">
+                <section id="liability" class="vp-legal__section" data-anim="fade" data-anim-once>
                   <h2 class="vp-legal__heading"><span class="vp-legal__num">19.</span> <span data-i18n="tc.s19.title">Liability disclaimer</span></h2>
                   <div class="vp-legal__body" data-i18n-html="tc.s19.body">
                     <p>Information provided by us on the Website is general in nature. All information is provided on an “as is” basis without warranty of any kind, whether express, implied, or statutory, unless explicitly stated otherwise. This disclaimer includes, but is not limited to, any and all warranties of merchantability, fitness for a particular purpose, and non-infringement. We try to provide you with the most accurate information possible; however, we make no claims, promises, or guarantees about the accuracy or completeness of the information provided by us on the Website. We reserve the right to alter, revise or modify the Website or any information available on it at any time without notice. You, as our visitor and user, use the Website and our services solely at your own risk. We shall not be responsible or liable for the accuracy, usefulness, or availability of any information transmitted or made available on the Website.</p>
                   </div>
                 </section>
 
-                <section id="privacy" class="vp-legal__section">
+                <section id="privacy" class="vp-legal__section" data-anim="fade" data-anim-once>
                   <h2 class="vp-legal__heading"><span class="vp-legal__num">20.</span> <span data-i18n="tc.s20.title">Privacy</span></h2>
                   <div class="vp-legal__body" data-i18n-html="tc.s20.body">
                     <p>The privacy of visitors and users of the Website is of extreme importance to us. Our <a href="privacy-policy.html">Privacy Policy</a> describes our information handling practices when you access the Website or use any of our services available through the Website. Please review our Privacy Policy carefully before using the Website or any of our services available through the Website.</p>
                   </div>
                 </section>
 
-                <section id="user-communications" class="vp-legal__section">
+                <section id="user-communications" class="vp-legal__section" data-anim="fade" data-anim-once>
                   <h2 class="vp-legal__heading"><span class="vp-legal__num">21.</span> <span data-i18n="tc.s21.title">User communications</span></h2>
                   <div class="vp-legal__body" data-i18n-html="tc.s21.body">
                     <p>Any comment, material, information, or other communication that you post, upload or submit to the Website, or that is displayed on the Website at your direction, will be considered non-confidential and non-proprietary, and we will be under no obligation to maintain the confidentiality of any communication. You are responsible for your communications. You shall ensure that your communications do not infringe any copyright or trademark with respect to any person, entity, product, or service, or violate any other rights of any other person or entity.</p>
@@ -341,14 +358,14 @@
                   </div>
                 </section>
 
-                <section id="indemnification" class="vp-legal__section">
+                <section id="indemnification" class="vp-legal__section" data-anim="fade" data-anim-once>
                   <h2 class="vp-legal__heading"><span class="vp-legal__num">22.</span> <span data-i18n="tc.s22.title">Indemnification</span></h2>
                   <div class="vp-legal__body" data-i18n-html="tc.s22.body">
                     <p>You agree to indemnify, defend, and hold us harmless from and against all losses, expenses, damages, and costs, including reasonable attorneys’ fees, resulting from any violation by you of these Terms and Conditions and/or your use of the Website.</p>
                   </div>
                 </section>
 
-                <section id="applicable-law" class="vp-legal__section">
+                <section id="applicable-law" class="vp-legal__section" data-anim="fade" data-anim-once>
                   <h2 class="vp-legal__heading"><span class="vp-legal__num">23.</span> <span data-i18n="tc.s23.title">Applicable law and dispute resolution</span></h2>
                   <div class="vp-legal__body" data-i18n-html="tc.s23.body">
                     <p>These Terms and Conditions will be governed by and interpreted in all respects in accordance with the substantive laws of the Republic of Bulgaria. If any provision of these Terms and Conditions is invalid, the remainder of the agreement remains valid. The statutory provisions shall take effect over the invalid regulations.</p>
@@ -356,7 +373,7 @@
                   </div>
                 </section>
 
-                <section id="contact" class="vp-legal__section">
+                <section id="contact" class="vp-legal__section" data-anim="fade" data-anim-once>
                   <h2 class="vp-legal__heading"><span class="vp-legal__num">24.</span> <span data-i18n="tc.s24.title">Contact us</span></h2>
                   <div class="vp-legal__body" data-i18n-html="tc.s24.body">
                     <p>If you have any questions about these Terms and Conditions or our <a href="privacy-policy.html">Privacy Policy</a>, feel free to contact us by sending your request via email to: <a href="mailto:support@vivapoll.com">support@vivapoll.com</a></p>
@@ -408,6 +425,10 @@
   <script src="assets/js/i18n.js"></script>
   <script src="assets/js/i18n-terms.js"></script>
   <script src="assets/js/main.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="assets/js/animations.js"></script>
   <script src="assets/js/nav.js"></script>
   <script src="assets/js/cursor.js"></script>
 </body>
