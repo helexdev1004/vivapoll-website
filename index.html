@@ -94,11 +94,12 @@
 
     <main id="main">
       <!-- ============ 2. HERO ============ -->
-      <section class="vp-hero" aria-labelledby="vp-hero-title">
+      <section class="vp-hero" aria-labelledby="vp-hero-title"
+               data-section-label="Overview" data-i18n-attr="data-section-label:rail.hero">
         <div class="container">
           <div class="row align-items-center">
             <div class="col-12 col-lg-6 vp-hero__content">
-              <p class="vp-eyebrow" data-anim="up" data-i18n="hero.eyebrow">Real opinions. Real rewards.</p>
+              <p class="vp-eyebrow" data-decode data-i18n="hero.eyebrow">Real opinions. Real rewards.</p>
               <h1 id="vp-hero-title" class="vp-hero__title" data-anim="chars" data-i18n-html="hero.title">Make money <span class="d-block">in your <span class="vp-highlight">spare time</span></span></h1>
               <p class="vp-hero__lead" data-anim="up" data-anim-delay="0.52" data-i18n-html="hero.lead">Complete surveys, play games, and try new apps. <span class="d-sm-block">Turn your free time into rewards with VivaPoll.</span></p>
               <a href="signup.html" class="btn vp-btn-cta" data-anim="zoom" data-anim-delay="0.66">
@@ -161,12 +162,13 @@
       </section>
 
       <!-- ============ 3. HOW VIVAPOLL WORKS ============ -->
-      <section class="vp-section vp-band vp-how" aria-labelledby="vp-how-title">
+      <section class="vp-section vp-band vp-how" aria-labelledby="vp-how-title"
+               data-section-label="How it works" data-i18n-attr="data-section-label:rail.how">
         <div class="container">
           <div class="vp-how__panel">
-            <div class="vp-section-head" data-anim="up" data-anim-group>
-              <p class="vp-eyebrow" data-i18n="how.eyebrow">It’s simple</p>
-              <h2 id="vp-how-title" class="vp-section-title" data-anim="up" data-i18n="how.title">How VivaPoll works?</h2>
+            <div class="vp-section-head" data-anim="mask" data-anim-stagger="0.12" data-anim-group>
+              <p class="vp-eyebrow" data-decode data-i18n="how.eyebrow">It’s simple</p>
+              <h2 id="vp-how-title" class="vp-section-title" data-i18n="how.title">How VivaPoll works?</h2>
               <p class="vp-section-sub vp-how__sub" data-i18n="how.sub">Start earning in just a few minutes.</p>            </div>
 
             <ol class="row g-3 g-lg-4 list-unstyled mb-0 vp-steps" data-anim="tilt" data-anim-group>
@@ -208,10 +210,11 @@
       </section>
 
       <!-- ============ 4. STATS ============ -->
-      <section class="vp-section vp-stats" aria-labelledby="vp-stats-title">
+      <section class="vp-section vp-stats" aria-labelledby="vp-stats-title"
+               data-section-label="In numbers" data-i18n-attr="data-section-label:rail.stats">
         <h2 id="vp-stats-title" class="visually-hidden" data-i18n="stats.title">VivaPoll in numbers</h2>
         <div class="container">
-          <ul class="row g-3 g-lg-4 list-unstyled mb-0 vp-stats__list" data-anim="tilt" data-anim-group>
+          <ul class="row g-3 g-lg-4 list-unstyled mb-0 vp-stats__list" data-anim="flip" data-anim-stagger="0.13" data-anim-group>
             <li class="col-6 col-lg-3">
               <article class="vp-stat vp-stat--members">
                 <img src="assets/images/icons/stat-members.svg" class="vp-stat__img" alt="" width="96" height="96">
@@ -245,12 +248,13 @@
       </section>
 
       <!-- ============ 5. TESTIMONIALS ============ -->
-      <section class="vp-section vp-band vp-testimonials" aria-labelledby="vp-testimonials-title">
+      <section class="vp-section vp-band vp-testimonials" aria-labelledby="vp-testimonials-title"
+               data-section-label="Stories" data-i18n-attr="data-section-label:rail.testimonials">
         <div class="container">
           <div class="vp-testimonials__panel">
-            <div class="vp-section-head vp-section-head--center" data-anim="up" data-anim-group>
-              <p class="vp-eyebrow" data-i18n="testi.eyebrow">Real people. Real rewards.</p>
-              <h2 id="vp-testimonials-title" class="vp-section-title" data-anim="up" data-i18n-html="testi.title">Join thousands of <span class="d-sm-block">happy VivaPoll users</span></h2>
+            <div class="vp-section-head vp-section-head--center" data-anim="mask" data-anim-stagger="0.12" data-anim-group>
+              <p class="vp-eyebrow" data-decode data-i18n="testi.eyebrow">Real people. Real rewards.</p>
+              <h2 id="vp-testimonials-title" class="vp-section-title" data-i18n-html="testi.title">Join thousands of <span class="d-sm-block">happy VivaPoll users</span></h2>
               <p class="vp-section-sub" data-i18n-html="testi.sub">Take surveys, play games, complete tasks <span class="d-sm-block">and get real rewards.</span></p>
             </div>
 
@@ -298,13 +302,14 @@
       </section>
 
       <!-- ============ 6. FAQ ============ -->
-      <section class="vp-section vp-faq" aria-labelledby="vp-faq-title">
+      <section class="vp-section vp-faq" aria-labelledby="vp-faq-title"
+               data-section-label="Questions" data-i18n-attr="data-section-label:rail.faq">
         <div class="container">
           <div class="vp-faq__inner">
-            <div class="vp-section-head vp-section-head--split" data-anim="up" data-anim-group>
+            <div class="vp-section-head vp-section-head--split" data-anim="mask" data-anim-stagger="0.12" data-anim-group>
               <div>
-                <p class="vp-eyebrow" data-i18n="faq.eyebrow">Frequently asked questions.</p>
-                <h2 id="vp-faq-title" class="vp-section-title" data-anim="up" data-i18n="faq.title">Got questions?</h2>
+                <p class="vp-eyebrow" data-decode data-i18n="faq.eyebrow">Frequently asked questions.</p>
+                <h2 id="vp-faq-title" class="vp-section-title" data-i18n="faq.title">Got questions?</h2>
                 <p class="vp-section-sub" data-i18n="faq.sub">Find quick answers to the most common questions about VivaPoll.</p>
               </div>
               <a href="#" class="vp-link-arrow"><span data-i18n="faq.viewAll">View all questions</span> <i class="bi bi-arrow-right" aria-hidden="true"></i></a>
@@ -374,9 +379,10 @@
       </section>
 
       <!-- ============ 7. CTA ============ -->
-      <section class="vp-section vp-band vp-cta" aria-labelledby="vp-cta-title">
+      <section class="vp-section vp-band vp-cta" aria-labelledby="vp-cta-title"
+               data-section-label="Get started" data-i18n-attr="data-section-label:rail.cta">
         <div class="container">
-          <div class="vp-cta__panel" data-anim="zoom">
+          <div class="vp-cta__panel" data-anim="mask">
             <div class="vp-cta__content">
               <div>
                 <h2 id="vp-cta-title" class="vp-cta__title" data-anim="up" data-i18n="cta.title">Get started today</h2>

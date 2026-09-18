@@ -1482,7 +1482,8 @@ a { color: var(--vp-blue); }
    script adds and animations.js removes the instant it takes over. If GSAP never
    arrives, a failsafe drops the class after 2.5s and the page renders normally. */
 .vp-anim [data-anim]:not([data-anim-group]),
-.vp-anim [data-anim-group] > * {
+.vp-anim [data-anim-group] > *,
+.vp-anim [data-decode] {
   opacity: 0;
   visibility: hidden;
 }
@@ -1522,6 +1523,96 @@ a { color: var(--vp-blue); }
   transform: scaleX(0);
   transform-origin: left center;
   pointer-events: none;
+}
+
+/* An index of the page down the right-hand side: one mark per section, the current one
+   lit, its line filling as you travel through it. Built by animations.js from the
+   sections that carry `data-section-label`, and only on wide screens - there is no room
+   for it beside a phone, and nothing is lost without it. */
+.vp-rail {
+  position: fixed;
+  top: 50%;
+  right: clamp(0.75rem, 1.6vw, 1.75rem);
+  z-index: 1035;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  transform: translateY(-50%);
+}
+
+/* Reads right to left: label, number, line - so the lines stay flush with the edge of
+   the screen and the words open inward, into the page, rather than into the margin. */
+.vp-rail__item {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.55rem;
+  padding: 0.1rem 0;
+  border: 0;
+  background: none;
+  color: var(--vp-muted);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  text-align: right;
+  cursor: pointer;
+}
+
+.vp-rail__num {
+  order: -1;
+  min-width: 1.25em;
+  opacity: 0.45;
+  font-variant-numeric: tabular-nums;
+  transition: opacity 0.3s ease;
+}
+
+/* The line is the progress meter: a pale groove with a brand-coloured fill that grows
+   from the top as the section passes. */
+.vp-rail__track {
+  position: relative;
+  width: 2px;
+  height: 22px;
+  border-radius: 2px;
+  background: var(--vp-divider);
+  overflow: hidden;
+}
+
+.vp-rail__fill {
+  position: absolute;
+  inset: 0;
+  border-radius: 2px;
+  background: var(--vp-blue);
+  transform: scaleY(0);
+  transform-origin: top center;
+}
+
+/* The label is held back until its section is the one being read, so the rail stays a
+   quiet column of marks rather than a wall of words. */
+.vp-rail__label {
+  order: -2;
+  max-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  opacity: 0;
+  transition: max-width 0.45s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.3s ease;
+}
+
+.vp-rail__item:hover .vp-rail__label,
+.vp-rail__item:focus-visible .vp-rail__label,
+.vp-rail__item.is-active .vp-rail__label { max-width: 11rem; opacity: 1; }
+
+.vp-rail__item:hover,
+.vp-rail__item:focus-visible,
+.vp-rail__item.is-active { color: var(--vp-dark); }
+
+.vp-rail__item.is-active .vp-rail__num { opacity: 1; color: var(--vp-blue); }
+.vp-rail__item.is-active .vp-rail__track { height: 34px; }
+
+.vp-rail__track { transition: height 0.4s cubic-bezier(0.22, 1, 0.36, 1); }
+
+@media (max-width: 1199.98px) {
+  .vp-rail { display: none; }
 }
 
 /* ---------- 17. Pointer ---------- */
