@@ -391,6 +391,65 @@
     });
   }
 
+  /* ------------------------------------------------------------- pinned steps */
+
+  // The four steps stop being a row you scroll past and become a sequence you drive: the
+  // section holds still while each card comes forward in turn, the others dropping back
+  // and dimming behind it. Tied to the scrollbar, so it moves exactly as fast as you do
+  // and reverses when you scroll back.
+  //
+  // Built through gsap.matchMedia so that it exists only on wide screens and is torn down
+  // properly - pin leaves spacing and inline styles behind, and unwinding that by hand on
+  // every resize is how pinned sections come apart.
+  function initPinnedSteps() {
+    var section = document.querySelector('.vp-how');
+    if (!section) return;
+    var cards = section.querySelectorAll('.vp-step');
+    if (cards.length < 2) return;
+
+    gsap.matchMedia().add('(min-width: 1200px) and (min-height: 640px)', function () {
+      // The reveal animates the list items; this animates the cards inside them. Two
+      // different elements on purpose - both writing a transform to one element would
+      // mean whichever ran last silently won.
+      // Fresh objects every time, never one shared constant. GSAP writes its own
+      // bookkeeping into the vars object it is handed, so passing the same one to several
+      // tweens contaminates them - the duration collapses and the cards snap between
+      // states instead of moving between them.
+      function back() { return { scale: 0.95, opacity: 0.55, y: 12 }; }
+      function fore() { return { scale: 1.05, opacity: 1, y: -10 }; }
+
+      // The first card is already forward before the section pins, so it arrives lit
+      // rather than as a row of four dimmed cards waiting to be told what to do. Each
+      // handover then costs one unit of the timeline, and the last card is left out.
+      gsap.set(cards, back());
+      gsap.set(cards[0], fore());
+
+      var tl = gsap.timeline({
+        defaults: { ease: 'power1.inOut', duration: 1 },
+        scrollTrigger: {
+          trigger: section,
+          start: 'top top',
+          end: '+=' + ((cards.length - 1) * 58) + '%',
+          pin: true,
+          pinSpacing: true,
+          scrub: 0.6,
+          invalidateOnRefresh: true
+        }
+      });
+
+      for (var i = 1; i < cards.length; i++) {
+        tl.to(cards[i - 1], back(), i - 1)
+          .to(cards[i], fore(), i - 1);
+      }
+
+      return function () {
+        // Put the cards back exactly as the stylesheet left them when the query stops
+        // matching, so a narrow window never inherits a half-played sequence.
+        gsap.set(cards, { clearProps: 'all' });
+      };
+    });
+  }
+
   /* ------------------------------------------------------------- section rail */
 
   // A fixed index down the side of the page: one mark per section, the current one lit,
@@ -514,6 +573,7 @@
     initReveals();
     initParallax();
     initDepth();
+    initPinnedSteps();
     initMagnets();
     // The side index says everything the thin bar at the top said and more, so the bar
     // is only built where there is no index to replace it.

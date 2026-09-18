@@ -166,12 +166,15 @@
                data-section-label="How it works" data-i18n-attr="data-section-label:rail.how">
         <div class="container">
           <div class="vp-how__panel">
-            <div class="vp-section-head" data-anim="mask" data-anim-stagger="0.12" data-anim-group>
+            <!-- once, not bidirectional: this section is pinned on wide screens, which
+                 stretches its scroll range, and a reveal that rewound partway through the
+                 pinned sequence would empty the panel while it was being read. -->
+            <div class="vp-section-head" data-anim="mask" data-anim-stagger="0.12" data-anim-once data-anim-group>
               <p class="vp-eyebrow" data-i18n="how.eyebrow">It’s simple</p>
               <h2 id="vp-how-title" class="vp-section-title" data-i18n="how.title">How VivaPoll works?</h2>
               <p class="vp-section-sub vp-how__sub" data-i18n="how.sub">Start earning in just a few minutes.</p>            </div>
 
-            <ol class="row g-3 g-lg-4 list-unstyled mb-0 vp-steps" data-anim="tilt" data-anim-group>
+            <ol class="row g-3 g-lg-4 list-unstyled mb-0 vp-steps" data-anim="tilt" data-anim-once data-anim-group>
               <li class="col-12 col-md-6 col-xl-3">
                 <article class="vp-step vp-step--blue">
                   <span class="vp-step__num" aria-hidden="true">01</span>
