@@ -781,7 +781,7 @@ a { color: var(--vp-blue); }
 }
 
 .vp-quotes__item {
-  flex: 0 0 min(30rem, 82vw);
+  flex: 0 0 min(46rem, 88vw);
   scroll-snap-align: center;
 }
 
@@ -804,60 +804,126 @@ a { color: var(--vp-blue); }
   transform-origin: left center;
 }
 
+/* Two columns: what was said on the left, who said it beside their picture on the right.
+   Each card carries its own accent, which tints the quote badge, the rule, the location
+   pin and the ring around the photo - the blues and greens of the rest of the site
+   rather than the blush of the layout it is modelled on. */
 .vp-quote {
   position: relative;
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 1fr 15rem;
+  align-items: center;
+  gap: 2.25rem;
   height: 100%;
   margin: 0;
-  padding: 2.75rem 2.1rem 2rem;
+  padding: 2.6rem 2.4rem;
   background: #fff;
   border: 1px solid var(--vp-border);
   border-radius: var(--vp-radius);
-  box-shadow: 0 10px 30px rgba(28, 82, 160, 0.06);
-  /* The accent runs down the leading edge rather than around a portrait. */
-  border-left: 4px solid var(--vp-quote-accent, var(--vp-blue));
+  box-shadow: 0 10px 34px rgba(28, 82, 160, 0.07);
 }
 
-.vp-quote__mark {
-  position: absolute;
-  top: 1rem;
-  right: 1.35rem;
-  font-size: 2.6rem;
-  line-height: 1;
+.vp-quote__body { min-width: 0; }
+
+/* The mark sits in a soft disc of its own accent, as in the reference. */
+.vp-quote__badge {
+  display: grid;
+  place-items: center;
+  width: 3.6rem;
+  height: 3.6rem;
+  margin-bottom: 1.1rem;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--vp-quote-accent, var(--vp-blue)) 14%, #fff);
   color: var(--vp-quote-accent, var(--vp-blue));
-  opacity: 0.16;
+  font-size: 2rem;
+  line-height: 1;
 }
 
-.vp-quote .vp-stars { justify-content: flex-start; margin-bottom: 0.9rem; }
-
+/* A serif italic. The whole character of this card comes from it. */
 .vp-quote__text {
-  flex: 1;
-  margin: 0 0 1.5rem;
-  font-size: 1.08rem;
-  line-height: 1.72;
+  margin: 0;
+  font-family: Lora, Georgia, "Times New Roman", serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(1.15rem, 0.95rem + 0.55vw, 1.55rem);
+  line-height: 1.5;
+  letter-spacing: -0.005em;
+  color: var(--vp-dark);
+}
+
+.vp-quote__rule {
+  display: block;
+  width: 4.5rem;
+  height: 3px;
+  margin: 1.5rem 0 1.35rem;
+  border-radius: 3px;
+  background: color-mix(in srgb, var(--vp-quote-accent, var(--vp-blue)) 45%, #fff);
+}
+
+.vp-quote__author { display: flex; flex-direction: column; gap: 0.3rem; }
+.vp-quote__name { font-size: 1.35rem; font-weight: 700; letter-spacing: -0.02em; color: var(--vp-dark); }
+.vp-quote__role { font-size: 1rem; color: var(--vp-muted); }
+
+.vp-quote__place {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 1rem;
   color: var(--vp-text);
 }
+.vp-quote__place .bi { color: var(--vp-quote-accent, var(--vp-blue)); font-size: 1.05rem; }
 
-.vp-quote__author { display: flex; align-items: center; gap: 0.9rem; }
+/* The picture, tilted in its frame, with a handwritten note tucked under one corner. */
+.vp-quote__side { position: relative; }
 
-.vp-quote__photo {
-  flex: none;
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
+.vp-quote__frame {
+  display: block;
+  padding: 6px;
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 14px 36px rgba(28, 82, 160, 0.16);
+  transform: rotate(-2.2deg);
 }
 
-.vp-quote__who { display: flex; flex-direction: column; line-height: 1.35; }
-.vp-quote__name { font-size: 1.03rem; font-weight: 700; color: var(--vp-dark); }
-.vp-quote__role { font-size: 0.92rem; color: var(--vp-text); }
-.vp-quote__place { font-size: 0.86rem; color: var(--vp-muted); }
+.vp-quote__photo {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 5 / 6;
+  object-fit: cover;
+  border-radius: 13px;
+}
+
+.vp-quote__note {
+  position: absolute;
+  right: -0.9rem;
+  bottom: -1.35rem;
+  max-width: 8.5rem;
+  padding: 0.5rem 0.75rem;
+  background: color-mix(in srgb, var(--vp-quote-accent, var(--vp-blue)) 12%, #fff);
+  border-radius: 10px;
+  box-shadow: 0 8px 18px rgba(28, 82, 160, 0.1);
+  transform: rotate(3.5deg);
+  font-size: 1.15rem;
+  line-height: 1.15;
+  color: var(--vp-dark);
+  text-align: center;
+}
 
 .vp-quote--blue   { --vp-quote-accent: #0874fc; }
 .vp-quote--violet { --vp-quote-accent: #6b46e5; }
 .vp-quote--rose   { --vp-quote-accent: #e0356a; }
 .vp-quote--mint   { --vp-quote-accent: #12a86e; }
 .vp-quote--amber  { --vp-quote-accent: #ef8b1f; }
+
+/* One column once there is no room for two, picture first. */
+@media (max-width: 767.98px) {
+  .vp-quote { grid-template-columns: 1fr; gap: 1.75rem; padding: 2rem 1.5rem 2.25rem; }
+  .vp-quote__side { order: -1; width: 11rem; margin: 0 auto; }
+  .vp-quote__badge { width: 3rem; height: 3rem; font-size: 1.7rem; margin-bottom: 0.85rem; }
+  .vp-quote__rule { margin: 1.15rem 0 1rem; }
+  .vp-quote__name { font-size: 1.2rem; }
+}
 
 /* Pinned mode. animations.js adds this once it has taken the track over, which also
    turns the native scrolling off - two things moving the same strip would fight. */
@@ -869,9 +935,7 @@ a { color: var(--vp-blue); }
 }
 
 @media (max-width: 575.98px) {
-  .vp-quote { padding: 2.25rem 1.35rem 1.6rem; }
-  .vp-quote__text { font-size: 1rem; }
-  .vp-quotes__item { flex-basis: 86vw; }
+  .vp-quotes__item { flex-basis: 88vw; }
 }
 
 /* Centred cards: the portrait sits on top inside a coloured ring, the person is named

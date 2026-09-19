@@ -11,7 +11,9 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Lora is here for the pulled quotes only: their character comes from a serif italic,
+       which neither Inter nor Caveat can give. One extra family, one extra weight. -->
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Inter:wght@400;500;600;700;800&family=Lora:ital,wght@1,400;1,500&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
   <link href="assets/css/style.css" rel="stylesheet">
@@ -272,77 +274,122 @@
               <ul class="vp-quotes__track list-unstyled mb-0" data-quote-track>
                 <li class="vp-quotes__item">
                   <figure class="vp-quote vp-quote--blue">
-                    <i class="bi bi-quote vp-quote__mark" aria-hidden="true"></i>
-                    <div class="vp-stars" role="img" aria-label="Rated 5 out of 5" data-i18n-attr="aria-label:testi.rating"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
-                    <blockquote class="vp-quote__text" data-i18n="testi.quote1">“VivaPoll changed the way we collect feedback during our team meetings. Instead of waiting for people to share their opinions one by one, we can instantly see responses and make better decisions together.”</blockquote>
-                    <figcaption class="vp-quote__author">
-                      <img src="assets/images/avatar-emily.svg" class="vp-quote__photo" width="240" height="240" alt="">
-                      <span class="vp-quote__who">
-                        <strong class="vp-quote__name">Emily Carter</strong>
+                    <div class="vp-quote__body">
+                      <span class="vp-quote__badge" aria-hidden="true"><i class="bi bi-quote"></i></span>
+                      <blockquote class="vp-quote__text" data-i18n="testi.quote1">“VivaPoll changed the way we collect feedback during our team meetings. Instead of waiting for people to share their opinions one by one, we can instantly see responses and make better decisions together.”</blockquote>
+                      <span class="vp-quote__rule" aria-hidden="true"></span>
+                      <figcaption class="vp-quote__author">
+                        <strong class="vp-quote__name">Bruno Marzano</strong>
                         <span class="vp-quote__role" data-i18n="testi.role1">Product Manager</span>
-                        <span class="vp-quote__place" data-i18n="testi.place1">Austin, Texas, USA</span>
+                        <span class="vp-quote__place">
+                          <i class="bi bi-geo-alt" aria-hidden="true"></i><span data-i18n="testi.place1">Lavras, Brazil</span>
+                        </span>
+                      </figcaption>
+                    </div>
+
+                    <div class="vp-quote__side">
+                      <span class="vp-quote__frame">
+                        <img src="assets/images/portrait-bruno.jpg" class="vp-quote__photo" width="400" height="480"
+                             alt="Portrait of Bruno Marzano" data-i18n-attr="alt:testi.alt1">
                       </span>
-                    </figcaption>
+                      <span class="vp-hand vp-quote__note" aria-hidden="true" data-i18n="testi.note">Your opinion counts</span>
+                    </div>
                   </figure>
                 </li>
                 <li class="vp-quotes__item">
                   <figure class="vp-quote vp-quote--violet">
-                    <i class="bi bi-quote vp-quote__mark" aria-hidden="true"></i>
-                    <div class="vp-stars" role="img" aria-label="Rated 5 out of 5" data-i18n-attr="aria-label:testi.rating"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
-                    <blockquote class="vp-quote__text" data-i18n="testi.quote2">“We started using VivaPoll for our online workshops and training sessions. The live polling feature keeps participants engaged and gives us immediate insights into what our audience thinks.”</blockquote>
-                    <figcaption class="vp-quote__author">
-                      <img src="assets/images/avatar-daniel.svg" class="vp-quote__photo" width="240" height="240" alt="">
-                      <span class="vp-quote__who">
-                        <strong class="vp-quote__name">Daniel Rodriguez</strong>
+                    <div class="vp-quote__body">
+                      <span class="vp-quote__badge" aria-hidden="true"><i class="bi bi-quote"></i></span>
+                      <blockquote class="vp-quote__text" data-i18n="testi.quote2">“We started using VivaPoll for our online workshops and training sessions. The live polling feature keeps participants engaged and gives us immediate insights into what our audience thinks.”</blockquote>
+                      <span class="vp-quote__rule" aria-hidden="true"></span>
+                      <figcaption class="vp-quote__author">
+                        <strong class="vp-quote__name">Hemangi Ahir</strong>
                         <span class="vp-quote__role" data-i18n="testi.role2">Learning &amp; Development Specialist</span>
-                        <span class="vp-quote__place" data-i18n="testi.place2">Miami, Florida, USA</span>
+                        <span class="vp-quote__place">
+                          <i class="bi bi-geo-alt" aria-hidden="true"></i><span data-i18n="testi.place2">Mumbai, India</span>
+                        </span>
+                      </figcaption>
+                    </div>
+
+                    <div class="vp-quote__side">
+                      <span class="vp-quote__frame">
+                        <img src="assets/images/portrait-hemangi.jpg" class="vp-quote__photo" width="400" height="480"
+                             alt="Portrait of Hemangi Ahir" data-i18n-attr="alt:testi.alt2">
                       </span>
-                    </figcaption>
+                      <span class="vp-hand vp-quote__note" aria-hidden="true" data-i18n="testi.note">Your opinion counts</span>
+                    </div>
                   </figure>
                 </li>
                 <li class="vp-quotes__item">
                   <figure class="vp-quote vp-quote--rose">
-                    <i class="bi bi-quote vp-quote__mark" aria-hidden="true"></i>
-                    <div class="vp-stars" role="img" aria-label="Rated 5 out of 5" data-i18n-attr="aria-label:testi.rating"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
-                    <blockquote class="vp-quote__text" data-i18n="testi.quote3">“The biggest advantage for us was simplicity. Our marketing team can create polls, share them with customers and analyze responses without needing technical support.”</blockquote>
-                    <figcaption class="vp-quote__author">
-                      <img src="assets/images/avatar-sophia.svg" class="vp-quote__photo" width="240" height="240" alt="">
-                      <span class="vp-quote__who">
-                        <strong class="vp-quote__name">Sophia Williams</strong>
+                    <div class="vp-quote__body">
+                      <span class="vp-quote__badge" aria-hidden="true"><i class="bi bi-quote"></i></span>
+                      <blockquote class="vp-quote__text" data-i18n="testi.quote3">“The biggest advantage for us was simplicity. Our marketing team can create polls, share them with customers and analyze responses without needing technical support.”</blockquote>
+                      <span class="vp-quote__rule" aria-hidden="true"></span>
+                      <figcaption class="vp-quote__author">
+                        <strong class="vp-quote__name">Olivia Chen</strong>
                         <span class="vp-quote__role" data-i18n="testi.role3">Marketing Director</span>
-                        <span class="vp-quote__place" data-i18n="testi.place3">London, United Kingdom</span>
+                        <span class="vp-quote__place">
+                          <i class="bi bi-geo-alt" aria-hidden="true"></i><span data-i18n="testi.place3">Singapore</span>
+                        </span>
+                      </figcaption>
+                    </div>
+
+                    <div class="vp-quote__side">
+                      <span class="vp-quote__frame">
+                        <img src="assets/images/portrait-olivia.jpg" class="vp-quote__photo" width="400" height="480"
+                             alt="Portrait of Olivia Chen" data-i18n-attr="alt:testi.alt3">
                       </span>
-                    </figcaption>
+                      <span class="vp-hand vp-quote__note" aria-hidden="true" data-i18n="testi.note">Your opinion counts</span>
+                    </div>
                   </figure>
                 </li>
                 <li class="vp-quotes__item">
                   <figure class="vp-quote vp-quote--mint">
-                    <i class="bi bi-quote vp-quote__mark" aria-hidden="true"></i>
-                    <div class="vp-stars" role="img" aria-label="Rated 5 out of 5" data-i18n-attr="aria-label:testi.rating"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
-                    <blockquote class="vp-quote__text" data-i18n="testi.quote4">“VivaPoll helped us make virtual events much more interactive. Attendees participate more because sharing their opinions only takes a few seconds.”</blockquote>
-                    <figcaption class="vp-quote__author">
-                      <img src="assets/images/avatar-michael.svg" class="vp-quote__photo" width="240" height="240" alt="">
-                      <span class="vp-quote__who">
-                        <strong class="vp-quote__name">Michael Thompson</strong>
+                    <div class="vp-quote__body">
+                      <span class="vp-quote__badge" aria-hidden="true"><i class="bi bi-quote"></i></span>
+                      <blockquote class="vp-quote__text" data-i18n="testi.quote4">“VivaPoll helped us make virtual events much more interactive. Attendees participate more because sharing their opinions only takes a few seconds.”</blockquote>
+                      <span class="vp-quote__rule" aria-hidden="true"></span>
+                      <figcaption class="vp-quote__author">
+                        <strong class="vp-quote__name">Leonardo Silva</strong>
                         <span class="vp-quote__role" data-i18n="testi.role4">Event Coordinator</span>
-                        <span class="vp-quote__place" data-i18n="testi.place4">Toronto, Canada</span>
+                        <span class="vp-quote__place">
+                          <i class="bi bi-geo-alt" aria-hidden="true"></i><span data-i18n="testi.place4">Colombia</span>
+                        </span>
+                      </figcaption>
+                    </div>
+
+                    <div class="vp-quote__side">
+                      <span class="vp-quote__frame">
+                        <img src="assets/images/portrait-leonardo.jpg" class="vp-quote__photo" width="400" height="480"
+                             alt="Portrait of Leonardo Silva" data-i18n-attr="alt:testi.alt4">
                       </span>
-                    </figcaption>
+                      <span class="vp-hand vp-quote__note" aria-hidden="true" data-i18n="testi.note">Your opinion counts</span>
+                    </div>
                   </figure>
                 </li>
                 <li class="vp-quotes__item">
                   <figure class="vp-quote vp-quote--amber">
-                    <i class="bi bi-quote vp-quote__mark" aria-hidden="true"></i>
-                    <div class="vp-stars" role="img" aria-label="Rated 5 out of 5" data-i18n-attr="aria-label:testi.rating"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
-                    <blockquote class="vp-quote__text" data-i18n="testi.quote5">“Real-time feedback has become an important part of our decision-making process. VivaPoll gives our team a simple way to understand customer opinions while conversations are happening.”</blockquote>
-                    <figcaption class="vp-quote__author">
-                      <img src="assets/images/avatar-olivia.svg" class="vp-quote__photo" width="240" height="240" alt="">
-                      <span class="vp-quote__who">
-                        <strong class="vp-quote__name">Olivia Chen</strong>
+                    <div class="vp-quote__body">
+                      <span class="vp-quote__badge" aria-hidden="true"><i class="bi bi-quote"></i></span>
+                      <blockquote class="vp-quote__text" data-i18n="testi.quote5">“Real-time feedback has become an important part of our decision-making process. VivaPoll gives our team a simple way to understand customer opinions while conversations are happening.”</blockquote>
+                      <span class="vp-quote__rule" aria-hidden="true"></span>
+                      <figcaption class="vp-quote__author">
+                        <strong class="vp-quote__name">Daniel Rodriguez</strong>
                         <span class="vp-quote__role" data-i18n="testi.role5">Operations Manager</span>
-                        <span class="vp-quote__place" data-i18n="testi.place5">Singapore</span>
+                        <span class="vp-quote__place">
+                          <i class="bi bi-geo-alt" aria-hidden="true"></i><span data-i18n="testi.place5">Houston, TX, USA</span>
+                        </span>
+                      </figcaption>
+                    </div>
+
+                    <div class="vp-quote__side">
+                      <span class="vp-quote__frame">
+                        <img src="assets/images/portrait-daniel.jpg" class="vp-quote__photo" width="400" height="480"
+                             alt="Portrait of Daniel Rodriguez" data-i18n-attr="alt:testi.alt5">
                       </span>
-                    </figcaption>
+                      <span class="vp-hand vp-quote__note" aria-hidden="true" data-i18n="testi.note">Your opinion counts</span>
+                    </div>
                   </figure>
                 </li>
               </ul>
