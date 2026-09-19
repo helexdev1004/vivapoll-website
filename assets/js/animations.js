@@ -611,6 +611,71 @@
     return true;
   }
 
+  /* ------------------------------------------------------------- she looks up */
+
+  // The character turns toward the pointer as it comes near her and settles back when it
+  // goes away. Her expression itself cannot change - she is one flat drawing with the
+  // smile painted in - so the life comes from where she is facing: a turn in three
+  // dimensions, with the figure leading the card floating beside her so the scene has
+  // depth rather than tilting as one flat sheet.
+  //
+  // Driven with quickTo, which keeps one tween per property alive and re-aims it. Making
+  // a new tween on every mouse move would queue them up and the motion would lag behind
+  // the pointer and overshoot.
+  function initGaze() {
+    var stage = document.querySelector('.vp-hero__stage');
+    if (!stage || !desktop.matches) return;
+    if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+
+    var img = stage.querySelector('.vp-hero__img');
+    var card = stage.querySelector('.vp-reward-card');
+
+    // `rotationY`, not `rotateY`. quickTo does not run the alias mapping a normal tween
+    // does, so the short name is accepted and then silently animates nothing - the whole
+    // turn was missing and the figure just slid sideways.
+    var set = {
+      rotY: gsap.quickTo(stage, 'rotationY', { duration: 0.8, ease: 'power3.out' }),
+      rotX: gsap.quickTo(stage, 'rotationX', { duration: 0.8, ease: 'power3.out' }),
+      x:    gsap.quickTo(stage, 'x',         { duration: 0.8, ease: 'power3.out' }),
+      y:    gsap.quickTo(stage, 'y',         { duration: 0.8, ease: 'power3.out' })
+    };
+    // The scroll parallax already owns `y` on these two, so the lead is taken on the
+    // percentage axis instead - GSAP keeps px and percent offsets apart, so the two
+    // never overwrite each other.
+    var lead = img ? gsap.quickTo(img, 'xPercent', { duration: 1, ease: 'power3.out' }) : null;
+    var trail = card ? gsap.quickTo(card, 'xPercent', { duration: 1.25, ease: 'power3.out' }) : null;
+
+    function rest() {
+      set.rotY(0); set.rotX(0); set.x(0); set.y(0);
+      if (lead) lead(0);
+      if (trail) trail(0);
+    }
+
+    function aim(e) {
+      var b = stage.getBoundingClientRect();
+      if (!b.width) return;
+      var dx = (e.clientX - (b.left + b.width / 2)) / (b.width / 2);
+      var dy = (e.clientY - (b.top + b.height / 2)) / (b.height / 2);
+
+      // Full strength over her, falling away to nothing about a figure's width out, so
+      // she answers the pointer when it is near her and ignores the rest of the page.
+      var reach = Math.min(1, Math.max(0, (2.3 - Math.sqrt(dx * dx + dy * dy)) / 1.3));
+      var k = reach * reach;
+      if (!k) { rest(); return; }
+
+      var cl = gsap.utils.clamp;
+      set.rotY(cl(-11, 11, dx * 10 * k));
+      set.rotX(cl(-8, 8, -dy * 7 * k));
+      set.x(cl(-14, 14, dx * 12 * k));
+      set.y(cl(-9, 9, dy * 7 * k));
+      if (lead) lead(cl(-2.2, 2.2, dx * 1.8 * k));
+      if (trail) trail(cl(-1.6, 1.6, dx * -1.2 * k));
+    }
+
+    window.addEventListener('mousemove', aim, { passive: true });
+    document.addEventListener('mouseleave', rest);
+  }
+
   /* ------------------------------------------------------------ magnetic keys */
 
   // The main call to action leans toward the pointer as it comes near, and springs back
@@ -695,6 +760,7 @@
     initDepth();
     initPinnedSteps();
     initQuoteRail();
+    initGaze();
     initMagnets();
     // The side index says everything the thin bar at the top said and more, so the bar
     // is only built where there is no index to replace it.

@@ -482,8 +482,10 @@ a { color: var(--vp-blue); }
 
 .vp-hero__app-label { margin: 2.6rem 0 0.9rem; font-size: 1.05rem; color: var(--vp-muted); }
 
-/* Visual: illustration + floating elements, positioned relative to the image */
-.vp-hero__visual { position: relative; padding-top: 3.5rem; }
+/* Visual: illustration + floating elements, positioned relative to the image.
+   The camera here is what turns the character's tilt into a turn rather than a squash -
+   animations.js rotates the stage toward the pointer. */
+.vp-hero__visual { position: relative; padding-top: 3.5rem; perspective: 1100px; }
 
 /* Desktop: the illustration sits to the right, its reward card finishing flush with
    the container edge so the section lines up with the header above it. */
