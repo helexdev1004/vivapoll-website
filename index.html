@@ -219,25 +219,28 @@
                data-section-label="In numbers" data-i18n-attr="data-section-label:rail.stats">
         <h2 id="vp-stats-title" class="visually-hidden" data-i18n="stats.title">VivaPoll in numbers</h2>
         <div class="container">
-          <ul class="row g-3 g-lg-4 list-unstyled mb-0 vp-stats__list" data-anim="flip" data-anim-stagger="0.13" data-anim-group>
+          <!-- Given longer than the preset and a wider gap between cards: they arrive one
+               at a time rather than all at once, and the figures have room to count. -->
+          <ul class="row g-3 g-lg-4 list-unstyled mb-0 vp-stats__list"
+              data-anim="flip" data-anim-duration="1.3" data-anim-stagger="0.28" data-anim-group>
             <li class="col-6 col-lg-3">
               <article class="vp-stat vp-stat--members">
                 <img src="assets/images/icons/stat-members.svg" class="vp-stat__img" alt="" width="96" height="96">
-                <strong class="vp-stat__value" data-count>100K+</strong>
+                <strong class="vp-stat__value" data-count data-anim-delay="0.2">100K+</strong>
                 <span class="vp-stat__label" data-i18n="stats.membersLabel">Active members</span>
               </article>
             </li>
             <li class="col-6 col-lg-3">
               <article class="vp-stat vp-stat--languages">
                 <img src="assets/images/icons/stat-languages.svg" class="vp-stat__img" alt="" width="96" height="96">
-                <strong class="vp-stat__value" data-count>6</strong>
+                <strong class="vp-stat__value" data-count data-anim-delay="0.48">6</strong>
                 <span class="vp-stat__label" data-i18n="stats.languagesLabel">Languages</span>
               </article>
             </li>
             <li class="col-6 col-lg-3">
               <article class="vp-stat vp-stat--rating">
                 <img src="assets/images/icons/stat-rating.svg" class="vp-stat__img" alt="" width="96" height="96">
-                <strong class="vp-stat__value" data-count data-i18n="stats.ratingValue">4.8/5</strong>
+                <strong class="vp-stat__value" data-count data-anim-delay="0.76" data-i18n="stats.ratingValue">4.8/5</strong>
                 <span class="vp-stat__label" data-i18n="stats.ratingLabel">User rating</span>
               </article>
             </li>

@@ -299,8 +299,14 @@
       var state = { n: 0 };
       var tween = gsap.to(state, {
         n: figure.value,
-        duration: 1.15,
-        ease: 'power2.out',
+        // Long enough to be read as it climbs rather than glimpsed. `power1.out` keeps
+        // most of that time in the middle of the run; a sharper ease spends it all
+        // crawling the last few units, which just reads as a number that has stopped.
+        duration: parseFloat(el.getAttribute('data-count-duration')) || 2.2,
+        ease: 'power1.out',
+        // Held back so each figure starts as its own card arrives, instead of all of
+        // them running while three of the cards are still on their way in.
+        delay: parseFloat(el.getAttribute('data-anim-delay')) || 0,
         paused: true,
         onUpdate: function () { el.textContent = renderFigure(figure, state.n); }
       });
@@ -348,7 +354,9 @@
 
       var shape = SHAPE[name] || { duration: 0.7, ease: 'power2.out' };
       var to = endVars(name);
-      to.duration = shape.duration;
+      // `data-anim-duration` overrides the preset for one element, so a single section can
+      // be given longer without slowing every other use of the same preset.
+      to.duration = parseFloat(el.getAttribute('data-anim-duration')) || shape.duration;
       to.ease = shape.ease;
       to.delay = delay;
       to.paused = true;
