@@ -408,6 +408,33 @@
     return 'top ' + h + 'px';
   }
 
+  /* -------------------------------------------------------------- held stats */
+
+  // The statistics used to slide past faster than the figures could finish counting, so
+  // the section was easy to scroll straight through without reading. It is held in place
+  // now while the numbers run.
+  //
+  // A pin is measured in scroll distance, not in seconds - there is no way to ask the
+  // browser for "two seconds of scrolling". A continuous scroll runs somewhere around
+  // 700px a second, so a hold of one and a half screens is about two seconds at that
+  // pace, and it scales with the window rather than being a fixed number of pixels.
+  function initPinnedStats() {
+    var section = document.querySelector('.vp-stats');
+    if (!section) return;
+
+    gsap.matchMedia().add('(min-width: 1200px) and (min-height: 640px)', function () {
+      var st = ScrollTrigger.create({
+        trigger: section,
+        start: pinStart,
+        end: function () { return '+=' + Math.round(window.innerHeight * 1.5); },
+        pin: true,
+        pinSpacing: true,
+        invalidateOnRefresh: true
+      });
+      return function () { st.kill(); };
+    });
+  }
+
   /* ------------------------------------------------------------- pinned steps */
 
   // The four steps stop being a row you scroll past and become a sequence you drive: the
@@ -759,6 +786,7 @@
     initParallax();
     initDepth();
     initPinnedSteps();
+    initPinnedStats();
     initQuoteRail();
     initGaze();
     initMagnets();
