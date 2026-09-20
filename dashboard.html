@@ -97,22 +97,22 @@
         <nav class="vp-segments" aria-label="Offer categories" data-anim="up" data-anim-delay="0.16">
           <ul class="nav vp-segments__list" role="tablist">
             <li class="nav-item" role="presentation">
-              <button class="vp-segment active" id="vp-seg-you" data-bs-toggle="pill" data-bs-target="#vp-pane-you" type="button" role="tab" aria-controls="vp-pane-you" aria-selected="true">
+              <button class="vp-segment active" id="vp-seg-you" data-title="Featured Offers" data-bs-toggle="pill" data-bs-target="#vp-pane-you" type="button" role="tab" aria-controls="vp-pane-you" aria-selected="true">
                 <i class="bi bi-star-fill" aria-hidden="true"></i><span>For You</span>
               </button>
             </li>
             <li class="nav-item" role="presentation">
-              <button class="vp-segment" id="vp-seg-surveys" data-bs-toggle="pill" data-bs-target="#vp-pane-surveys" type="button" role="tab" aria-controls="vp-pane-surveys" aria-selected="false">
+              <button class="vp-segment" id="vp-seg-surveys" data-title="Available Surveys" data-bs-toggle="pill" data-bs-target="#vp-pane-surveys" type="button" role="tab" aria-controls="vp-pane-surveys" aria-selected="false">
                 <i class="bi bi-card-text" aria-hidden="true"></i><span>Surveys</span>
               </button>
             </li>
             <li class="nav-item" role="presentation">
-              <button class="vp-segment" id="vp-seg-profiling" data-bs-toggle="pill" data-bs-target="#vp-pane-profiling" type="button" role="tab" aria-controls="vp-pane-profiling" aria-selected="false">
+              <button class="vp-segment" id="vp-seg-profiling" data-title="Profiling Surveys" data-bs-toggle="pill" data-bs-target="#vp-pane-profiling" type="button" role="tab" aria-controls="vp-pane-profiling" aria-selected="false">
                 <i class="bi bi-person-plus" aria-hidden="true"></i><span>Profiling surveys</span>
               </button>
             </li>
             <li class="nav-item" role="presentation">
-              <button class="vp-segment" id="vp-seg-games" data-bs-toggle="pill" data-bs-target="#vp-pane-games" type="button" role="tab" aria-controls="vp-pane-games" aria-selected="false">
+              <button class="vp-segment" id="vp-seg-games" data-title="Games" data-bs-toggle="pill" data-bs-target="#vp-pane-games" type="button" role="tab" aria-controls="vp-pane-games" aria-selected="false">
                 <i class="bi bi-controller" aria-hidden="true"></i><span>Games</span>
               </button>
             </li>
@@ -122,7 +122,7 @@
         <!-- ============ OFFERS ============ -->
         <section class="vp-offers" aria-labelledby="vp-offers-title" data-anim="up" data-anim-delay="0.22">
           <div class="vp-offers__head">
-            <h2 id="vp-offers-title" class="vp-offers__title">Featured Offers</h2>
+            <h2 id="vp-offers-title" class="vp-offers__title" data-offers-title>Featured Offers</h2>
             <a href="#" class="vp-offers__all"><span>View all</span> <i class="bi bi-chevron-right" aria-hidden="true"></i></a>
           </div>
 
@@ -171,7 +171,72 @@
             <!-- The other three categories have nothing to list until there is a back end
                  to list it from, so they say so rather than showing an invented offer. -->
             <div class="tab-pane fade" id="vp-pane-surveys" role="tabpanel" aria-labelledby="vp-seg-surveys" tabindex="0">
-              <p class="vp-offers__empty">Nothing here yet. New offers appear as they become available for you.</p>
+              <ul class="vp-survey-list list-unstyled mb-0">
+                <li>
+                  <a href="#" class="vp-survey vp-survey--unlock" aria-label="€0.02, 11 questions, Unlock surveys">
+                    <span class="vp-survey__lead">
+                      <span class="vp-survey__pay">€0.02</span>
+                    </span>
+                    <span class="vp-survey__meta">
+                      <span class="vp-survey__fact"><i class="bi bi-check-circle-fill" aria-hidden="true"></i>11 questions</span>
+                      <span class="vp-survey__fact"><i class="bi bi-unlock-fill" aria-hidden="true"></i>Unlock surveys</span>
+                    </span>
+                    <span class="vp-survey__go" aria-hidden="true"><i class="bi bi-chevron-right"></i></span>
+                  </a>
+                </li>
+                <li>
+                  <a href="#" class="vp-survey" aria-label="€0.85, rated 1 out of 5, 35 min, from Prime Insights">
+                    <span class="vp-survey__lead">
+                      <span class="vp-survey__pay">€0.85</span>
+                      <span class="vp-survey__rating">1 <i class="bi bi-star-fill" aria-hidden="true"></i></span>
+                    </span>
+                    <span class="vp-survey__meta">
+                      <span class="vp-survey__fact"><i class="bi bi-clock-fill" aria-hidden="true"></i>35 min</span>
+                      <span class="vp-survey__fact"><i class="bi bi-briefcase-fill" aria-hidden="true"></i>Prime Insights</span>
+                    </span>
+                    <span class="vp-survey__go" aria-hidden="true"><i class="bi bi-chevron-right"></i></span>
+                  </a>
+                </li>
+                <li>
+                  <a href="#" class="vp-survey" aria-label="€0.07, rated 2 out of 5, 16 min, from Toluna">
+                    <span class="vp-survey__lead">
+                      <span class="vp-survey__pay">€0.07</span>
+                      <span class="vp-survey__rating">2 <i class="bi bi-star-fill" aria-hidden="true"></i></span>
+                    </span>
+                    <span class="vp-survey__meta">
+                      <span class="vp-survey__fact"><i class="bi bi-clock-fill" aria-hidden="true"></i>16 min</span>
+                      <span class="vp-survey__fact"><i class="bi bi-briefcase-fill" aria-hidden="true"></i>Toluna</span>
+                    </span>
+                    <span class="vp-survey__go" aria-hidden="true"><i class="bi bi-chevron-right"></i></span>
+                  </a>
+                </li>
+                <li>
+                  <a href="#" class="vp-survey" aria-label="€0.22, rated 1 out of 5, 17 min, from CPX Research">
+                    <span class="vp-survey__lead">
+                      <span class="vp-survey__pay">€0.22</span>
+                      <span class="vp-survey__rating">1 <i class="bi bi-star-fill" aria-hidden="true"></i></span>
+                    </span>
+                    <span class="vp-survey__meta">
+                      <span class="vp-survey__fact"><i class="bi bi-clock-fill" aria-hidden="true"></i>17 min</span>
+                      <span class="vp-survey__fact"><i class="bi bi-briefcase-fill" aria-hidden="true"></i>CPX Research</span>
+                    </span>
+                    <span class="vp-survey__go" aria-hidden="true"><i class="bi bi-chevron-right"></i></span>
+                  </a>
+                </li>
+                <li>
+                  <a href="#" class="vp-survey" aria-label="€0.08, rated 1 out of 5, 13 min, from CPX Research">
+                    <span class="vp-survey__lead">
+                      <span class="vp-survey__pay">€0.08</span>
+                      <span class="vp-survey__rating">1 <i class="bi bi-star-fill" aria-hidden="true"></i></span>
+                    </span>
+                    <span class="vp-survey__meta">
+                      <span class="vp-survey__fact"><i class="bi bi-clock-fill" aria-hidden="true"></i>13 min</span>
+                      <span class="vp-survey__fact"><i class="bi bi-briefcase-fill" aria-hidden="true"></i>CPX Research</span>
+                    </span>
+                    <span class="vp-survey__go" aria-hidden="true"><i class="bi bi-chevron-right"></i></span>
+                  </a>
+                </li>
+              </ul>
             </div>
             <div class="tab-pane fade" id="vp-pane-profiling" role="tabpanel" aria-labelledby="vp-seg-profiling" tabindex="0">
               <p class="vp-offers__empty">Nothing here yet. New offers appear as they become available for you.</p>
@@ -217,6 +282,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script src="assets/js/animations.js"></script>
+  <script src="assets/js/dashboard.js"></script>
   <script src="assets/js/nav.js"></script>
   <script src="assets/js/cursor.js"></script>
 </body>
