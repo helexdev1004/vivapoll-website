@@ -706,10 +706,13 @@ a { color: var(--vp-blue); }
   background: radial-gradient(150px 130px at 100% 0%, var(--vp-stat-glow), transparent 72%);
 }
 
+/* Hover lifts with light rather than with a transform. While the section is held, the
+   cards carry an inline transform of their own from the scrubbed wave, and an inline
+   style beats a stylesheet one - a hover lift written here would simply be ignored for
+   as long as that lasted, and then start working again afterwards. */
 .vp-stat:hover {
-  transform: translateY(-4px);
   border-color: var(--vp-stat-accent);
-  box-shadow: 0 20px 44px rgba(28, 82, 160, 0.13);
+  box-shadow: 0 20px 44px rgba(28, 82, 160, 0.16);
 }
 
 .vp-stat__img {

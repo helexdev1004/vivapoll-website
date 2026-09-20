@@ -423,15 +423,50 @@
     if (!section) return;
 
     gsap.matchMedia().add('(min-width: 1200px) and (min-height: 640px)', function () {
-      var st = ScrollTrigger.create({
-        trigger: section,
-        start: pinStart,
-        end: function () { return '+=' + Math.round(window.innerHeight * 1.5); },
-        pin: true,
-        pinSpacing: true,
-        invalidateOnRefresh: true
+      var list = section.querySelector('.vp-stats__list');
+      var cards = Array.prototype.slice.call(section.querySelectorAll('.vp-stat'));
+      var icons = Array.prototype.slice.call(section.querySelectorAll('.vp-stat__img'));
+
+      // Everything below is tied to the scrollbar. A hold with nothing moving in it does
+      // not read as emphasis, it reads as the page having stuck - so the time the section
+      // is given is spent on something.
+      var tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: section,
+          start: pinStart,
+          end: function () { return '+=' + Math.round(window.innerHeight * 1.5); },
+          pin: true,
+          pinSpacing: true,
+          scrub: 0.5,
+          invalidateOnRefresh: true
+        }
       });
-      return function () { st.kill(); };
+
+      // The row glides the whole way through, so the section is never actually still.
+      // The reveal animates this list's children, never the list itself, so the two do
+      // not write to the same element.
+      if (list) tl.fromTo(list, { y: 38 }, { y: -38, ease: 'none', duration: 4 }, 0);
+
+      // Then a wave across the four: each card rises and settles as the scroll reaches
+      // it, its icon springing a little further, so the eye is walked along the figures
+      // one at a time instead of meeting all four at once.
+      cards.forEach(function (card, i) {
+        // Spaced so the last card settles as the hold ends rather than three quarters of
+        // the way through, which left the tail of it flat.
+        var at = i * 0.85;
+        tl.to(card, { y: -24, scale: 1.045, duration: 0.55, ease: 'power2.out' }, at)
+          .to(card, { y: 0, scale: 1, duration: 0.8, ease: 'power2.inOut' }, at + 0.55);
+        if (icons[i]) {
+          tl.to(icons[i], { scale: 1.2, rotate: -7, duration: 0.55, ease: 'back.out(2)' }, at)
+            .to(icons[i], { scale: 1, rotate: 0, duration: 0.8, ease: 'power2.inOut' }, at + 0.55);
+        }
+      });
+
+      return function () {
+        if (list) gsap.set(list, { clearProps: 'all' });
+        if (cards.length) gsap.set(cards, { clearProps: 'all' });
+        if (icons.length) gsap.set(icons, { clearProps: 'all' });
+      };
     });
   }
 
