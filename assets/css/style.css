@@ -2037,6 +2037,88 @@ a { color: var(--vp-blue); }
   .vp-game__facts { flex-direction: column; gap: 0.1rem; }
 }
 
+/* ---------- Wallet ---------- */
+.vp-wallet { max-width: 40rem; }
+.vp-wallet__title { margin: 0.5rem 0 0.25rem; font-size: clamp(1.6rem, 1.3rem + 1vw, 2.1rem); font-weight: 800; letter-spacing: -0.03em; text-align: center; color: var(--vp-dark); }
+
+/* The dial. An open ring, three quarters of a circle with the gap at the foot, drawn by
+   dash length: `--vp-gauge-progress` runs 0 to 1 and nothing else has to be recalculated.
+   r=94 gives a circumference of 590.6, and three quarters of that is 442.9. */
+.vp-gauge { position: relative; display: grid; place-items: center; width: min(280px, 72vw); margin: 0.5rem auto 1.25rem; }
+.vp-gauge__svg { width: 100%; height: auto; overflow: visible; }
+
+.vp-gauge__track,
+.vp-gauge__value {
+  fill: none;
+  stroke-width: 16;
+  stroke-linecap: round;
+  stroke-dasharray: 442.9 590.6;
+}
+.vp-gauge__track { stroke: #e3eefc; }
+/* The stroke itself is a gradient defined in the markup. It is left as a presentation
+   attribute on purpose - naming it here would override the paint server and the ring
+   would come out flat. */
+.vp-gauge__value { stroke-dasharray: calc(442.9 * var(--vp-gauge-progress, 0)) 590.6; }
+.vp-gauge__pip { fill: var(--vp-blue); }
+
+.vp-gauge__text { position: absolute; display: flex; flex-direction: column; align-items: center; line-height: 1.05; }
+.vp-gauge__amount { font-size: clamp(2.1rem, 1.5rem + 2.4vw, 3rem); font-weight: 800; letter-spacing: -0.04em; color: var(--vp-dark); }
+.vp-gauge__unit { margin-top: 0.3rem; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.1em; color: var(--vp-muted); }
+
+.vp-cashout {
+  display: block;
+  width: 100%;
+  padding: 0.95rem 1.5rem;
+  border: 0;
+  border-radius: 16px;
+  background: var(--vp-blue);
+  color: #fff;
+  font-size: 1.1rem;
+  font-weight: 700;
+  box-shadow: 0 12px 26px rgba(8, 116, 252, 0.24);
+}
+.vp-cashout:hover:not(:disabled), .vp-cashout:focus-visible:not(:disabled) { background: var(--vp-blue-dark); color: #fff; }
+/* Below the minimum there is nothing to withdraw, and a button that only refuses is
+   worse than one that says so plainly. */
+.vp-cashout:disabled { background: #c9dcf3; color: #fff; box-shadow: none; opacity: 1; cursor: not-allowed; }
+
+.vp-cashout__note { margin: 0.65rem 0 0; font-size: 0.95rem; text-align: center; color: var(--vp-muted); }
+.vp-cashout__note strong { color: var(--vp-dark); }
+
+.vp-payouts { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem 1.6rem; margin: 1rem 0 1.5rem; }
+.vp-payouts li { display: inline-flex; align-items: center; gap: 0.45rem; font-size: 0.98rem; font-weight: 600; color: var(--vp-text); }
+.vp-payouts .bi { font-size: 1.1rem; color: var(--vp-blue); }
+
+/* Two pills sharing the trough evenly, rather than four sized to their labels. */
+.vp-segments--pair { margin-bottom: 1.35rem; }
+.vp-segments--pair .vp-segments__list { overflow: visible; }
+.vp-segments--pair .nav-item { flex: 1 1 50%; }
+
+.vp-wallet__month { margin: 0 0 0.6rem; padding-left: 0.25rem; font-size: 1.05rem; font-weight: 700; color: var(--vp-dark); }
+
+.vp-ledger { background: #fff; border-radius: 18px; box-shadow: 0 8px 24px rgba(28, 82, 160, 0.05); overflow: hidden; }
+.vp-ledger li { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 0.95rem 1.25rem; }
+.vp-ledger li + li { border-top: 1px solid var(--vp-border); }
+.vp-ledger__what { display: inline-flex; align-items: center; gap: 0.7rem; color: var(--vp-text); }
+.vp-ledger__what .bi { font-size: 1.1rem; color: var(--vp-blue); }
+.vp-ledger__sum { font-weight: 700; color: var(--vp-dark); font-variant-numeric: tabular-nums; }
+.vp-ledger__sum--none { color: var(--vp-muted); font-weight: 500; }
+
+.vp-wallet__all {
+  display: block;
+  margin-top: 0.85rem;
+  padding: 0.9rem 1.25rem;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(28, 82, 160, 0.05);
+  color: var(--vp-dark);
+  font-weight: 600;
+  text-align: center;
+  text-decoration: none;
+  transition: box-shadow 0.25s ease, color 0.2s ease;
+}
+.vp-wallet__all:hover, .vp-wallet__all:focus-visible { color: var(--vp-blue); box-shadow: 0 16px 34px rgba(28, 82, 160, 0.12); }
+
 /* Floating tab bar. Fixed to the screen so it is always reachable, which is the point
    of it - the same four destinations wherever the visitor has scrolled to. */
 .vp-tabbar {
