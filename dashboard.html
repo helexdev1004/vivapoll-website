@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Your dashboard – VivaPoll</title>
+  <meta name="description" content="Your VivaPoll dashboard: see your balance, pick up surveys, games and profiling surveys, and earn real rewards.">
+  <meta name="theme-color" content="#0874fc">
+  <!-- Signed-in pages are nobody's business but the account holder's. -->
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32.png">
+  <link rel="apple-touch-icon" href="assets/images/apple-touch-icon.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link href="assets/css/style.css" rel="stylesheet">
+
+  <!-- Arms the reveals before first paint, so nothing flashes into place. Skipped for
+       reduced motion, and a failsafe drops the class if GSAP has not started within
+       2.5s - a signed-in visitor must never be left looking at a blank dashboard
+       because a CDN was slow or blocked. -->
+  <script>
+    (function () {
+      if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      var root = document.documentElement;
+      root.classList.add('vp-anim');
+      window.setTimeout(function () {
+        if (!root.classList.contains('vp-anim-ready')) root.classList.remove('vp-anim');
+      }, 2500);
+    })();
+  </script>
+</head>
+<body class="vp-app-page">
+  <a class="visually-hidden-focusable vp-skip-link" href="#main">Skip to main content</a>
+
+  <div class="vp-page vp-app">
+    <div class="vp-decor" aria-hidden="true">
+      <span class="vp-circle vp-circle--1"></span>
+      <span class="vp-circle vp-circle--2"></span>
+      <span class="vp-circle vp-circle--4"></span>
+      <span class="vp-circle vp-circle--11"></span>
+    </div>
+
+    <!-- ============ APP BAR ============ -->
+    <header class="vp-appbar">
+      <div class="container vp-appbar__inner">
+        <a class="vp-brand vp-appbar__brand" href="dashboard.html">
+          <img src="assets/images/logo.png" alt="VivaPoll" width="236" height="46">
+        </a>
+
+        <div class="vp-appbar__actions">
+          <a href="#" class="vp-appbar__icon vp-appbar__bell" aria-label="Notifications">
+            <i class="bi bi-bell" aria-hidden="true"></i>
+            <span class="vp-appbar__dot" aria-hidden="true"></span>
+          </a>
+
+
+          <a href="#" class="vp-avatar" aria-label="Your account">
+            <span aria-hidden="true">A</span>
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <main id="main" class="vp-app__main">
+      <div class="container">
+
+        <!-- ============ WELCOME + BALANCE ============ -->
+        <div class="row g-3 g-xl-4 vp-dash-top">
+          <div class="col-12 col-lg-8">
+            <section class="vp-panel-card vp-welcome" aria-labelledby="vp-welcome-title" data-anim="mask">
+              <div class="vp-welcome__text">
+                <h1 id="vp-welcome-title" class="vp-welcome__title">Welcome back!</h1>
+                <p class="vp-welcome__sub">Answer surveys, play games, try profiling surveys and earn real rewards.</p>
+              </div>
+              <!-- Decorative: she repeats what the copy beside her already says. -->
+              <img src="assets/images/dash-girl.png" class="vp-welcome__girl" width="620" height="534" alt="" aria-hidden="true">
+            </section>
+          </div>
+
+          <div class="col-12 col-lg-4">
+            <a href="#" class="vp-panel-card vp-balance" data-anim="mask" data-anim-delay="0.1">
+              <span class="vp-balance__icon" aria-hidden="true"><i class="bi bi-wallet2"></i></span>
+              <span class="vp-balance__text">
+                <span class="vp-balance__label">Your Balance</span>
+                <strong class="vp-balance__value">€2.75</strong>
+              </span>
+              <i class="bi bi-chevron-right vp-balance__go" aria-hidden="true"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- ============ CATEGORY TABS ============ -->
+        <nav class="vp-segments" aria-label="Offer categories" data-anim="up" data-anim-delay="0.16">
+          <ul class="nav vp-segments__list" role="tablist">
+            <li class="nav-item" role="presentation">
+              <button class="vp-segment active" id="vp-seg-you" data-bs-toggle="pill" data-bs-target="#vp-pane-you" type="button" role="tab" aria-controls="vp-pane-you" aria-selected="true">
+                <i class="bi bi-star-fill" aria-hidden="true"></i><span>For You</span>
+              </button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="vp-segment" id="vp-seg-surveys" data-bs-toggle="pill" data-bs-target="#vp-pane-surveys" type="button" role="tab" aria-controls="vp-pane-surveys" aria-selected="false">
+                <i class="bi bi-card-text" aria-hidden="true"></i><span>Surveys</span>
+              </button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="vp-segment" id="vp-seg-profiling" data-bs-toggle="pill" data-bs-target="#vp-pane-profiling" type="button" role="tab" aria-controls="vp-pane-profiling" aria-selected="false">
+                <i class="bi bi-person-plus" aria-hidden="true"></i><span>Profiling surveys</span>
+              </button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="vp-segment" id="vp-seg-games" data-bs-toggle="pill" data-bs-target="#vp-pane-games" type="button" role="tab" aria-controls="vp-pane-games" aria-selected="false">
+                <i class="bi bi-controller" aria-hidden="true"></i><span>Games</span>
+              </button>
+            </li>
+          </ul>
+        </nav>
+
+        <!-- ============ OFFERS ============ -->
+        <section class="vp-offers" aria-labelledby="vp-offers-title" data-anim="up" data-anim-delay="0.22">
+          <div class="vp-offers__head">
+            <h2 id="vp-offers-title" class="vp-offers__title">Featured Offers</h2>
+            <a href="#" class="vp-offers__all"><span>View all</span> <i class="bi bi-chevron-right" aria-hidden="true"></i></a>
+          </div>
+
+          <div class="tab-content">
+            <div class="tab-pane fade show active" id="vp-pane-you" role="tabpanel" aria-labelledby="vp-seg-you" tabindex="0">
+              <ul class="vp-offer-list list-unstyled mb-0">
+                <li>
+                  <a href="#" class="vp-offer vp-offer--blue">
+                    <span class="vp-offer__icon" aria-hidden="true"><i class="bi bi-file-earmark-text"></i></span>
+                    <span class="vp-offer__body">
+                      <strong class="vp-offer__name">Survey # 123456</strong>
+                      <span class="vp-offer__by"><span>by</span> Nielsen <i class="bi bi-box-arrow-up-right" aria-hidden="true"></i></span>
+                      <span class="vp-offer__time"><i class="bi bi-clock" aria-hidden="true"></i><span>5–10 min</span></span>
+                    </span>
+                    <span class="vp-offer__pay">+ €1.20</span>
+                    <i class="bi bi-chevron-right vp-offer__go" aria-hidden="true"></i>
+                  </a>
+                </li>
+                <li>
+                  <a href="#" class="vp-offer vp-offer--green">
+                    <span class="vp-offer__icon" aria-hidden="true"><i class="bi bi-controller"></i></span>
+                    <span class="vp-offer__body">
+                      <strong class="vp-offer__name">Play a Game</strong>
+                      <span class="vp-offer__by"><span>by</span> Mistplay <i class="bi bi-box-arrow-up-right" aria-hidden="true"></i></span>
+                      <span class="vp-offer__time"><i class="bi bi-clock" aria-hidden="true"></i><span>Varies</span></span>
+                    </span>
+                    <span class="vp-offer__pay">+ €0.80</span>
+                    <i class="bi bi-chevron-right vp-offer__go" aria-hidden="true"></i>
+                  </a>
+                </li>
+                <li>
+                  <a href="#" class="vp-offer vp-offer--purple">
+                    <span class="vp-offer__icon" aria-hidden="true"><i class="bi bi-person-plus"></i></span>
+                    <span class="vp-offer__body">
+                      <strong class="vp-offer__name">Try Profiling Surveys</strong>
+                      <span class="vp-offer__by"><span>by</span> Censuswide <i class="bi bi-box-arrow-up-right" aria-hidden="true"></i></span>
+                      <span class="vp-offer__time"><i class="bi bi-clock" aria-hidden="true"></i><span>2–5 min</span></span>
+                    </span>
+                    <span class="vp-offer__pay">+ €1.50</span>
+                    <i class="bi bi-chevron-right vp-offer__go" aria-hidden="true"></i>
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            <!-- The other three categories have nothing to list until there is a back end
+                 to list it from, so they say so rather than showing an invented offer. -->
+            <div class="tab-pane fade" id="vp-pane-surveys" role="tabpanel" aria-labelledby="vp-seg-surveys" tabindex="0">
+              <p class="vp-offers__empty">Nothing here yet. New offers appear as they become available for you.</p>
+            </div>
+            <div class="tab-pane fade" id="vp-pane-profiling" role="tabpanel" aria-labelledby="vp-seg-profiling" tabindex="0">
+              <p class="vp-offers__empty">Nothing here yet. New offers appear as they become available for you.</p>
+            </div>
+            <div class="tab-pane fade" id="vp-pane-games" role="tabpanel" aria-labelledby="vp-seg-games" tabindex="0">
+              <p class="vp-offers__empty">Nothing here yet. New offers appear as they become available for you.</p>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <!-- ============ BOTTOM BAR ============ -->
+    <nav class="vp-tabbar" aria-label="Sections">
+      <a href="dashboard.html" class="vp-tabbar__item is-active" aria-current="page">
+        <i class="bi bi-house-door-fill" aria-hidden="true"></i><span>Home</span>
+      </a>
+      <a href="#" class="vp-tabbar__item">
+        <i class="bi bi-wallet2" aria-hidden="true"></i><span>My Wallet</span>
+      </a>
+      <a href="#" class="vp-tabbar__item">
+        <i class="bi bi-person-plus" aria-hidden="true"></i><span>Invite</span>
+      </a>
+      <a href="#" class="vp-tabbar__item">
+        <i class="bi bi-person" aria-hidden="true"></i><span>Profile</span>
+      </a>
+    </nav>
+
+    <footer class="vp-app-footer">
+      <div class="container vp-app-footer__inner">
+        <p class="vp-app-footer__copy mb-0">© 2026 Main Frame Ltd. All rights reserved.</p>
+        <ul class="vp-app-footer__links list-unstyled mb-0">
+          <li><a href="support.html">Help</a></li>
+          <li><a href="terms-and-conditions.html">Terms</a></li>
+          <li><a href="privacy-policy.html">Privacy</a></li>
+        </ul>
+      </div>
+    </footer>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="assets/js/animations.js"></script>
+  <script src="assets/js/nav.js"></script>
+  <script src="assets/js/cursor.js"></script>
+</body>
+</html>
