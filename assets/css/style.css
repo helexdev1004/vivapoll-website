@@ -1924,6 +1924,86 @@ a { color: var(--vp-blue); }
   .vp-survey__fact { font-size: 0.88rem; }
 }
 
+/* Game rows carry a tile, then the total on offer, the title, and what it takes to earn
+   it. Three rows of text beside a square, so the grid is two columns with the tile and
+   the chevron each spanning all three. */
+.vp-game-list { display: flex; flex-direction: column; gap: 0.85rem; }
+
+.vp-game {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.15rem 1.1rem;
+  padding: 1rem 1.3rem;
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 8px 24px rgba(28, 82, 160, 0.05);
+  text-decoration: none;
+  transition: box-shadow 0.25s ease, transform 0.25s ease;
+}
+.vp-game:hover, .vp-game:focus-visible { transform: translateY(-2px); box-shadow: 0 18px 38px rgba(28, 82, 160, 0.12); }
+
+.vp-game__icon {
+  grid-column: 1;
+  grid-row: 1 / span 3;
+  display: grid;
+  place-items: center;
+  width: 74px;
+  height: 74px;
+  border-radius: 18px;
+  color: #fff;
+  font-size: 2rem;
+}
+.vp-game__icon--a { background: linear-gradient(140deg, #ff7a59, #e02f2f); }
+.vp-game__icon--b { background: linear-gradient(140deg, #9f7aea, #5b35e8); }
+.vp-game__icon--c { background: linear-gradient(140deg, #4ea0ff, #0757c4); }
+.vp-game__icon--d { background: linear-gradient(140deg, #35c98a, #0a7a4c); }
+
+.vp-game__lead { grid-column: 2; grid-row: 1; display: flex; align-items: baseline; gap: 0.45rem; min-width: 0; }
+.vp-game__pay { font-size: clamp(1.4rem, 1.15rem + 0.8vw, 1.8rem); font-weight: 800; letter-spacing: -0.03em; line-height: 1.15; color: var(--vp-dark); }
+.vp-game__total { font-size: 0.92rem; color: var(--vp-muted); }
+
+/* One line, cut with an ellipsis. Some of these titles are very long and a wrap would
+   push the row's facts out of line with its neighbours. */
+.vp-game__name {
+  grid-column: 2;
+  grid-row: 2;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--vp-dark);
+}
+
+.vp-game__facts { grid-column: 2; grid-row: 3; display: flex; flex-wrap: wrap; gap: 0.15rem 1rem; min-width: 0; margin-top: 0.15rem; }
+.vp-game__fact { display: inline-flex; align-items: center; gap: 0.4rem; min-width: 0; font-size: 0.93rem; color: var(--vp-muted); }
+.vp-game__fact .bi { flex: none; font-size: 0.88rem; color: #f0980b; }
+
+.vp-game__go {
+  grid-column: 3;
+  grid-row: 1 / span 3;
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: #fff1dd;
+  color: #d97d06;
+  font-size: 1.1rem;
+}
+
+@media (max-width: 575.98px) {
+  .vp-game { padding: 0.85rem 1rem; gap: 0.1rem 0.85rem; }
+  .vp-game__icon { width: 60px; height: 60px; border-radius: 15px; font-size: 1.6rem; }
+  .vp-game__go { width: 34px; height: 34px; font-size: 1rem; }
+  .vp-game__name { font-size: 0.98rem; }
+  .vp-game__fact { font-size: 0.85rem; }
+  /* Both facts on one line each at this width, so neither is orphaned. */
+  .vp-game__facts { flex-direction: column; gap: 0.1rem; }
+}
+
 /* Floating tab bar. Fixed to the screen so it is always reachable, which is the point
    of it - the same four destinations wherever the visitor has scrolled to. */
 .vp-tabbar {
