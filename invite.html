@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Invite &amp; Earn – VivaPoll</title>
+  <meta name="description" content="Invite friends to VivaPoll and earn a share of everything they complete.">
+  <meta name="theme-color" content="#0874fc">
+  <!-- Signed-in pages are nobody's business but the account holder's. -->
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32.png">
+  <link rel="apple-touch-icon" href="assets/images/apple-touch-icon.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link href="assets/css/style.css" rel="stylesheet">
+
+  <script>
+    (function () {
+      if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      var root = document.documentElement;
+      root.classList.add('vp-anim');
+      window.setTimeout(function () {
+        if (!root.classList.contains('vp-anim-ready')) root.classList.remove('vp-anim');
+      }, 2500);
+    })();
+  </script>
+</head>
+<body class="vp-app-page">
+  <a class="visually-hidden-focusable vp-skip-link" href="#main">Skip to main content</a>
+
+  <div class="vp-page vp-app">
+    <div class="vp-decor" aria-hidden="true">
+      <span class="vp-circle vp-circle--1"></span>
+      <span class="vp-circle vp-circle--2"></span>
+      <span class="vp-circle vp-circle--4"></span>
+      <span class="vp-circle vp-circle--11"></span>
+    </div>
+
+    <!-- ============ APP BAR ============ -->
+    <header class="vp-appbar">
+      <div class="container vp-appbar__inner">
+        <a class="vp-brand vp-appbar__brand" href="dashboard.html">
+          <img src="assets/images/logo.png" alt="VivaPoll" width="236" height="46">
+        </a>
+
+        <div class="vp-appbar__actions">
+          <a href="#" class="vp-appbar__icon vp-appbar__bell" aria-label="Notifications">
+            <i class="bi bi-bell" aria-hidden="true"></i>
+            <span class="vp-appbar__dot" aria-hidden="true"></span>
+          </a>
+          <a href="#" class="vp-avatar" aria-label="Your account">
+            <span aria-hidden="true">A</span>
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <main id="main" class="vp-app__main">
+      <div class="container vp-invite">
+
+        <h1 class="vp-invite__title" data-anim="up">Invite &amp; Earn</h1>
+
+        <!-- ============ WHAT YOU GET ============ -->
+        <section class="vp-panel-card vp-invite__terms" data-anim="mask" data-anim-delay="0.06">
+          <span class="vp-invite__badge" aria-hidden="true"><i class="bi bi-coin"></i></span>
+          <span class="vp-invite__terms-text">
+            <strong>For every survey your invitees complete. No upper limit</strong>
+            <span class="vp-invite__rate">Earn 10%</span>
+          </span>
+          <a href="#" class="vp-invite__insights">Earning insights <i class="bi bi-bar-chart-fill" aria-hidden="true"></i></a>
+        </section>
+
+        <!-- ============ THE SCENE ============ -->
+        <!-- Coins are drawn rather than drafted in as artwork: each is a span the
+             stylesheet places and sizes, so the scatter costs no requests and stays
+             crisp at any size. Purely decorative, so it is hidden from the reader. -->
+        <div class="vp-coins" aria-hidden="true" data-anim="zoom" data-anim-delay="0.12">
+          <span class="vp-coin vp-coin--1">€</span>
+          <span class="vp-coin vp-coin--2">€</span>
+          <span class="vp-coin vp-coin--3">€</span>
+          <span class="vp-coin vp-coin--4">€</span>
+          <span class="vp-coin vp-coin--5">€</span>
+          <span class="vp-coin vp-coin--6">€</span>
+          <span class="vp-coin vp-coin--7">€</span>
+          <span class="vp-coin vp-coin--8">€</span>
+          <span class="vp-mark">
+            <img src="assets/images/icons/mark-inverse.png" alt="" width="28" height="28">
+          </span>
+        </div>
+
+        <!-- ============ YOUR CODE ============ -->
+        <section class="vp-panel-card vp-invite__code-card" aria-labelledby="vp-code-title" data-anim="mask" data-anim-delay="0.18">
+          <h2 id="vp-code-title" class="visually-hidden">Your referral code</h2>
+
+          <div class="vp-code">
+            <span class="vp-code__text">
+              <strong class="vp-code__value" data-invite-code>K7M2QX</strong>
+              <span class="vp-code__label">Your unique referral code</span>
+            </span>
+            <button type="button" class="vp-code__copy" data-invite-copy aria-label="Copy your referral code">
+              <i class="bi bi-link-45deg" aria-hidden="true"></i>
+            </button>
+          </div>
+
+          <button type="button" class="btn vp-invite__cta" data-invite-share>
+            Invite a friend <i class="bi bi-heart-fill" aria-hidden="true"></i>
+          </button>
+
+          <!-- Announced politely so the confirmation is heard without stealing focus. -->
+          <p class="vp-invite__said" data-invite-said role="status" aria-live="polite"></p>
+
+          <a href="terms-and-conditions.html" class="vp-invite__terms-link">Read terms</a>
+        </section>
+      </div>
+    </main>
+
+    <!-- ============ BOTTOM BAR ============ -->
+    <nav class="vp-tabbar" aria-label="Sections">
+      <a href="dashboard.html" class="vp-tabbar__item">
+        <i class="bi bi-house-door" aria-hidden="true"></i><span>Home</span>
+      </a>
+      <a href="wallet.html" class="vp-tabbar__item">
+        <i class="bi bi-wallet2" aria-hidden="true"></i><span>My Wallet</span>
+      </a>
+      <a href="invite.html" class="vp-tabbar__item is-active" aria-current="page">
+        <i class="bi bi-person-plus-fill" aria-hidden="true"></i><span>Invite</span>
+      </a>
+      <a href="#" class="vp-tabbar__item">
+        <i class="bi bi-person" aria-hidden="true"></i><span>Profile</span>
+      </a>
+    </nav>
+
+    <footer class="vp-app-footer">
+      <div class="container vp-app-footer__inner">
+        <p class="vp-app-footer__copy mb-0">© 2026 Main Frame Ltd. All rights reserved.</p>
+        <ul class="vp-app-footer__links list-unstyled mb-0">
+          <li><a href="support.html">Help</a></li>
+          <li><a href="terms-and-conditions.html">Terms</a></li>
+          <li><a href="privacy-policy.html">Privacy</a></li>
+        </ul>
+      </div>
+    </footer>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="assets/js/animations.js"></script>
+  <script src="assets/js/invite.js"></script>
+  <script src="assets/js/nav.js"></script>
+  <script src="assets/js/cursor.js"></script>
+</body>
+</html>
