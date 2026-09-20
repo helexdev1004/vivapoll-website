@@ -47,13 +47,31 @@
           <img src="assets/images/logo.png" alt="VivaPoll" width="236" height="46">
         </a>
 
+        <nav class="vp-appnav" aria-label="Sections">
+          <a href="dashboard.html" class="vp-appnav__item">
+            <i class="bi bi-house-door" aria-hidden="true"></i><span>Home</span>
+          </a>
+          <a href="wallet.html" class="vp-appnav__item is-active" aria-current="page">
+            <i class="bi bi-wallet2" aria-hidden="true"></i><span>My Wallet</span>
+          </a>
+          <a href="invite.html" class="vp-appnav__item">
+            <i class="bi bi-person-plus" aria-hidden="true"></i><span>Invite</span>
+          </a>
+          <a href="#" class="vp-appnav__item">
+            <i class="bi bi-person" aria-hidden="true"></i><span>Profile</span>
+          </a>
+        </nav>
+
         <div class="vp-appbar__actions">
           <a href="#" class="vp-appbar__icon vp-appbar__bell" aria-label="Notifications">
             <i class="bi bi-bell" aria-hidden="true"></i>
             <span class="vp-appbar__dot" aria-hidden="true"></span>
           </a>
-          <a href="#" class="vp-avatar" aria-label="Your account">
-            <span aria-hidden="true">A</span>
+          <!-- The avatar and the chevron are one control: there is one account, and one
+               place it would go. -->
+          <a href="#" class="vp-account" aria-label="Your account">
+            <span class="vp-avatar" aria-hidden="true">A</span>
+            <i class="bi bi-chevron-down" aria-hidden="true"></i>
           </a>
         </div>
       </div>
@@ -191,22 +209,6 @@
         </section>
       </div>
     </main>
-
-    <!-- ============ BOTTOM BAR ============ -->
-    <nav class="vp-tabbar" aria-label="Sections">
-      <a href="dashboard.html" class="vp-tabbar__item">
-        <i class="bi bi-house-door" aria-hidden="true"></i><span>Home</span>
-      </a>
-      <a href="wallet.html" class="vp-tabbar__item is-active" aria-current="page">
-        <i class="bi bi-wallet2" aria-hidden="true"></i><span>My Wallet</span>
-      </a>
-      <a href="invite.html" class="vp-tabbar__item">
-        <i class="bi bi-person-plus" aria-hidden="true"></i><span>Invite</span>
-      </a>
-      <a href="#" class="vp-tabbar__item">
-        <i class="bi bi-person" aria-hidden="true"></i><span>Profile</span>
-      </a>
-    </nav>
 
     <footer class="vp-app-footer">
       <div class="container vp-app-footer__inner">

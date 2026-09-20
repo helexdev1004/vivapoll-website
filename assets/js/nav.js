@@ -125,9 +125,9 @@
 
   /* ------------------------------------------------------------- leaving a page */
 
-  // Anything in the header that goes somewhere else on this site: the tabs, and the log
-  // in / sign up buttons beside them.
-  var LEAVES = '.vp-nav .nav-link, .vp-nav-actions a[href]';
+  // Anything in the header that goes somewhere else on this site: the tabs, the log in /
+  // sign up buttons beside them, and on the signed-in pages the four menu pills.
+  var LEAVES = '.vp-nav .nav-link, .vp-nav-actions a[href], .vp-appnav__item';
   var HOLD = 300;
 
   function ordinary(e, link) {
@@ -146,13 +146,18 @@
     if (!link || !ordinary(e, link)) return;
 
     var tab = link.matches('.vp-nav .nav-link') ? link : null;
+    // The signed-in menu. It has no travelling underline - the pill itself marks where
+    // the visitor is - but it takes the same press and the same page exit.
+    var pill = link.matches('.vp-appnav__item') ? link : null;
+    var here = (tab && tab.classList.contains('active')) || (pill && pill.classList.contains('is-active'));
 
-    // Already here: give the tab its press and stop, rather than reloading the page the
+    // Already here: give it its press and stop, rather than reloading the page the
     // visitor is looking at.
-    if (tab && tab.classList.contains('active')) {
+    if (here) {
       e.preventDefault();
-      tab.classList.add('is-pressed');
-      window.setTimeout(function () { tab.classList.remove('is-pressed'); }, 260);
+      var mark = tab || pill;
+      mark.classList.add('is-pressed');
+      window.setTimeout(function () { mark.classList.remove('is-pressed'); }, 260);
       return;
     }
 
@@ -161,6 +166,7 @@
       tab.classList.add('is-pressed');
       slideTo(tab);
     }
+    if (pill) pill.classList.add('is-pressed');
     root.classList.add('vp-leaving');
 
     var href = link.href;
