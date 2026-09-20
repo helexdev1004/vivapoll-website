@@ -619,8 +619,20 @@
         '<span class="vp-rail__track"><span class="vp-rail__fill"></span></span>' +
         '<span class="vp-rail__label"></span>';
       item.querySelector('.vp-rail__label').textContent = section.getAttribute('data-section-label');
+      // Measured at click time, against the document, and from the pin spacer where there
+      // is one. `offsetTop` is relative to the nearest positioned ancestor, and a pinned
+      // section's ancestor is the spacer GSAP wraps around it - so the three pinned
+      // sections each reported an offset of 0 and their marks scrolled to the top of the
+      // page instead of to the section. The spacer is the element that actually holds the
+      // section's place in the flow, and it is never itself pinned.
       item.addEventListener('click', function () {
-        window.scrollTo({ top: section.offsetTop - 70, behavior: 'smooth' });
+        var box = section.closest('.pin-spacer') || section;
+        var header = document.querySelector('.vp-header');
+        var clear = header ? header.getBoundingClientRect().height : 0;
+        window.scrollTo({
+          top: Math.max(0, box.getBoundingClientRect().top + window.scrollY - clear - 8),
+          behavior: 'smooth'
+        });
       });
       rail.appendChild(item);
 
