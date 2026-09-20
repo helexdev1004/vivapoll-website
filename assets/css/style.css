@@ -1748,8 +1748,41 @@ a { color: var(--vp-blue); }
   pointer-events: none;
 }
 
-.vp-balance { display: flex; align-items: center; gap: 1rem; text-decoration: none; transition: box-shadow 0.25s ease; }
+/* The figure alone says nothing about what can be done with it, so the card carries how
+   far off a payout is underneath. `--vp-balance-progress` is set on the element itself -
+   it is a value, not a style, and belongs with the number it describes. */
+.vp-balance { display: flex; flex-direction: column; justify-content: center; gap: 1rem; text-decoration: none; transition: box-shadow 0.25s ease; }
 .vp-balance:hover, .vp-balance:focus-visible { box-shadow: 0 20px 44px rgba(28, 82, 160, 0.13); }
+
+.vp-balance__top { display: flex; align-items: center; gap: 1rem; }
+
+.vp-balance__meter {
+  display: block;
+  height: 8px;
+  border-radius: 8px;
+  background: var(--vp-light-blue);
+  overflow: hidden;
+}
+
+.vp-balance__fill {
+  display: block;
+  width: var(--vp-balance-progress, 0%);
+  height: 100%;
+  border-radius: 8px;
+  background: linear-gradient(90deg, var(--vp-blue), #5b35e8);
+}
+
+.vp-balance__note {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-top: -0.35rem;
+  font-size: 0.93rem;
+  color: var(--vp-muted);
+}
+.vp-balance__note strong { color: var(--vp-dark); font-weight: 700; }
+.vp-balance__goal { flex: none; }
 
 .vp-balance__icon {
   display: grid;
