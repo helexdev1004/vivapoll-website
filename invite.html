@@ -60,60 +60,106 @@
     </header>
 
     <main id="main" class="vp-app__main">
-      <div class="container vp-invite">
+      <div class="container vp-screen">
 
-        <h1 class="vp-invite__title" data-anim="up">Invite &amp; Earn</h1>
-
-        <!-- ============ WHAT YOU GET ============ -->
-        <section class="vp-panel-card vp-invite__terms" data-anim="mask" data-anim-delay="0.06">
-          <span class="vp-invite__badge" aria-hidden="true"><i class="bi bi-coin"></i></span>
-          <span class="vp-invite__terms-text">
-            <strong>For every survey your invitees complete. No upper limit</strong>
-            <span class="vp-invite__rate">Earn 10%</span>
-          </span>
-          <a href="#" class="vp-invite__insights">Earning insights <i class="bi bi-bar-chart-fill" aria-hidden="true"></i></a>
-        </section>
-
-        <!-- ============ THE SCENE ============ -->
-        <!-- Coins are drawn rather than drafted in as artwork: each is a span the
-             stylesheet places and sizes, so the scatter costs no requests and stays
-             crisp at any size. Purely decorative, so it is hidden from the reader. -->
-        <div class="vp-coins" aria-hidden="true" data-anim="zoom" data-anim-delay="0.12">
-          <span class="vp-coin vp-coin--1">€</span>
-          <span class="vp-coin vp-coin--2">€</span>
-          <span class="vp-coin vp-coin--3">€</span>
-          <span class="vp-coin vp-coin--4">€</span>
-          <span class="vp-coin vp-coin--5">€</span>
-          <span class="vp-coin vp-coin--6">€</span>
-          <span class="vp-coin vp-coin--7">€</span>
-          <span class="vp-coin vp-coin--8">€</span>
-          <span class="vp-mark">
-            <img src="assets/images/icons/mark-inverse.png" alt="" width="28" height="28">
-          </span>
+        <div class="vp-screen__head" data-anim="up">
+          <p class="vp-screen__eyebrow">Invite</p>
+          <h1 class="vp-screen__title">Bring a friend, take a cut</h1>
         </div>
 
         <!-- ============ YOUR CODE ============ -->
-        <section class="vp-panel-card vp-invite__code-card" aria-labelledby="vp-code-title" data-anim="mask" data-anim-delay="0.18">
+        <!-- The code is the whole screen, so it sits in the panel at the size of a
+             headline with both of its actions beside it, rather than in a box further
+             down the page. -->
+        <section class="vp-hero-panel" aria-labelledby="vp-code-title" data-anim="mask" data-anim-delay="0.06">
           <h2 id="vp-code-title" class="visually-hidden">Your referral code</h2>
 
-          <div class="vp-code">
-            <span class="vp-code__text">
-              <strong class="vp-code__value" data-invite-code>K7M2QX</strong>
-              <span class="vp-code__label">Your unique referral code</span>
+          <!-- Drawn rather than drafted in as artwork: each coin is a span the stylesheet
+               places and sizes, so it costs no requests and stays crisp at any size.
+               Decorative only, so it is hidden from the reader. -->
+          <span class="vp-hero-panel__coins" aria-hidden="true">
+            <span>€</span><span>€</span><span>€</span>
+          </span>
+
+          <span class="vp-hero-panel__label">Your referral code</span>
+          <p class="vp-hero-panel__line">
+            Earn <strong>10%</strong> of everything the people you invite complete, for as
+            long as they keep going. No cap, and it never comes out of their share.
+          </p>
+
+          <div class="vp-codebox">
+            <span class="vp-codebox__text">
+              <strong class="vp-codebox__value" data-invite-code>K7M2QX</strong>
+              <span class="vp-codebox__label">Yours alone — it never expires</span>
             </span>
-            <button type="button" class="vp-code__copy" data-invite-copy aria-label="Copy your referral code">
-              <i class="bi bi-link-45deg" aria-hidden="true"></i>
+            <button type="button" class="vp-codebox__copy" data-invite-copy aria-label="Copy your referral code">
+              <i class="bi bi-copy" aria-hidden="true"></i>
             </button>
           </div>
 
-          <button type="button" class="btn vp-invite__cta" data-invite-share>
-            Invite a friend <i class="bi bi-heart-fill" aria-hidden="true"></i>
-          </button>
-
           <!-- Announced politely so the confirmation is heard without stealing focus. -->
-          <p class="vp-invite__said" data-invite-said role="status" aria-live="polite"></p>
+          <p class="vp-said" data-invite-said role="status" aria-live="polite"></p>
 
-          <a href="terms-and-conditions.html" class="vp-invite__terms-link">Read terms</a>
+          <div class="vp-hero-panel__actions">
+            <button type="button" class="vp-act" data-invite-share>
+              Invite a friend <i class="bi bi-send" aria-hidden="true"></i>
+            </button>
+            <a href="#" class="vp-act vp-act--ghost">Earning insights <i class="bi bi-bar-chart" aria-hidden="true"></i></a>
+          </div>
+        </section>
+
+        <!-- ============ WHERE YOU STAND ============ -->
+        <div class="vp-bento" data-anim="up" data-anim-delay="0.1" data-anim-stagger="0.07" data-anim-group>
+          <article class="vp-tile">
+            <span class="vp-tile__label"><i class="bi bi-send" aria-hidden="true"></i>Invited</span>
+            <strong class="vp-tile__value">0</strong>
+            <span class="vp-tile__foot">Share your code to start</span>
+          </article>
+
+          <article class="vp-tile">
+            <span class="vp-tile__label"><i class="bi bi-person-check" aria-hidden="true"></i>Signed up</span>
+            <strong class="vp-tile__value">0</strong>
+            <span class="vp-tile__foot">They count once they finish a task</span>
+          </article>
+
+          <article class="vp-tile">
+            <span class="vp-tile__label"><i class="bi bi-cash-coin" aria-hidden="true"></i>Earned</span>
+            <strong class="vp-tile__value">€0.00</strong>
+            <span class="vp-tile__foot">Paid into the same balance</span>
+          </article>
+        </div>
+
+        <!-- ============ HOW IT WORKS ============ -->
+        <section class="vp-screen__section" aria-labelledby="vp-how-title" data-anim="up" data-anim-delay="0.14">
+          <div class="vp-screen__h">
+            <h2 id="vp-how-title">How it works</h2>
+            <span>Three steps</span>
+          </div>
+
+          <div class="vp-steps-row" data-anim="up" data-anim-delay="0.16" data-anim-stagger="0.07" data-anim-group>
+            <article class="vp-step-card">
+              <span class="vp-step-card__n" aria-hidden="true">1</span>
+              <h3 class="vp-step-card__t">Send your code</h3>
+              <p class="vp-step-card__p">Copy it, or use the share button to hand it over in whatever app you already use.</p>
+            </article>
+
+            <article class="vp-step-card">
+              <span class="vp-step-card__n" aria-hidden="true">2</span>
+              <h3 class="vp-step-card__t">They sign up</h3>
+              <p class="vp-step-card__p">Your friend enters the code when they create their account. That is the whole setup.</p>
+            </article>
+
+            <article class="vp-step-card">
+              <span class="vp-step-card__n" aria-hidden="true">3</span>
+              <h3 class="vp-step-card__t">You both earn</h3>
+              <p class="vp-step-card__p">Ten per cent of everything they complete lands in your balance, alongside your own work.</p>
+            </article>
+          </div>
+
+          <p class="vp-fineprint">
+            Referral earnings follow the same payout rules as the rest of your balance.
+            <a href="terms-and-conditions.html">Read terms</a>
+          </p>
         </section>
       </div>
     </main>

@@ -2006,76 +2006,120 @@ a { color: var(--vp-blue); }
   .vp-game__facts { flex-direction: column; gap: 0.1rem; }
 }
 
-/* ---------- Wallet ---------- */
-.vp-wallet { max-width: 40rem; }
-.vp-wallet__title { margin: 0.5rem 0 0.25rem; font-size: clamp(1.6rem, 1.3rem + 1vw, 2.1rem); font-weight: 800; letter-spacing: -0.03em; text-align: center; color: var(--vp-dark); }
+/* ---------- Signed-in screens: one shared vocabulary ---------- */
+/* Wallet and Invite are built from the same three pieces: a dark panel carrying the one
+   thing the screen is actually about, a row of small tiles under it for the supporting
+   figures, and a plain list below that. Keeping them to one vocabulary is what makes the
+   signed-in side read as a single product rather than two unrelated screens. */
+.vp-screen { max-width: 46rem; }
 
-/* The dial. An open ring, three quarters of a circle with the gap at the foot, drawn by
-   dash length: `--vp-gauge-progress` runs 0 to 1 and nothing else has to be recalculated.
-   r=94 gives a circumference of 590.6, and three quarters of that is 442.9. */
-.vp-gauge { position: relative; display: grid; place-items: center; width: min(280px, 72vw); margin: 0.5rem auto 1.25rem; }
-.vp-gauge__svg { width: 100%; height: auto; overflow: visible; }
+.vp-screen__head { margin: 0.4rem 0 1.15rem; }
+.vp-screen__eyebrow { margin: 0 0 0.25rem; font-size: 0.8rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--vp-blue); }
+.vp-screen__title { margin: 0; font-size: clamp(1.7rem, 1.35rem + 1.3vw, 2.3rem); font-weight: 800; letter-spacing: -0.035em; color: var(--vp-dark); }
 
-.vp-gauge__track,
-.vp-gauge__value {
-  fill: none;
-  stroke-width: 16;
-  stroke-linecap: round;
-  stroke-dasharray: 442.9 590.6;
-}
-.vp-gauge__track { stroke: #e3eefc; }
-/* The stroke itself is a gradient defined in the markup. It is left as a presentation
-   attribute on purpose - naming it here would override the paint server and the ring
-   would come out flat. */
-.vp-gauge__value { stroke-dasharray: calc(442.9 * var(--vp-gauge-progress, 0)) 590.6; }
-.vp-gauge__pip { fill: var(--vp-blue); }
-
-.vp-gauge__text { position: absolute; display: flex; flex-direction: column; align-items: center; line-height: 1.05; }
-.vp-gauge__amount { font-size: clamp(2.1rem, 1.5rem + 2.4vw, 3rem); font-weight: 800; letter-spacing: -0.04em; color: var(--vp-dark); }
-.vp-gauge__unit { margin-top: 0.3rem; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.1em; color: var(--vp-muted); }
-
-.vp-cashout {
-  display: block;
-  width: 100%;
-  padding: 0.95rem 1.5rem;
-  border: 0;
-  border-radius: 16px;
-  background: var(--vp-blue);
+.vp-hero-panel {
+  position: relative;
+  overflow: hidden;
+  padding: 2rem 2.1rem 1.9rem;
+  border-radius: 28px;
+  /* Not flat navy: the light falls in from the top left, which is what keeps a dark block
+     from reading as a hole cut in the page. */
+  background: radial-gradient(125% 150% at 10% -10%, #22376f 0%, #101c46 46%, #0a1233 100%);
   color: #fff;
-  font-size: 1.1rem;
-  font-weight: 700;
-  box-shadow: 0 12px 26px rgba(8, 116, 252, 0.24);
+  box-shadow: 0 26px 60px rgba(11, 20, 55, 0.3);
 }
-.vp-cashout:hover:not(:disabled), .vp-cashout:focus-visible:not(:disabled) { background: var(--vp-blue-dark); color: #fff; }
-/* Below the minimum there is nothing to withdraw, and a button that only refuses is
-   worse than one that says so plainly. */
-.vp-cashout:disabled { background: #c9dcf3; color: #fff; box-shadow: none; opacity: 1; cursor: not-allowed; }
 
-.vp-cashout__note { margin: 0.65rem 0 0; font-size: 0.95rem; text-align: center; color: var(--vp-muted); }
-.vp-cashout__note strong { color: var(--vp-dark); }
+/* A wash of violet bleeding in from the far corner, behind everything else. */
+.vp-hero-panel::after {
+  content: "";
+  position: absolute;
+  right: -16%;
+  top: -48%;
+  width: 64%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(91, 53, 232, 0.55), rgba(91, 53, 232, 0) 64%);
+  pointer-events: none;
+}
+.vp-hero-panel > * { position: relative; z-index: 1; }
 
-.vp-payouts { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem 1.6rem; margin: 1rem 0 1.5rem; }
-.vp-payouts li { display: inline-flex; align-items: center; gap: 0.45rem; font-size: 0.98rem; font-weight: 600; color: var(--vp-text); }
-.vp-payouts .bi { font-size: 1.1rem; color: var(--vp-blue); }
+.vp-hero-panel__label { display: block; font-size: 0.95rem; color: rgba(255, 255, 255, 0.66); }
+.vp-hero-panel__figure { display: flex; align-items: baseline; gap: 0.55rem; margin-top: 0.15rem; }
+.vp-hero-panel__amount { font-size: clamp(2.6rem, 1.9rem + 3.2vw, 3.9rem); font-weight: 800; letter-spacing: -0.05em; line-height: 1; }
+.vp-hero-panel__unit { font-size: 0.82rem; font-weight: 700; letter-spacing: 0.14em; color: rgba(255, 255, 255, 0.55); }
+.vp-hero-panel__line { margin: 1rem 0 0; max-width: 34rem; font-size: 1rem; line-height: 1.55; color: rgba(255, 255, 255, 0.76); }
+.vp-hero-panel__line strong { color: #fff; font-weight: 700; }
 
-/* Two pills sharing the trough evenly, rather than four sized to their labels. */
-.vp-segments--pair { margin-bottom: 1.35rem; }
-.vp-segments--pair .vp-segments__list { overflow: visible; }
-.vp-segments--pair .nav-item { flex: 1 1 50%; }
+/* The payout meter, on the dark ground. */
+.vp-meter { margin-top: 1.5rem; }
+.vp-meter__track { display: block; height: 7px; border-radius: 7px; background: rgba(255, 255, 255, 0.16); overflow: hidden; }
+.vp-meter__fill { display: block; width: var(--vp-meter, 0%); height: 100%; border-radius: 7px; background: linear-gradient(90deg, #4ea0ff, #8b6cf0); }
+.vp-meter__note { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.2rem 1rem; margin: 0.6rem 0 0; font-size: 0.92rem; color: rgba(255, 255, 255, 0.66); }
+.vp-meter__note strong { color: #fff; font-weight: 700; }
 
-.vp-wallet__month { margin: 0 0 0.6rem; padding-left: 0.25rem; font-size: 1.05rem; font-weight: 700; color: var(--vp-dark); }
+.vp-hero-panel__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 0.7rem; margin-top: 1.5rem; }
 
-.vp-ledger { background: #fff; border-radius: 18px; box-shadow: 0 8px 24px rgba(28, 82, 160, 0.05); overflow: hidden; }
-.vp-ledger li { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 0.95rem 1.25rem; }
-.vp-ledger li + li { border-top: 1px solid var(--vp-border); }
-.vp-ledger__what { display: inline-flex; align-items: center; gap: 0.7rem; color: var(--vp-text); }
-.vp-ledger__what .bi { font-size: 1.1rem; color: var(--vp-blue); }
-.vp-ledger__sum { font-weight: 700; color: var(--vp-dark); font-variant-numeric: tabular-nums; }
-.vp-ledger__sum--none { color: var(--vp-muted); font-weight: 500; }
+.vp-act {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.85rem 1.6rem;
+  border: 0;
+  border-radius: 14px;
+  background: #fff;
+  color: var(--vp-dark);
+  font-size: 1.02rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+.vp-act:hover:not(:disabled), .vp-act:focus-visible:not(:disabled) { transform: translateY(-2px); box-shadow: 0 14px 30px rgba(0, 0, 0, 0.28); color: var(--vp-dark); }
+/* Below the minimum there is nothing to withdraw, and a button that only refuses is worse
+   than one that says so plainly. */
+.vp-act:disabled { background: rgba(255, 255, 255, 0.16); color: rgba(255, 255, 255, 0.66); cursor: not-allowed; }
 
-.vp-wallet__all {
+.vp-act--ghost { background: rgba(255, 255, 255, 0.1); color: #fff; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.24); }
+.vp-act--ghost:hover, .vp-act--ghost:focus-visible { background: rgba(255, 255, 255, 0.2); color: #fff; }
+
+.vp-methods { display: flex; flex-wrap: wrap; gap: 0.4rem 1.2rem; margin: 1.3rem 0 0; padding: 0; list-style: none; }
+.vp-methods li { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.9rem; color: rgba(255, 255, 255, 0.7); }
+.vp-methods .bi { font-size: 1rem; color: rgba(255, 255, 255, 0.9); }
+
+/* The tiles. Three across where there is room, two then one as it narrows. */
+.vp-bento { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.8rem; margin-top: 0.8rem; }
+
+.vp-tile {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding: 1.15rem 1.25rem;
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 8px 24px rgba(28, 82, 160, 0.05);
+  transition: box-shadow 0.25s ease, transform 0.25s ease;
+}
+.vp-tile:hover { transform: translateY(-2px); box-shadow: 0 16px 34px rgba(28, 82, 160, 0.11); }
+.vp-tile__label { display: flex; align-items: center; gap: 0.4rem; font-size: 0.85rem; color: var(--vp-muted); }
+.vp-tile__label .bi { color: var(--vp-blue); }
+.vp-tile__value { font-size: clamp(1.25rem, 1.05rem + 0.7vw, 1.55rem); font-weight: 800; letter-spacing: -0.03em; color: var(--vp-dark); font-variant-numeric: tabular-nums; }
+.vp-tile__foot { margin-top: auto; padding-top: 0.35rem; font-size: 0.84rem; color: var(--vp-muted); }
+.vp-tile__foot--up { color: #0a7a4c; font-weight: 600; }
+
+/* A shape, not a chart: it says the month has been climbing, and claims nothing finer. */
+.vp-spark { margin-top: 0.45rem; width: 100%; height: 30px; overflow: visible; }
+.vp-spark__area { fill: rgba(8, 116, 252, 0.12); stroke: none; }
+.vp-spark__line { fill: none; stroke: var(--vp-blue); stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+
+/* Section headings within a screen. */
+.vp-screen__section { margin-top: 1.9rem; }
+.vp-screen__h { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; margin: 0 0 0.85rem; }
+.vp-screen__h h2 { margin: 0; font-size: 1.15rem; font-weight: 800; letter-spacing: -0.02em; color: var(--vp-dark); }
+.vp-screen__h span { font-size: 0.9rem; color: var(--vp-muted); }
+
+.vp-screen__more {
   display: block;
-  margin-top: 0.85rem;
+  margin-top: 0.8rem;
   padding: 0.9rem 1.25rem;
   background: #fff;
   border-radius: 16px;
@@ -2086,152 +2130,117 @@ a { color: var(--vp-blue); }
   text-decoration: none;
   transition: box-shadow 0.25s ease, color 0.2s ease;
 }
-.vp-wallet__all:hover, .vp-wallet__all:focus-visible { color: var(--vp-blue); box-shadow: 0 16px 34px rgba(28, 82, 160, 0.12); }
+.vp-screen__more:hover, .vp-screen__more:focus-visible { color: var(--vp-blue); box-shadow: 0 16px 34px rgba(28, 82, 160, 0.12); }
+
+/* Two pills sharing the trough evenly, rather than two sized to their labels. */
+.vp-segments--pair { margin-bottom: 1.2rem; }
+.vp-segments--pair .vp-segments__list { overflow: visible; }
+.vp-segments--pair .nav-item { flex: 1 1 50%; }
+
+/* ---------- Wallet: the month's ledger ---------- */
+/* Every row carries its own share of the month as a bar, so where the money came from is
+   legible at a glance instead of by reading four numbers and doing the arithmetic. */
+.vp-ledger { background: #fff; border-radius: 20px; box-shadow: 0 8px 24px rgba(28, 82, 160, 0.05); overflow: hidden; }
+.vp-ledger li { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 0.4rem 0.9rem; padding: 1rem 1.25rem; }
+.vp-ledger li + li { border-top: 1px solid var(--vp-border); }
+
+.vp-ledger__icon { grid-row: 1 / span 2; display: grid; place-items: center; width: 40px; height: 40px; border-radius: 12px; background: var(--vp-light-blue); color: var(--vp-blue); font-size: 1.1rem; }
+.vp-ledger__name { grid-column: 2; font-weight: 600; color: var(--vp-dark); }
+.vp-ledger__sum { grid-column: 3; grid-row: 1 / span 2; font-weight: 800; color: var(--vp-dark); font-variant-numeric: tabular-nums; }
+.vp-ledger__sum--none { color: var(--vp-muted); font-weight: 600; }
+
+.vp-ledger__bar { grid-column: 2; display: block; height: 6px; border-radius: 6px; background: var(--vp-light-blue); overflow: hidden; }
+.vp-ledger__bar i { display: block; width: var(--vp-share, 0%); height: 100%; border-radius: 6px; background: linear-gradient(90deg, var(--vp-blue), #5b35e8); }
 
 /* ---------- Invite ---------- */
-.vp-invite { max-width: 40rem; }
-.vp-invite__title { margin: 0.5rem 0 1.1rem; font-size: clamp(1.6rem, 1.3rem + 1vw, 2.1rem); font-weight: 800; letter-spacing: -0.03em; text-align: center; color: var(--vp-dark); }
-
-.vp-invite__terms { display: grid; grid-template-columns: auto 1fr; gap: 0.35rem 1rem; padding: 1.35rem 1.4rem; }
-
-.vp-invite__badge {
-  grid-row: 1 / span 1;
-  display: grid;
-  place-items: center;
-  width: 44px;
-  height: 44px;
-  border-radius: 13px;
-  background: #fff1dd;
-  color: #d97d06;
-  font-size: 1.4rem;
-}
-
-.vp-invite__terms-text { display: flex; flex-direction: column; gap: 0.15rem; min-width: 0; }
-.vp-invite__terms-text strong { font-size: 1rem; font-weight: 700; line-height: 1.35; color: var(--vp-dark); }
-.vp-invite__rate { font-size: 0.95rem; color: var(--vp-muted); }
-
-.vp-invite__insights {
-  grid-column: 1 / -1;
+/* The code is the whole point of the screen, so it sits inside the dark panel at the size
+   of a headline rather than in a box somewhere further down. */
+.vp-codebox {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  margin-top: 0.9rem;
-  padding: 0.8rem 1.25rem;
-  border: 1px solid var(--vp-border);
-  border-radius: 14px;
-  color: var(--vp-dark);
-  font-weight: 600;
-  text-decoration: none;
-  transition: border-color 0.2s ease, color 0.2s ease, background-color 0.2s ease;
+  gap: 0.85rem;
+  margin-top: 1.45rem;
+  padding: 0.7rem 0.7rem 0.7rem 1.35rem;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px dashed rgba(255, 255, 255, 0.34);
+  border-radius: 18px;
 }
-.vp-invite__insights:hover, .vp-invite__insights:focus-visible { border-color: var(--vp-blue); background: var(--vp-light-blue); color: var(--vp-blue); }
+.vp-codebox__text { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.vp-codebox__value { font-size: clamp(1.5rem, 1.15rem + 1.5vw, 2.05rem); font-weight: 800; letter-spacing: 0.22em; text-indent: 0.22em; line-height: 1.2; color: #fff; }
+.vp-codebox__label { font-size: 0.82rem; color: rgba(255, 255, 255, 0.6); }
 
-/* The scene. Coins are spans rather than artwork: no requests, crisp at any size, and
-   the scatter is adjusted by moving numbers rather than by redrawing a picture. */
-.vp-coins { position: relative; height: clamp(190px, 34vw, 250px); margin: 1.6rem 0; }
+.vp-codebox__copy {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border: 0;
+  border-radius: 14px;
+  background: #fff;
+  color: var(--vp-dark);
+  font-size: 1.35rem;
+  transition: transform 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+}
+.vp-codebox__copy:hover, .vp-codebox__copy:focus-visible { transform: translateY(-2px); background: var(--vp-blue); color: #fff; }
 
-.vp-coin {
+/* Holds its line whether or not it is saying anything, so confirming a copy does not shove
+   what follows down the page. */
+.vp-said { min-height: 1.35rem; margin: 0.7rem 0 0; font-size: 0.9rem; font-weight: 600; color: #8ff0c0; }
+/* The reserved line already supplies the gap; the buttons need not add a full one. */
+.vp-said + .vp-hero-panel__actions { margin-top: 0.85rem; }
+
+.vp-steps-row { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.8rem; }
+.vp-step-card { padding: 1.25rem 1.3rem; background: #fff; border-radius: 20px; box-shadow: 0 8px 24px rgba(28, 82, 160, 0.05); }
+.vp-step-card__n { display: grid; place-items: center; width: 34px; height: 34px; margin-bottom: 0.7rem; border-radius: 11px; background: var(--vp-light-blue); color: var(--vp-blue); font-size: 0.92rem; font-weight: 800; }
+.vp-step-card__t { margin: 0 0 0.2rem; font-size: 1rem; font-weight: 700; color: var(--vp-dark); }
+.vp-step-card__p { margin: 0; font-size: 0.92rem; line-height: 1.5; color: var(--vp-muted); }
+
+/* Coins drifting behind the panel's own glow - restrained, and decorative only. They are
+   spans rather than artwork: no requests, crisp at any size. */
+/* Above the corner glow, below the content: z-index 0 here would let the glow paint over
+   them, since the glow is an ::after and comes last in tree order. */
+.vp-hero-panel__coins { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
+.vp-hero-panel__coins span {
   position: absolute;
   display: grid;
   place-items: center;
   border-radius: 50%;
   background: radial-gradient(circle at 34% 28%, #ffe08a, #f5a623 62%, #d9860c);
-  box-shadow: 0 6px 14px rgba(200, 130, 10, 0.28), inset 0 -2px 4px rgba(150, 95, 5, 0.35);
-  color: #b3700a;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+  color: #a9670a;
   font-weight: 800;
   line-height: 1;
-  user-select: none;
+}
+/* Kept in the two corners the content never reaches: the paragraph is capped at 34rem and
+   the buttons are left-aligned, so nothing can collide with them as the panel reflows. */
+.vp-hero-panel__coins span:nth-child(1) { width: 44px; height: 44px; font-size: 1.2rem;  right: 6%;  top: 8%; }
+.vp-hero-panel__coins span:nth-child(2) { width: 26px; height: 26px; font-size: 0.75rem; right: 19%; top: 4%; opacity: 0.75; }
+.vp-hero-panel__coins span:nth-child(3) { width: 32px; height: 32px; font-size: 0.9rem;  right: 7%;  bottom: 9%; opacity: 0.85; }
+
+.vp-fineprint { margin: 1rem 0 0; font-size: 0.88rem; color: var(--vp-muted); }
+.vp-fineprint a { color: var(--vp-blue); font-weight: 600; text-decoration: none; }
+.vp-fineprint a:hover { text-decoration: underline; }
+
+@media (max-width: 767.98px) {
+  .vp-bento, .vp-steps-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  /* An odd one out spans the row rather than leaving a gap beside it. */
+  .vp-bento > :last-child:nth-child(odd),
+  .vp-steps-row > :last-child:nth-child(odd) { grid-column: 1 / -1; }
+  .vp-hero-panel { padding: 1.6rem 1.35rem 1.5rem; border-radius: 24px; }
+  /* The corner glow is sized off the panel, so on a narrow one it falls almost entirely
+     outside and the panel comes out flat. Bring it back in. */
+  .vp-hero-panel::after { right: -30%; top: -26%; width: 95%; }
+  .vp-hero-panel__actions .vp-act { flex: 1 1 100%; }
+  /* They would sit behind the figure at this width. */
+  .vp-hero-panel__coins { display: none; }
+  .vp-codebox { padding-left: 1rem; }
+  .vp-codebox__value { letter-spacing: 0.14em; text-indent: 0.14em; }
 }
 
-.vp-coin--1 { width: 34px; height: 34px; font-size: 1rem;   left: 6%;  top: 14%; }
-.vp-coin--2 { width: 26px; height: 26px; font-size: 0.8rem; left: 22%; top: 2%; }
-.vp-coin--3 { width: 46px; height: 46px; font-size: 1.3rem; left: 13%; top: 58%; }
-.vp-coin--4 { width: 30px; height: 30px; font-size: 0.9rem; left: 33%; top: 78%; }
-.vp-coin--5 { width: 56px; height: 56px; font-size: 1.6rem; right: 20%; top: 6%; }
-.vp-coin--6 { width: 30px; height: 30px; font-size: 0.9rem; right: 7%;  top: 34%; }
-.vp-coin--7 { width: 40px; height: 40px; font-size: 1.15rem; right: 16%; top: 66%; }
-.vp-coin--8 { width: 24px; height: 24px; font-size: 0.75rem; right: 34%; top: 88%; }
-
-.vp-mark {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  display: grid;
-  place-items: center;
-  width: 78px;
-  height: 78px;
-  border-radius: 22px;
-  background: var(--vp-blue);
-  box-shadow: 0 14px 34px rgba(8, 116, 252, 0.34);
-  transform: translate(-50%, -50%);
-}
-.vp-mark img { width: 38px; height: auto; }
-
-.vp-invite__code-card { text-align: center; }
-
-.vp-code {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  padding: 0.9rem 0.9rem 0.9rem 1.25rem;
-  background: var(--vp-bg);
-  border: 1px dashed var(--vp-divider);
-  border-radius: 16px;
-}
-
-.vp-code__text { flex: 1; min-width: 0; display: flex; flex-direction: column; align-items: center; }
-.vp-code__value { font-size: clamp(1.4rem, 1.1rem + 1vw, 1.8rem); font-weight: 800; letter-spacing: 0.32em; text-indent: 0.32em; color: var(--vp-dark); }
-.vp-code__label { margin-top: 0.15rem; font-size: 0.85rem; color: var(--vp-muted); }
-
-.vp-code__copy {
-  flex: none;
-  display: grid;
-  place-items: center;
-  width: 42px;
-  height: 42px;
-  border: 0;
-  border-radius: 12px;
-  background: #fff;
-  color: var(--vp-blue);
-  font-size: 1.3rem;
-  box-shadow: 0 4px 12px rgba(28, 82, 160, 0.1);
-  transition: background-color 0.2s ease, color 0.2s ease;
-}
-.vp-code__copy:hover, .vp-code__copy:focus-visible { background: var(--vp-blue); color: #fff; }
-
-.vp-invite__cta {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.55rem;
-  width: 100%;
-  margin-top: 1rem;
-  padding: 0.95rem 1.5rem;
-  border: 0;
-  border-radius: 16px;
-  background: var(--vp-blue);
-  color: #fff;
-  font-size: 1.1rem;
-  font-weight: 700;
-  box-shadow: 0 12px 26px rgba(8, 116, 252, 0.24);
-}
-.vp-invite__cta:hover, .vp-invite__cta:focus-visible { background: var(--vp-blue-dark); color: #fff; }
-.vp-invite__cta .bi { font-size: 1rem; }
-
-/* Reserves its line whether or not it is saying anything, so confirming a copy does not
-   shove the link underneath it down the page. */
-.vp-invite__said { min-height: 1.4rem; margin: 0.6rem 0 0; font-size: 0.92rem; font-weight: 600; color: #0a7a4c; }
-
-.vp-invite__terms-link { display: inline-block; margin-top: 0.35rem; color: var(--vp-blue); font-weight: 600; text-decoration: none; }
-.vp-invite__terms-link:hover { text-decoration: underline; }
-
-@media (max-width: 575.98px) {
-  .vp-invite__terms { padding: 1.1rem 1.1rem; }
-  .vp-code { padding-left: 1rem; gap: 0.65rem; }
-  .vp-code__value { letter-spacing: 0.22em; text-indent: 0.22em; }
-  .vp-mark { width: 64px; height: 64px; border-radius: 18px; }
-  .vp-mark img { width: 31px; }
+@media (max-width: 420px) {
+  .vp-bento, .vp-steps-row { grid-template-columns: minmax(0, 1fr); }
+  .vp-ledger li { padding: 0.9rem 1rem; }
 }
 
 /* Floating tab bar. Fixed to the screen so it is always reachable, which is the point

@@ -60,78 +60,135 @@
     </header>
 
     <main id="main" class="vp-app__main">
-      <div class="container vp-wallet">
+      <div class="container vp-screen">
 
-        <h1 class="vp-wallet__title" data-anim="up">Wallet</h1>
-
-        <!-- ============ BALANCE DIAL ============ -->
-        <!-- The ring is the same reading as the bar on the dashboard: how much of the
-             minimum payout has been reached. The arc is drawn by dash length, so the one
-             number below is all that changes when there is a back end behind it. -->
-        <div class="vp-gauge" data-anim="zoom" data-anim-delay="0.08"
-             style="--vp-gauge-progress: 0.55"
-             role="img" aria-label="Balance €2.75. That is 55% of the €5.00 minimum payout.">
-          <svg class="vp-gauge__svg" viewBox="0 0 220 220" aria-hidden="true">
-            <defs>
-              <linearGradient id="vpGaugeFade" x1="0" y1="1" x2="1" y2="0">
-                <stop offset="0" stop-color="#0874fc" />
-                <stop offset="1" stop-color="#5b35e8" />
-              </linearGradient>
-            </defs>
-            <g transform="rotate(135 110 110)">
-              <circle class="vp-gauge__track" cx="110" cy="110" r="94" />
-              <circle class="vp-gauge__value" cx="110" cy="110" r="94" stroke="url(#vpGaugeFade)" />
-            </g>
-            <!-- Where the arc begins: r=94 swung 135 degrees round the centre. -->
-            <circle class="vp-gauge__pip" cx="43.5" cy="176.5" r="7" />
-          </svg>
-          <span class="vp-gauge__text">
-            <strong class="vp-gauge__amount">€2.75</strong>
-            <span class="vp-gauge__unit">EUR</span>
-          </span>
+        <div class="vp-screen__head" data-anim="up">
+          <p class="vp-screen__eyebrow">My wallet</p>
+          <h1 class="vp-screen__title">Everything you have earned</h1>
         </div>
 
-        <!-- Below the minimum, so there is nothing to withdraw yet and the button says so
-             rather than leading somewhere that would only refuse. -->
-        <button type="button" class="btn vp-cashout" disabled data-anim="up" data-anim-delay="0.14">Cash out</button>
-        <p class="vp-cashout__note" data-anim="up" data-anim-delay="0.16">
-          <strong>€2.25</strong> more to reach the €5.00 minimum
-        </p>
+        <!-- ============ BALANCE ============ -->
+        <!-- One panel carrying the only figure that matters on this screen, the distance
+             left to a payout, and the button that acts on it. Everything else is support. -->
+        <section class="vp-hero-panel" aria-labelledby="vp-balance-title" data-anim="mask" data-anim-delay="0.06">
+          <h2 id="vp-balance-title" class="visually-hidden">Your balance</h2>
 
-        <ul class="vp-payouts list-unstyled" data-anim="up" data-anim-delay="0.2" data-anim-group>
-          <li><i class="bi bi-paypal" aria-hidden="true"></i>PayPal</li>
-          <li><i class="bi bi-credit-card-2-front" aria-hidden="true"></i>Revolut</li>
-          <li><i class="bi bi-gift" aria-hidden="true"></i>Gift cards</li>
-        </ul>
+          <span class="vp-hero-panel__label">Available balance</span>
+          <p class="vp-hero-panel__figure mb-0">
+            <strong class="vp-hero-panel__amount">€2.75</strong>
+            <span class="vp-hero-panel__unit">EUR</span>
+          </p>
+
+          <!-- The same reading as the bar on the dashboard: how much of the minimum payout
+               has been reached. One custom property carries it, so a single number changes
+               when there is a back end behind this. -->
+          <div class="vp-meter" style="--vp-meter: 55%">
+            <span class="vp-meter__track" role="img" aria-label="€2.75 of the €5.00 minimum payout, 55 per cent">
+              <span class="vp-meter__fill"></span>
+            </span>
+            <p class="vp-meter__note">
+              <span><strong>€2.25</strong> to your first payout</span>
+              <span>Minimum €5.00</span>
+            </p>
+          </div>
+
+          <div class="vp-hero-panel__actions">
+            <!-- Below the minimum there is nothing to withdraw yet, so the button says so
+                 rather than leading somewhere that would only refuse. -->
+            <button type="button" class="vp-act" disabled>Cash out</button>
+            <a href="#" class="vp-act vp-act--ghost">Payout methods <i class="bi bi-arrow-right" aria-hidden="true"></i></a>
+          </div>
+
+          <ul class="vp-methods">
+            <li><i class="bi bi-paypal" aria-hidden="true"></i>PayPal</li>
+            <li><i class="bi bi-credit-card-2-front" aria-hidden="true"></i>Revolut</li>
+            <li><i class="bi bi-gift" aria-hidden="true"></i>Gift cards</li>
+          </ul>
+        </section>
+
+        <!-- ============ THE SUPPORTING FIGURES ============ -->
+        <div class="vp-bento" data-anim="up" data-anim-delay="0.1" data-anim-stagger="0.07" data-anim-group>
+          <article class="vp-tile">
+            <span class="vp-tile__label"><i class="bi bi-graph-up-arrow" aria-hidden="true"></i>This month</span>
+            <strong class="vp-tile__value">€2.75</strong>
+            <!-- A shape, not a chart: it says the month has been climbing and claims
+                 nothing finer than that. The stroke is kept at an even weight while the
+                 box stretches, which is what non-scaling-stroke is for. -->
+            <svg class="vp-spark" viewBox="0 0 100 30" preserveAspectRatio="none" aria-hidden="true">
+              <path class="vp-spark__area" d="M0,25 L20,21 L40,23 L60,13 L80,15 L100,5 L100,30 L0,30 Z" />
+              <path class="vp-spark__line" d="M0,25 L20,21 L40,23 L60,13 L80,15 L100,5" vector-effect="non-scaling-stroke" />
+            </svg>
+          </article>
+
+          <article class="vp-tile">
+            <span class="vp-tile__label"><i class="bi bi-hourglass-split" aria-hidden="true"></i>Pending</span>
+            <strong class="vp-tile__value">€0.40</strong>
+            <span class="vp-tile__foot">Clears once the partner confirms</span>
+          </article>
+
+          <article class="vp-tile">
+            <span class="vp-tile__label"><i class="bi bi-trophy" aria-hidden="true"></i>Lifetime</span>
+            <strong class="vp-tile__value">€18.60</strong>
+            <span class="vp-tile__foot">Across 46 completed tasks</span>
+          </article>
+        </div>
 
         <!-- ============ ACTIVITY / PAYMENTS ============ -->
-        <nav class="vp-segments vp-segments--pair" aria-label="Wallet history" data-anim="up" data-anim-delay="0.24">
-          <ul class="nav vp-segments__list" role="tablist">
-            <li class="nav-item" role="presentation">
-              <button class="vp-segment active" id="vp-seg-activity" data-bs-toggle="pill" data-bs-target="#vp-pane-activity" type="button" role="tab" aria-controls="vp-pane-activity" aria-selected="true">Activity</button>
-            </li>
-            <li class="nav-item" role="presentation">
-              <button class="vp-segment" id="vp-seg-payments" data-bs-toggle="pill" data-bs-target="#vp-pane-payments" type="button" role="tab" aria-controls="vp-pane-payments" aria-selected="false">Payments</button>
-            </li>
-          </ul>
-        </nav>
+        <section class="vp-screen__section" aria-labelledby="vp-history-title" data-anim="up" data-anim-delay="0.14">
+          <div class="vp-screen__h">
+            <h2 id="vp-history-title">History</h2>
+            <span>September</span>
+          </div>
 
-        <div class="tab-content" data-anim="up" data-anim-delay="0.28">
-          <div class="tab-pane fade show active" id="vp-pane-activity" role="tabpanel" aria-labelledby="vp-seg-activity" tabindex="0">
-            <h2 class="vp-wallet__month">September</h2>
-            <ul class="vp-ledger list-unstyled mb-0">
-              <li><span class="vp-ledger__what"><i class="bi bi-card-checklist" aria-hidden="true"></i>Surveys</span><span class="vp-ledger__sum">€1.85</span></li>
-              <li><span class="vp-ledger__what"><i class="bi bi-controller" aria-hidden="true"></i>Games</span><span class="vp-ledger__sum">€0.65</span></li>
-              <li><span class="vp-ledger__what"><i class="bi bi-people" aria-hidden="true"></i>Referrals</span><span class="vp-ledger__sum vp-ledger__sum--none">€0.00</span></li>
-              <li><span class="vp-ledger__what"><i class="bi bi-cash-coin" aria-hidden="true"></i>Other</span><span class="vp-ledger__sum">€0.25</span></li>
+          <nav class="vp-segments vp-segments--pair" aria-label="Wallet history">
+            <ul class="nav vp-segments__list" role="tablist">
+              <li class="nav-item" role="presentation">
+                <button class="vp-segment active" id="vp-seg-activity" data-bs-toggle="pill" data-bs-target="#vp-pane-activity" type="button" role="tab" aria-controls="vp-pane-activity" aria-selected="true">Activity</button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button class="vp-segment" id="vp-seg-payments" data-bs-toggle="pill" data-bs-target="#vp-pane-payments" type="button" role="tab" aria-controls="vp-pane-payments" aria-selected="false">Payments</button>
+              </li>
             </ul>
-            <a href="#" class="vp-wallet__all">All activity</a>
-          </div>
+          </nav>
 
-          <div class="tab-pane fade" id="vp-pane-payments" role="tabpanel" aria-labelledby="vp-seg-payments" tabindex="0">
-            <p class="vp-offers__empty">No payments yet. Once you cash out, every payment shows up here with its status.</p>
+          <div class="tab-content">
+            <div class="tab-pane fade show active" id="vp-pane-activity" role="tabpanel" aria-labelledby="vp-seg-activity" tabindex="0">
+              <!-- Each bar is that row's share of the month, so where the money came from
+                   reads at a glance instead of by comparing four numbers. -->
+              <ul class="vp-ledger list-unstyled mb-0">
+                <li style="--vp-share: 100%">
+                  <span class="vp-ledger__icon" aria-hidden="true"><i class="bi bi-card-checklist"></i></span>
+                  <span class="vp-ledger__name">Surveys</span>
+                  <span class="vp-ledger__bar" aria-hidden="true"><i></i></span>
+                  <span class="vp-ledger__sum">€1.85</span>
+                </li>
+                <li style="--vp-share: 35%">
+                  <span class="vp-ledger__icon" aria-hidden="true"><i class="bi bi-controller"></i></span>
+                  <span class="vp-ledger__name">Games</span>
+                  <span class="vp-ledger__bar" aria-hidden="true"><i></i></span>
+                  <span class="vp-ledger__sum">€0.65</span>
+                </li>
+                <li style="--vp-share: 0%">
+                  <span class="vp-ledger__icon" aria-hidden="true"><i class="bi bi-people"></i></span>
+                  <span class="vp-ledger__name">Referrals</span>
+                  <span class="vp-ledger__bar" aria-hidden="true"><i></i></span>
+                  <span class="vp-ledger__sum vp-ledger__sum--none">€0.00</span>
+                </li>
+                <li style="--vp-share: 14%">
+                  <span class="vp-ledger__icon" aria-hidden="true"><i class="bi bi-cash-coin"></i></span>
+                  <span class="vp-ledger__name">Other</span>
+                  <span class="vp-ledger__bar" aria-hidden="true"><i></i></span>
+                  <span class="vp-ledger__sum">€0.25</span>
+                </li>
+              </ul>
+              <a href="#" class="vp-screen__more">All activity</a>
+            </div>
+
+            <div class="tab-pane fade" id="vp-pane-payments" role="tabpanel" aria-labelledby="vp-seg-payments" tabindex="0">
+              <p class="vp-offers__empty">No payments yet. Once you cash out, every payment shows up here with its status.</p>
+            </div>
           </div>
-        </div>
+        </section>
       </div>
     </main>
 
