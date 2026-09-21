@@ -2152,9 +2152,14 @@ a { color: var(--vp-blue); }
 .vp-screen__h span { font-size: 0.9rem; color: var(--vp-muted); }
 
 .vp-screen__more {
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
   margin-top: 0.8rem;
   padding: 0.9rem 1.25rem;
+  border: 0;
   background: #fff;
   border-radius: 16px;
   box-shadow: 0 8px 24px rgba(28, 82, 160, 0.05);
@@ -2165,18 +2170,28 @@ a { color: var(--vp-blue); }
   transition: box-shadow 0.25s ease, color 0.2s ease;
 }
 .vp-screen__more:hover, .vp-screen__more:focus-visible { color: var(--vp-blue); box-shadow: 0 16px 34px rgba(28, 82, 160, 0.12); }
+.vp-screen__more .bi { font-size: 0.95rem; transition: transform 0.25s ease; }
+
+/* The button says what it will do next, and Bootstrap's own aria-expanded is what
+   decides which of the two labels is showing - no JavaScript of ours involved. */
+.vp-screen__more[aria-expanded="false"] .vp-more__open,
+.vp-screen__more[aria-expanded="true"] .vp-more__shut { display: none; }
+.vp-screen__more[aria-expanded="true"] .bi { transform: rotate(180deg); }
 
 /* Two pills sharing the trough evenly, rather than two sized to their labels. */
 .vp-segments--pair { margin-bottom: 1.2rem; }
 .vp-segments--pair .vp-segments__list { overflow: visible; }
 .vp-segments--pair .nav-item { flex: 1 1 50%; }
 
-/* ---------- Wallet: the month's ledger ---------- */
-/* Every row carries its own share of the month as a bar, so where the money came from is
-   legible at a glance instead of by reading four numbers and doing the arithmetic. */
+/* ---------- Wallet: what has paid, newest first ---------- */
+/* One row per thing that paid, in the order it happened. The older ones live in a second
+   list inside the same card, so the card reads as one list whether it is folded or not. */
 .vp-ledger { background: #fff; border-radius: 20px; box-shadow: 0 8px 24px rgba(28, 82, 160, 0.05); overflow: hidden; }
-.vp-ledger li { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 0.4rem 0.9rem; padding: 1rem 1.25rem; }
-.vp-ledger li + li { border-top: 1px solid var(--vp-border); }
+.vp-ledger li { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 0.15rem 0.9rem; padding: 0.85rem 1.25rem; }
+/* Every row rules off from the one above, including the first of the folded-away list -
+   and then the very first row of the card has its rule taken back off. */
+.vp-ledger li { border-top: 1px solid var(--vp-border); }
+.vp-ledger > .vp-ledger__list:first-child > li:first-child { border-top: 0; }
 
 /* The tiles carry the same colours as the lists the money came from on the dashboard, so
    a row is recognised the same way in both places: a filled tile with a white glyph,
@@ -2201,11 +2216,9 @@ a { color: var(--vp-blue); }
 .vp-ledger__icon--games     { --vp-tile: linear-gradient(140deg, #9f7aea, #5b35e8); }
 .vp-ledger__icon--referrals { --vp-tile: linear-gradient(140deg, #f7b733, #d9860c); }
 .vp-ledger__name { grid-column: 2; font-weight: 600; color: var(--vp-dark); }
+.vp-ledger__when { grid-column: 2; font-size: 0.88rem; color: var(--vp-muted); }
 .vp-ledger__sum { grid-column: 3; grid-row: 1 / span 2; font-weight: 800; color: var(--vp-dark); font-variant-numeric: tabular-nums; }
 .vp-ledger__sum--none { color: var(--vp-muted); font-weight: 600; }
-
-.vp-ledger__bar { grid-column: 2; display: block; height: 6px; border-radius: 6px; background: var(--vp-light-blue); overflow: hidden; }
-.vp-ledger__bar i { display: block; width: var(--vp-share, 0%); height: 100%; border-radius: 6px; background: linear-gradient(90deg, var(--vp-blue), #5b35e8); }
 
 /* ---------- Invite ---------- */
 /* The link is what a friend actually uses, so it is the thing the panel is built around,

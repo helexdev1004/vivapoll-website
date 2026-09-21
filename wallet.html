@@ -145,7 +145,6 @@
         <section class="vp-screen__section" aria-labelledby="vp-history-title" data-anim="up" data-anim-delay="0.14">
           <div class="vp-screen__h">
             <h2 id="vp-history-title">History</h2>
-            <span>September</span>
           </div>
 
           <nav class="vp-segments vp-segments--pair" aria-label="Wallet history">
@@ -161,35 +160,87 @@
 
           <div class="tab-content">
             <div class="tab-pane fade show active" id="vp-pane-activity" role="tabpanel" aria-labelledby="vp-seg-activity" tabindex="0">
-              <!-- Each bar is that row's share of the month, so where the money came from
-                   reads at a glance instead of by comparing four numbers. -->
-              <ul class="vp-ledger list-unstyled mb-0">
-                <li style="--vp-share: 100%">
-                  <span class="vp-ledger__icon vp-ledger__icon--surveys" aria-hidden="true"><i class="bi bi-file-earmark-text"></i></span>
-                  <span class="vp-ledger__name">Surveys</span>
-                  <span class="vp-ledger__bar" aria-hidden="true"><i></i></span>
-                  <span class="vp-ledger__sum">€1.85</span>
-                </li>
-                <li style="--vp-share: 35%">
-                  <span class="vp-ledger__icon vp-ledger__icon--games" aria-hidden="true"><i class="bi bi-controller"></i></span>
-                  <span class="vp-ledger__name">Games</span>
-                  <span class="vp-ledger__bar" aria-hidden="true"><i></i></span>
-                  <span class="vp-ledger__sum">€0.65</span>
-                </li>
-                <li style="--vp-share: 14%">
-                  <span class="vp-ledger__icon vp-ledger__icon--profiling" aria-hidden="true"><i class="bi bi-file-earmark-plus-fill"></i></span>
-                  <span class="vp-ledger__name">Profiling surveys</span>
-                  <span class="vp-ledger__bar" aria-hidden="true"><i></i></span>
-                  <span class="vp-ledger__sum">€0.25</span>
-                </li>
-                <li style="--vp-share: 0%">
-                  <span class="vp-ledger__icon vp-ledger__icon--referrals" aria-hidden="true"><i class="bi bi-person-plus"></i></span>
-                  <span class="vp-ledger__name">Referrals</span>
-                  <span class="vp-ledger__bar" aria-hidden="true"><i></i></span>
-                  <span class="vp-ledger__sum vp-ledger__sum--none">€0.00</span>
-                </li>
-              </ul>
-              <a href="#" class="vp-screen__more">All activity</a>
+              <!-- One thing that paid, per row, newest first, whatever it was. Grouping by
+                   category answered a question nobody was asking here - the tiles above
+                   already say what the month came to, and the lists on the dashboard are
+                   where categories belong. The tile colour still says which kind it was. -->
+              <div class="vp-ledger">
+                <ul class="vp-ledger__list list-unstyled mb-0">
+                  <li>
+                    <span class="vp-ledger__icon vp-ledger__icon--surveys" aria-hidden="true"><i class="bi bi-file-earmark-text"></i></span>
+                    <span class="vp-ledger__name">Survey #2712671</span>
+                    <span class="vp-ledger__when">21 September</span>
+                    <span class="vp-ledger__sum">€0.22</span>
+                  </li>
+                  <li>
+                    <span class="vp-ledger__icon vp-ledger__icon--profiling" aria-hidden="true"><i class="bi bi-file-earmark-plus-fill"></i></span>
+                    <span class="vp-ledger__name">Profiling survey #3100588</span>
+                    <span class="vp-ledger__when">20 September</span>
+                    <span class="vp-ledger__sum">€0.15</span>
+                  </li>
+                  <li>
+                    <span class="vp-ledger__icon vp-ledger__icon--games" aria-hidden="true"><i class="bi bi-controller"></i></span>
+                    <span class="vp-ledger__name">MONOPOLY GO!</span>
+                    <span class="vp-ledger__when">19 September</span>
+                    <span class="vp-ledger__sum">€0.35</span>
+                  </li>
+                  <li>
+                    <span class="vp-ledger__icon vp-ledger__icon--surveys" aria-hidden="true"><i class="bi bi-file-earmark-text"></i></span>
+                    <span class="vp-ledger__name">Survey #2712408</span>
+                    <span class="vp-ledger__when">18 September</span>
+                    <span class="vp-ledger__sum">€0.85</span>
+                  </li>
+                </ul>
+
+                <!-- Everything older, folded away until it is asked for. Bootstrap's own
+                     collapse does the work, so this needs no JavaScript of ours. -->
+                <div class="collapse" id="vp-all-activity">
+                  <ul class="vp-ledger__list list-unstyled mb-0">
+                    <li>
+                      <span class="vp-ledger__icon vp-ledger__icon--surveys" aria-hidden="true"><i class="bi bi-file-earmark-text"></i></span>
+                      <span class="vp-ledger__name">Survey #2712950</span>
+                      <span class="vp-ledger__when">16 September</span>
+                      <span class="vp-ledger__sum">€0.41</span>
+                    </li>
+                    <li>
+                      <span class="vp-ledger__icon vp-ledger__icon--games" aria-hidden="true"><i class="bi bi-controller"></i></span>
+                      <span class="vp-ledger__name">Sort N Loop: Flow Puzzle</span>
+                      <span class="vp-ledger__when">15 September</span>
+                      <span class="vp-ledger__sum">€0.30</span>
+                    </li>
+                    <li>
+                      <span class="vp-ledger__icon vp-ledger__icon--profiling" aria-hidden="true"><i class="bi bi-file-earmark-plus-fill"></i></span>
+                      <span class="vp-ledger__name">Profiling survey #3100779</span>
+                      <span class="vp-ledger__when">14 September</span>
+                      <span class="vp-ledger__sum">€0.10</span>
+                    </li>
+                    <li>
+                      <span class="vp-ledger__icon vp-ledger__icon--surveys" aria-hidden="true"><i class="bi bi-file-earmark-text"></i></span>
+                      <span class="vp-ledger__name">Survey #2712233</span>
+                      <span class="vp-ledger__when">12 September</span>
+                      <span class="vp-ledger__sum">€0.22</span>
+                    </li>
+                    <li>
+                      <span class="vp-ledger__icon vp-ledger__icon--surveys" aria-hidden="true"><i class="bi bi-file-earmark-text"></i></span>
+                      <span class="vp-ledger__name">Survey #2712804</span>
+                      <span class="vp-ledger__when">10 September</span>
+                      <span class="vp-ledger__sum">€0.08</span>
+                    </li>
+                    <li>
+                      <span class="vp-ledger__icon vp-ledger__icon--surveys" aria-hidden="true"><i class="bi bi-file-earmark-text"></i></span>
+                      <span class="vp-ledger__name">Survey #2712533</span>
+                      <span class="vp-ledger__when">8 September</span>
+                      <span class="vp-ledger__sum">€0.07</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              <button type="button" class="vp-screen__more" data-bs-toggle="collapse" data-bs-target="#vp-all-activity" aria-expanded="false" aria-controls="vp-all-activity">
+                <span class="vp-more__shut">All activity</span>
+                <span class="vp-more__open">Show less</span>
+                <i class="bi bi-chevron-down" aria-hidden="true"></i>
+              </button>
             </div>
 
             <div class="tab-pane fade" id="vp-pane-payments" role="tabpanel" aria-labelledby="vp-seg-payments" tabindex="0">
