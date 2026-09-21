@@ -2121,10 +2121,6 @@ a { color: var(--vp-blue); }
 .vp-act--ghost { background: rgba(255, 255, 255, 0.1); color: #fff; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.24); }
 .vp-act--ghost:hover, .vp-act--ghost:focus-visible { background: rgba(255, 255, 255, 0.2); color: #fff; }
 
-.vp-methods { display: flex; flex-wrap: wrap; gap: 0.4rem 1.2rem; margin: 1.3rem 0 0; padding: 0; list-style: none; }
-.vp-methods li { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.9rem; color: rgba(255, 255, 255, 0.7); }
-.vp-methods .bi { font-size: 1rem; color: rgba(255, 255, 255, 0.9); }
-
 /* The tiles. Three across where there is room, two then one as it narrows. */
 .vp-bento { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.8rem; margin-top: 0.8rem; }
 
