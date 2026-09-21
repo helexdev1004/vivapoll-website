@@ -1876,8 +1876,10 @@ a { color: var(--vp-blue); }
 .vp-offer__body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 0.15rem; }
 .vp-offer__name { font-size: 1.1rem; font-weight: 700; color: var(--vp-dark); }
 .vp-offer__by,
+.vp-offer__fact,
 .vp-offer__time { display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.95rem; color: var(--vp-muted); }
 .vp-offer__by .bi { font-size: 0.8rem; }
+.vp-offer__fact .bi { font-size: 0.85rem; }
 
 .vp-offer__pay {
   flex: none;
@@ -1889,11 +1891,16 @@ a { color: var(--vp-blue); }
   font-weight: 800;
   white-space: nowrap;
 }
+/* A game's figure is what the whole ladder is worth, not a single payout, so the pill
+   says so rather than putting €120 beside a survey's 85 cents unqualified. */
+.vp-offer__pay small { font-size: 0.72rem; font-weight: 700; opacity: 0.75; }
 .vp-offer__go { flex: none; font-size: 1.4rem; color: var(--vp-blue); }
 
-.vp-offer--blue   { --vp-offer-tint: #3b82f6; }
-.vp-offer--green  { --vp-offer-tint: #2f9e6b; }
-.vp-offer--purple { --vp-offer-tint: #9333ea; }
+/* A featured row is a real entry lifted out of one of the three lists, so it wears that
+   list's own tile: the survey blue, the game's own gradient, the profiling green. */
+.vp-offer--survey   { --vp-offer-tint: var(--vp-blue); }
+.vp-offer--game     { --vp-offer-tint: linear-gradient(140deg, #ff7a59, #e02f2f); }
+.vp-offer--profiling { --vp-offer-tint: linear-gradient(145deg, #63b86f, #3f8c4e); }
 
 .vp-offers__empty { margin: 0; padding: 2.5rem 1.5rem; background: #fff; border-radius: 18px; text-align: center; color: var(--vp-muted); }
 
