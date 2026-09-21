@@ -71,12 +71,33 @@
             <i class="bi bi-bell" aria-hidden="true"></i>
             <span class="vp-appbar__dot" aria-hidden="true"></span>
           </a>
-          <!-- The avatar and the chevron are one control: there is one account, and one
-               place it would go. -->
-          <a href="profile.html" class="vp-account" aria-label="Your account">
-            <span class="vp-avatar" aria-hidden="true">A</span>
-            <i class="bi bi-chevron-down" aria-hidden="true"></i>
-          </a>
+          <!-- The avatar and the chevron are one control, and it opens the account menu.
+               Bootstrap's dropdown handles Escape, click-outside and focus. -->
+          <div class="dropdown">
+            <button type="button" class="vp-account" data-bs-toggle="dropdown" data-bs-offset="0,14" aria-expanded="false" aria-label="Your account">
+              <span class="vp-avatar" aria-hidden="true">A</span>
+              <i class="bi bi-chevron-down" aria-hidden="true"></i>
+            </button>
+
+            <div class="dropdown-menu dropdown-menu-end vp-menu">
+              <div class="vp-menu__head">
+                <span class="vp-avatar" aria-hidden="true">A</span>
+                <span class="vp-menu__who">
+                  <strong>Alex Carter</strong>
+                  <span>alex.carter@example.com</span>
+                </span>
+              </div>
+
+              <a class="vp-menu__item" href="profile.html"><i class="bi bi-person" aria-hidden="true"></i>My profile</a>
+              <a class="vp-menu__item" href="profile-data.html"><i class="bi bi-ui-checks" aria-hidden="true"></i>Profile data</a>
+              <a class="vp-menu__item" href="wallet.html"><i class="bi bi-wallet2" aria-hidden="true"></i>My wallet</a>
+              <a class="vp-menu__item" href="support.html"><i class="bi bi-question-circle" aria-hidden="true"></i>Help</a>
+
+              <hr class="vp-menu__rule">
+
+              <a class="vp-menu__item vp-menu__item--out" href="signin.html"><i class="bi bi-box-arrow-right" aria-hidden="true"></i>Log out</a>
+            </div>
+          </div>
         </div>
       </div>
     </header>

@@ -1722,11 +1722,63 @@ a { color: var(--vp-blue); }
 }
 .vp-avatar:hover, .vp-avatar:focus-visible { background: #d6e8ff; color: var(--vp-blue); }
 
-/* The avatar and its chevron are one control, so the chevron is part of the same link
+/* The avatar and its chevron are one control, so the chevron is part of the same button
    rather than a second thing to aim at. */
-.vp-account { display: inline-flex; align-items: center; gap: 0.2rem; color: var(--vp-muted); text-decoration: none; }
+.vp-account { display: inline-flex; align-items: center; gap: 0.2rem; padding: 0; border: 0; background: none; color: var(--vp-muted); text-decoration: none; }
 .vp-account .bi { font-size: 0.95rem; transition: transform 0.2s ease, color 0.2s ease; }
-.vp-account:hover .bi, .vp-account:focus-visible .bi { transform: translateY(2px); color: var(--vp-blue); }
+.vp-account:hover .bi, .vp-account:focus-visible .bi { color: var(--vp-blue); }
+/* The chevron points at the menu it has opened. */
+.vp-account[aria-expanded="true"] .bi { transform: rotate(180deg); color: var(--vp-blue); }
+.vp-account[aria-expanded="true"] .vp-avatar { background: #d6e8ff; }
+
+/* ---------- The account menu ---------- */
+.vp-menu {
+  --bs-dropdown-min-width: 17rem;
+  padding: 0.4rem;
+  border: 0;
+  border-radius: 20px;
+  background: #fff;
+  box-shadow: 0 20px 48px rgba(11, 20, 55, 0.18), 0 2px 6px rgba(11, 20, 55, 0.06);
+}
+
+/* Who is signed in, above the things they can do about it. */
+.vp-menu__head { display: flex; align-items: center; gap: 0.7rem; padding: 0.7rem 0.75rem 0.85rem; }
+.vp-menu__who { display: flex; flex-direction: column; min-width: 0; line-height: 1.35; }
+.vp-menu__who strong { font-size: 0.98rem; color: var(--vp-dark); }
+/* An address has no spaces to wrap at, and the menu is only so wide. */
+.vp-menu__who span { font-size: 0.85rem; color: var(--vp-muted); overflow-wrap: anywhere; }
+
+.vp-menu__rule { margin: 0.35rem 0.4rem; border: 0; border-top: 1px solid var(--vp-border); opacity: 1; }
+
+.vp-menu__item {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.65rem 0.75rem;
+  border-radius: 13px;
+  color: var(--vp-text);
+  font-weight: 600;
+  text-decoration: none;
+  transition: background-color 0.18s ease, color 0.18s ease;
+}
+.vp-menu__item .bi { font-size: 1.05rem; color: var(--vp-blue); }
+.vp-menu__item:hover, .vp-menu__item:focus-visible { background: var(--vp-light-blue); color: var(--vp-dark); }
+
+/* Leaving is not the same kind of act as the four above it. */
+.vp-menu__item--out, .vp-menu__item--out .bi { color: #c02c2c; }
+.vp-menu__item--out:hover, .vp-menu__item--out:focus-visible { background: #fdeaea; color: #c02c2c; }
+
+/* Bootstrap swaps display, which a transition cannot follow, so the open state is
+   animated rather than transitioned. */
+@keyframes vp-menu-in {
+  from { opacity: 0; transform: translateY(-6px) scale(0.97); }
+  to { opacity: 1; transform: none; }
+}
+.vp-menu.show { animation: vp-menu-in 0.18s cubic-bezier(0.2, 0.8, 0.3, 1); transform-origin: top right; }
+
+@media (prefers-reduced-motion: reduce) {
+  .vp-menu.show { animation: none; }
+}
 
 /* ---------- The app menu ---------- */
 /* The same four destinations the foot of the screen used to carry, moved up into the bar
