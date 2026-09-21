@@ -1898,10 +1898,23 @@ a { color: var(--vp-blue); }
 .vp-survey__meta { display: flex; flex-wrap: wrap; gap: 0.15rem 1.35rem; font-size: 0.95rem; color: var(--vp-muted); }
 /* Each fact keeps its icon on its own line: inline-flex rather than a plain inline, so a
    wrap never leaves a clock stranded above the minutes it belongs to. */
-.vp-survey__meta > span { display: inline-flex; align-items: center; gap: 0.42rem; }
-.vp-survey__meta .bi { font-size: 0.92rem; color: var(--vp-blue); }
-/* The icons take the row's own colour, so a green-tiled row is green throughout. */
-.vp-survey--profiling .vp-survey__meta .bi { color: #3f8c4e; }
+.vp-survey__meta > span { display: inline-flex; align-items: center; gap: 0.5rem; }
+
+/* Each icon sits in a tinted disc of its own. At this size a bare outline glyph goes thin
+   and grey against the text beside it; a filled one on a disc keeps its shape and gives
+   the line something to scan down. */
+.vp-survey__meta .bi {
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--vp-light-blue);
+  color: var(--vp-blue);
+  font-size: 0.7rem;
+}
+/* The discs take the row's own colour, so a green-tiled row is green throughout. */
+.vp-survey--profiling .vp-survey__meta .bi { background: #e4f4e8; color: #3f8c4e; }
 
 /* The same round mark the game rows carry, so every row in every list says "this opens"
    the same way. It takes the row's own colour rather than one colour for all three. */
