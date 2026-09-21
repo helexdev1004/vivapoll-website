@@ -2224,6 +2224,90 @@ a { color: var(--vp-blue); }
 
 .vp-fineprint { margin: 1rem 0 0; font-size: 0.88rem; color: var(--vp-muted); }
 .vp-fineprint a { color: var(--vp-blue); font-weight: 600; text-decoration: none; }
+
+/* ---------- Profile ---------- */
+/* Who is signed in, on the same dark panel the balance and the referral code use. */
+.vp-whoami { display: flex; align-items: center; gap: 1.1rem; }
+
+.vp-whoami__avatar {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.14);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.24);
+  color: #fff;
+  font-size: 2rem;
+  font-weight: 800;
+}
+
+.vp-whoami__text { min-width: 0; }
+.vp-whoami__name { margin: 0; font-size: clamp(1.4rem, 1.15rem + 1vw, 1.9rem); font-weight: 800; letter-spacing: -0.03em; }
+/* An address is one unbroken string, and on a phone it is wider than the screen. */
+.vp-whoami__mail { margin: 0.1rem 0 0; color: rgba(255, 255, 255, 0.7); overflow-wrap: anywhere; }
+
+.vp-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 0.6rem;
+  padding: 0.3rem 0.7rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.85);
+}
+.vp-badge .bi { font-size: 0.9rem; }
+
+/* A list of settings rather than of earnings, so the tiles stay the quiet blue the
+   ledger's used to be - nothing here is a category with a colour of its own. */
+.vp-rows { background: #fff; border-radius: 20px; box-shadow: 0 8px 24px rgba(28, 82, 160, 0.05); overflow: hidden; }
+
+.vp-row {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  width: 100%;
+  padding: 1rem 1.25rem;
+  border: 0;
+  background: none;
+  text-align: left;
+  text-decoration: none;
+  transition: background-color 0.2s ease;
+}
+.vp-row + .vp-row { border-top: 1px solid var(--vp-border); }
+.vp-row:hover, .vp-row:focus-visible { background: var(--vp-light-blue); }
+
+.vp-row__icon { flex: none; display: grid; place-items: center; width: 42px; height: 42px; border-radius: 12px; background: var(--vp-light-blue); color: var(--vp-blue); font-size: 1.15rem; }
+.vp-row:hover .vp-row__icon, .vp-row:focus-visible .vp-row__icon { background: #fff; }
+
+.vp-row__text { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.vp-row__label { font-weight: 600; color: var(--vp-dark); }
+.vp-row__note { font-size: 0.88rem; color: var(--vp-muted); }
+
+.vp-row__go { flex: none; color: var(--vp-muted); font-size: 1.1rem; transition: transform 0.2s ease, color 0.2s ease; }
+.vp-row:hover .vp-row__go, .vp-row:focus-visible .vp-row__go { transform: translateX(3px); color: var(--vp-blue); }
+
+/* A state rather than something to press, so it is not dressed as a button. */
+.vp-state { flex: none; display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.2rem 0.65rem; border-radius: 999px; background: #e4f7ed; color: #0a7a4c; font-size: 0.8rem; font-weight: 700; }
+.vp-state .bi { font-size: 0.7rem; }
+
+/* Deleting an account cannot be undone, so it does not look like the rows above it. */
+.vp-row--danger .vp-row__icon { background: #fdeaea; color: #c02c2c; }
+.vp-row--danger .vp-row__label { color: #c02c2c; }
+.vp-row--danger:hover, .vp-row--danger:focus-visible { background: #fdeaea; }
+.vp-row--danger:hover .vp-row__icon, .vp-row--danger:focus-visible .vp-row__icon { background: #fff; }
+.vp-row--danger:hover .vp-row__go, .vp-row--danger:focus-visible .vp-row__go { color: #c02c2c; }
+
+@media (max-width: 575.98px) {
+  .vp-whoami { gap: 0.9rem; }
+  .vp-whoami__avatar { width: 62px; height: 62px; font-size: 1.6rem; }
+  .vp-row { padding: 0.9rem 1rem; gap: 0.75rem; }
+  .vp-row__icon { width: 38px; height: 38px; border-radius: 11px; font-size: 1.05rem; }
+}
 .vp-fineprint a:hover { text-decoration: underline; }
 
 @media (max-width: 767.98px) {

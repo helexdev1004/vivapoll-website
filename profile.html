@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>My profile – VivaPoll</title>
+  <meta name="description" content="Your VivaPoll account: your profile data, your settings, and everything you have earned so far.">
+  <meta name="theme-color" content="#0874fc">
+  <!-- Signed-in pages are nobody's business but the account holder's. -->
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32.png">
+  <link rel="apple-touch-icon" href="assets/images/apple-touch-icon.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link href="assets/css/style.css" rel="stylesheet">
+
+  <script>
+    (function () {
+      if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      var root = document.documentElement;
+      root.classList.add('vp-anim');
+      window.setTimeout(function () {
+        if (!root.classList.contains('vp-anim-ready')) root.classList.remove('vp-anim');
+      }, 2500);
+    })();
+  </script>
+</head>
+<body class="vp-app-page">
+  <a class="visually-hidden-focusable vp-skip-link" href="#main">Skip to main content</a>
+
+  <div class="vp-page vp-app">
+    <div class="vp-decor" aria-hidden="true">
+      <span class="vp-circle vp-circle--1"></span>
+      <span class="vp-circle vp-circle--2"></span>
+      <span class="vp-circle vp-circle--4"></span>
+      <span class="vp-circle vp-circle--11"></span>
+    </div>
+
+    <!-- ============ APP BAR ============ -->
+    <header class="vp-appbar">
+      <div class="container vp-appbar__inner">
+        <a class="vp-brand vp-appbar__brand" href="dashboard.html">
+          <img src="assets/images/logo.png" alt="VivaPoll" width="236" height="46">
+        </a>
+
+        <nav class="vp-appnav" aria-label="Sections">
+          <a href="dashboard.html" class="vp-appnav__item">
+            <i class="bi bi-house-door" aria-hidden="true"></i><span>Home</span>
+          </a>
+          <a href="wallet.html" class="vp-appnav__item">
+            <i class="bi bi-wallet2" aria-hidden="true"></i><span>My Wallet</span>
+          </a>
+          <a href="invite.html" class="vp-appnav__item">
+            <i class="bi bi-person-plus" aria-hidden="true"></i><span>Invite</span>
+          </a>
+          <a href="profile.html" class="vp-appnav__item is-active" aria-current="page">
+            <i class="bi bi-person-fill" aria-hidden="true"></i><span>Profile</span>
+          </a>
+        </nav>
+
+        <div class="vp-appbar__actions">
+          <a href="#" class="vp-appbar__icon vp-appbar__bell" aria-label="Notifications">
+            <i class="bi bi-bell" aria-hidden="true"></i>
+            <span class="vp-appbar__dot" aria-hidden="true"></span>
+          </a>
+          <!-- The avatar and the chevron are one control: there is one account, and one
+               place it would go. -->
+          <a href="profile.html" class="vp-account" aria-label="Your account">
+            <span class="vp-avatar" aria-hidden="true">A</span>
+            <i class="bi bi-chevron-down" aria-hidden="true"></i>
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <main id="main" class="vp-app__main">
+      <div class="container vp-screen">
+
+        <div class="vp-screen__head" data-anim="up">
+          <p class="vp-screen__eyebrow">My profile</p>
+          <h1 class="vp-screen__title">Your account</h1>
+        </div>
+
+        <!-- ============ WHO IS SIGNED IN ============ -->
+        <!-- The same dark panel the balance and the referral code sit on, carrying the one
+             thing this screen is about: the account itself. -->
+        <section class="vp-hero-panel" aria-labelledby="vp-account-title" data-anim="mask" data-anim-delay="0.06">
+          <h2 id="vp-account-title" class="visually-hidden">Signed in as</h2>
+
+          <div class="vp-whoami">
+            <span class="vp-whoami__avatar" aria-hidden="true">A</span>
+            <div class="vp-whoami__text">
+              <p class="vp-whoami__name">Alex Carter</p>
+              <p class="vp-whoami__mail">alex.carter@example.com</p>
+              <span class="vp-badge"><i class="bi bi-shield-check" aria-hidden="true"></i>Signed in with Google</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============ WHAT THE ACCOUNT HAS DONE ============ -->
+        <!-- The same three figures the wallet and the invite screen report, so the account
+             adds up wherever it is read. -->
+        <div class="vp-bento" data-anim="up" data-anim-delay="0.1" data-anim-stagger="0.07" data-anim-group>
+          <article class="vp-tile">
+            <span class="vp-tile__label"><i class="bi bi-check2-circle" aria-hidden="true"></i>Completed</span>
+            <strong class="vp-tile__value">46</strong>
+            <span class="vp-tile__foot">Surveys, games and profiling</span>
+          </article>
+
+          <article class="vp-tile">
+            <span class="vp-tile__label"><i class="bi bi-trophy" aria-hidden="true"></i>Lifetime</span>
+            <strong class="vp-tile__value">€18.60</strong>
+            <span class="vp-tile__foot">Earned since you joined</span>
+          </article>
+
+          <article class="vp-tile">
+            <span class="vp-tile__label"><i class="bi bi-person-plus" aria-hidden="true"></i>Invited</span>
+            <strong class="vp-tile__value">0</strong>
+            <span class="vp-tile__foot">Friends who joined</span>
+          </article>
+        </div>
+
+        <!-- ============ SETTINGS ============ -->
+        <section class="vp-screen__section" aria-labelledby="vp-settings-title" data-anim="up" data-anim-delay="0.14">
+          <div class="vp-screen__h">
+            <h2 id="vp-settings-title">Account</h2>
+          </div>
+
+          <div class="vp-rows">
+            <a href="#" class="vp-row">
+              <span class="vp-row__icon" aria-hidden="true"><i class="bi bi-person"></i></span>
+              <span class="vp-row__text">
+                <span class="vp-row__label">Profile data</span>
+                <span class="vp-row__note">Name, date of birth and the details surveys match on</span>
+              </span>
+              <i class="bi bi-chevron-right vp-row__go" aria-hidden="true"></i>
+            </a>
+
+            <!-- A state, not a destination: it says where the setting stands and nothing
+                 here can change it until there is something behind it. -->
+            <div class="vp-row">
+              <span class="vp-row__icon" aria-hidden="true"><i class="bi bi-geo-alt"></i></span>
+              <span class="vp-row__text">
+                <span class="vp-row__label">Location</span>
+                <span class="vp-row__note">Used to show surveys available where you are</span>
+              </span>
+              <span class="vp-state"><i class="bi bi-circle-fill" aria-hidden="true"></i>Enabled</span>
+            </div>
+
+            <a href="#" class="vp-row">
+              <span class="vp-row__icon" aria-hidden="true"><i class="bi bi-ticket-perforated"></i></span>
+              <span class="vp-row__text">
+                <span class="vp-row__label">Enter invitation code</span>
+                <span class="vp-row__note">Were you invited? Add your friend's code</span>
+              </span>
+              <i class="bi bi-chevron-right vp-row__go" aria-hidden="true"></i>
+            </a>
+
+            <a href="support.html" class="vp-row">
+              <span class="vp-row__icon" aria-hidden="true"><i class="bi bi-question-circle"></i></span>
+              <span class="vp-row__text">
+                <span class="vp-row__label">Help</span>
+                <span class="vp-row__note">Answers on payouts, surveys and your account</span>
+              </span>
+              <i class="bi bi-chevron-right vp-row__go" aria-hidden="true"></i>
+            </a>
+          </div>
+        </section>
+
+        <!-- ============ LEAVING ============ -->
+        <section class="vp-screen__section" aria-labelledby="vp-session-title" data-anim="up" data-anim-delay="0.18">
+          <div class="vp-screen__h">
+            <h2 id="vp-session-title">Session</h2>
+          </div>
+
+          <div class="vp-rows">
+            <a href="signin.html" class="vp-row">
+              <span class="vp-row__icon" aria-hidden="true"><i class="bi bi-box-arrow-right"></i></span>
+              <span class="vp-row__text">
+                <span class="vp-row__label">Log out</span>
+              </span>
+              <i class="bi bi-chevron-right vp-row__go" aria-hidden="true"></i>
+            </a>
+
+            <a href="#" class="vp-row vp-row--danger">
+              <span class="vp-row__icon" aria-hidden="true"><i class="bi bi-trash3"></i></span>
+              <span class="vp-row__text">
+                <span class="vp-row__label">Delete account</span>
+                <span class="vp-row__note">Removes your account and everything in it. This cannot be undone</span>
+              </span>
+              <i class="bi bi-chevron-right vp-row__go" aria-hidden="true"></i>
+            </a>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer class="vp-app-footer">
+      <div class="container vp-app-footer__inner">
+        <p class="vp-app-footer__copy mb-0">© 2026 Main Frame Ltd. All rights reserved.</p>
+        <ul class="vp-app-footer__links list-unstyled mb-0">
+          <li><a href="support.html">Help</a></li>
+          <li><a href="terms-and-conditions.html">Terms</a></li>
+          <li><a href="privacy-policy.html">Privacy</a></li>
+        </ul>
+      </div>
+    </footer>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="assets/js/animations.js"></script>
+  <script src="assets/js/nav.js"></script>
+  <script src="assets/js/cursor.js"></script>
+</body>
+</html>
