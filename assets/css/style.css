@@ -2003,9 +2003,22 @@ a { color: var(--vp-blue); }
   color: var(--vp-dark);
 }
 
-.vp-game__facts { grid-column: 2; grid-row: 3; display: flex; flex-wrap: wrap; gap: 0.15rem 1rem; min-width: 0; margin-top: 0.15rem; }
-.vp-game__fact { display: inline-flex; align-items: center; gap: 0.4rem; min-width: 0; font-size: 0.93rem; color: var(--vp-muted); }
-.vp-game__fact .bi { flex: none; font-size: 0.88rem; color: #f0980b; }
+.vp-game__facts { grid-column: 2; grid-row: 3; display: flex; flex-wrap: wrap; gap: 0.15rem 1rem; min-width: 0; margin-top: 0.2rem; }
+.vp-game__fact { display: inline-flex; align-items: center; gap: 0.5rem; min-width: 0; font-size: 0.93rem; color: var(--vp-muted); }
+
+/* The same tinted disc the survey facts carry, in the games' own amber, so a fact reads
+   the same way whichever list it is in. */
+.vp-game__fact .bi {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #fff1dd;
+  color: #d97d06;
+  font-size: 0.7rem;
+}
 
 .vp-game__go {
   grid-column: 3;
