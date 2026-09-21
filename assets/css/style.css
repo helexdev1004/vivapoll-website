@@ -2277,6 +2277,37 @@ a { color: var(--vp-blue); }
 }
 .vp-badge .bi { font-size: 0.9rem; }
 
+/* A sub-page of the profile: the way back is the first thing on it, above the title,
+   where a reader looks for it rather than at the foot of the page. */
+.vp-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin-bottom: 0.9rem;
+  color: var(--vp-muted);
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+.vp-back__icon {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 6px 18px rgba(28, 82, 160, 0.08);
+  color: var(--vp-dark);
+  font-size: 1.05rem;
+  transition: transform 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+}
+.vp-back:hover, .vp-back:focus-visible { color: var(--vp-blue); }
+.vp-back:hover .vp-back__icon, .vp-back:focus-visible .vp-back__icon { transform: translateX(-3px); background: var(--vp-blue); color: #fff; }
+
+/* The lead-in under a sub-page title: what the list below is for, in one line. */
+.vp-screen__lead { max-width: 44rem; margin: 0.6rem 0 0; font-size: 1.02rem; line-height: 1.6; color: var(--vp-muted); }
+
 /* A list of settings rather than of earnings, so the tiles stay the quiet blue the
    ledger's used to be - nothing here is a category with a colour of its own. */
 .vp-rows { background: #fff; border-radius: 20px; box-shadow: 0 8px 24px rgba(28, 82, 160, 0.05); overflow: hidden; }
