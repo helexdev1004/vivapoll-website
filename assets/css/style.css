@@ -1840,12 +1840,18 @@ a { color: var(--vp-blue); }
 .vp-offers__all { display: inline-flex; align-items: center; gap: 0.4rem; color: var(--vp-blue); font-weight: 600; text-decoration: none; }
 .vp-offers__all:hover { text-decoration: underline; }
 
+/* Every category's list is built to the same measure - the same row height, tile, corner
+   and spacing - so switching tabs changes what the rows say, not how big they are. Only
+   the games rows run taller, and only where their own text needs the space. */
+.vp-app { --vp-row-h: 120px; }
+
 .vp-offer-list { display: flex; flex-direction: column; gap: 0.85rem; }
 
 .vp-offer {
   display: flex;
   align-items: center;
   gap: 1.1rem;
+  min-height: var(--vp-row-h);
   padding: 1.1rem 1.4rem;
   background: #fff;
   border-radius: 18px;
@@ -1894,37 +1900,38 @@ a { color: var(--vp-blue); }
 /* Survey rows lead with what the survey pays, because that is what the reader is
    choosing between. Everything else - which survey it is, how long it takes, who is
    asking - is one quiet line underneath, beside a tile that marks the row as a survey. */
-.vp-survey-list { display: flex; flex-direction: column; gap: 0.75rem; }
+.vp-survey-list { display: flex; flex-direction: column; gap: 0.85rem; }
 
 .vp-survey {
   display: flex;
   align-items: center;
-  gap: 1rem;
-  padding: 0.9rem 1.1rem;
+  gap: 1.1rem;
+  min-height: var(--vp-row-h);
+  padding: 1.1rem 1.4rem;
   background: #fff;
-  border: 1px solid var(--vp-border);
-  border-radius: 16px;
+  border-radius: 18px;
+  box-shadow: 0 8px 24px rgba(28, 82, 160, 0.05);
   text-decoration: none;
-  transition: border-color 0.2s ease, box-shadow 0.25s ease, transform 0.25s ease;
+  transition: box-shadow 0.25s ease, transform 0.25s ease;
 }
-.vp-survey:hover, .vp-survey:focus-visible { transform: translateY(-2px); border-color: transparent; box-shadow: 0 14px 32px rgba(28, 82, 160, 0.12); }
+.vp-survey:hover, .vp-survey:focus-visible { transform: translateY(-2px); box-shadow: 0 18px 38px rgba(28, 82, 160, 0.12); }
 
 .vp-survey__icon {
   flex: none;
   display: grid;
   place-items: center;
-  width: 46px;
-  height: 46px;
-  border-radius: 13px;
+  width: 62px;
+  height: 62px;
+  border-radius: 16px;
   background: var(--vp-blue);
   color: #fff;
-  font-size: 1.35rem;
+  font-size: 1.75rem;
 }
 
-.vp-survey__body { min-width: 0; display: flex; flex-direction: column; gap: 0.1rem; }
+.vp-survey__body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 0.2rem; }
 
 .vp-survey__pay {
-  font-size: 1.35rem;
+  font-size: 1.5rem;
   font-weight: 800;
   letter-spacing: -0.02em;
   line-height: 1.2;
@@ -1933,18 +1940,13 @@ a { color: var(--vp-blue); }
 
 /* The facts share one line and wrap together rather than one at a time, so a long client
    name never leaves a lone word stranded under the duration. */
-.vp-survey__meta { display: flex; flex-wrap: wrap; gap: 0.15rem 1.35rem; font-size: 0.92rem; color: var(--vp-muted); }
-
-/* The unlock row is a prompt rather than a paid survey, so its tile and its figure read
-   in the brand's second colour. */
-.vp-survey--unlock .vp-survey__icon { background: #5b35e8; }
-.vp-survey--unlock .vp-survey__pay { color: #5b35e8; }
+.vp-survey__meta { display: flex; flex-wrap: wrap; gap: 0.15rem 1.35rem; font-size: 0.95rem; color: var(--vp-muted); }
 
 @media (max-width: 575.98px) {
-  .vp-survey { gap: 0.8rem; padding: 0.8rem 0.9rem; }
-  .vp-survey__icon { width: 42px; height: 42px; border-radius: 12px; font-size: 1.2rem; }
-  .vp-survey__pay { font-size: 1.2rem; }
-  .vp-survey__meta { gap: 0.1rem 0.9rem; font-size: 0.85rem; }
+  .vp-survey { gap: 0.9rem; padding: 0.9rem 1rem; }
+  .vp-survey__icon { width: 50px; height: 50px; border-radius: 14px; font-size: 1.45rem; }
+  .vp-survey__pay { font-size: 1.3rem; }
+  .vp-survey__meta { gap: 0.1rem 0.9rem; font-size: 0.88rem; }
   /* All three facts will not share a line on a phone. Rather than let each row break
      wherever it happens to run out - which left the list with five different heights -
      the survey's name takes the first line and the other two share the second. */
@@ -1961,6 +1963,7 @@ a { color: var(--vp-blue); }
   grid-template-columns: auto minmax(0, 1fr) auto;
   align-items: center;
   gap: 0.15rem 1.1rem;
+  min-height: var(--vp-row-h);
   padding: 1rem 1.3rem;
   background: #fff;
   border-radius: 18px;
@@ -1975,11 +1978,11 @@ a { color: var(--vp-blue); }
   grid-row: 1 / span 3;
   display: grid;
   place-items: center;
-  width: 74px;
-  height: 74px;
-  border-radius: 18px;
+  width: 62px;
+  height: 62px;
+  border-radius: 16px;
   color: #fff;
-  font-size: 2rem;
+  font-size: 1.75rem;
 }
 .vp-game__icon--a { background: linear-gradient(140deg, #ff7a59, #e02f2f); }
 .vp-game__icon--b { background: linear-gradient(140deg, #9f7aea, #5b35e8); }
@@ -2023,7 +2026,7 @@ a { color: var(--vp-blue); }
 
 @media (max-width: 575.98px) {
   .vp-game { padding: 0.85rem 1rem; gap: 0.1rem 0.85rem; }
-  .vp-game__icon { width: 60px; height: 60px; border-radius: 15px; font-size: 1.6rem; }
+  .vp-game__icon { width: 50px; height: 50px; border-radius: 14px; font-size: 1.45rem; }
   .vp-game__go { width: 34px; height: 34px; font-size: 1rem; }
   .vp-game__name { font-size: 0.98rem; }
   .vp-game__fact { font-size: 0.85rem; }
