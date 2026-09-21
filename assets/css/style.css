@@ -1942,6 +1942,10 @@ a { color: var(--vp-blue); }
    name never leaves a lone word stranded under the duration. */
 .vp-survey__meta { display: flex; flex-wrap: wrap; gap: 0.15rem 1.35rem; font-size: 0.95rem; color: var(--vp-muted); }
 
+/* Profiling surveys are the same row in every respect but their tile, which is green so
+   the two lists are told apart at a glance rather than by reading the heading. */
+.vp-survey--profiling .vp-survey__icon { background: linear-gradient(145deg, #63b86f, #3f8c4e); }
+
 @media (max-width: 575.98px) {
   .vp-survey { gap: 0.9rem; padding: 0.9rem 1rem; }
   .vp-survey__icon { width: 50px; height: 50px; border-radius: 14px; font-size: 1.45rem; }
