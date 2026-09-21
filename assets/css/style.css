@@ -1903,14 +1903,32 @@ a { color: var(--vp-blue); }
 /* The icons take the row's own colour, so a green-tiled row is green throughout. */
 .vp-survey--profiling .vp-survey__meta .bi { color: #3f8c4e; }
 
-/* Profiling surveys are the same row in every respect but their tile, which is green so
+/* The same round mark the game rows carry, so every row in every list says "this opens"
+   the same way. It takes the row's own colour rather than one colour for all three. */
+.vp-survey__go {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--vp-light-blue);
+  color: var(--vp-blue);
+  font-size: 1.1rem;
+  transition: transform 0.2s ease;
+}
+.vp-survey:hover .vp-survey__go, .vp-survey:focus-visible .vp-survey__go { transform: translateX(3px); }
+
+/* Profiling surveys are the same row in every respect but their colour, which is green so
    the two lists are told apart at a glance rather than by reading the heading. */
 .vp-survey--profiling .vp-survey__icon { background: linear-gradient(145deg, #63b86f, #3f8c4e); }
+.vp-survey--profiling .vp-survey__go { background: #e4f4e8; color: #3f8c4e; }
 
 @media (max-width: 575.98px) {
   .vp-survey { gap: 0.9rem; padding: 0.9rem 1rem; }
   .vp-survey__icon { width: 50px; height: 50px; border-radius: 14px; font-size: 1.45rem; }
   .vp-survey__pay { font-size: 1.3rem; }
+  .vp-survey__go { width: 34px; height: 34px; font-size: 1rem; }
   .vp-survey__meta { gap: 0.1rem 0.9rem; font-size: 0.88rem; }
   /* All three facts will not share a line on a phone. Rather than let each row break
      wherever it happens to run out - which left the list with five different heights -
