@@ -2157,36 +2157,51 @@ a { color: var(--vp-blue); }
 .vp-ledger__bar i { display: block; width: var(--vp-share, 0%); height: 100%; border-radius: 6px; background: linear-gradient(90deg, var(--vp-blue), #5b35e8); }
 
 /* ---------- Invite ---------- */
-/* The code is the whole point of the screen, so it sits inside the dark panel at the size
-   of a headline rather than in a box somewhere further down. */
-.vp-codebox {
+/* The link is what a friend actually uses, so it is the thing the panel is built around,
+   with the button that hands it over sitting inside the same box. */
+.vp-hero-panel__line--tight { margin-top: 1.1rem; color: rgba(255, 255, 255, 0.86); }
+
+.vp-linkbox {
   display: flex;
   align-items: center;
-  gap: 0.85rem;
-  margin-top: 1.45rem;
-  padding: 0.7rem 0.7rem 0.7rem 1.35rem;
+  gap: 0.75rem;
+  margin-top: 0.7rem;
+  padding: 0.55rem 0.55rem 0.55rem 1.1rem;
   background: rgba(255, 255, 255, 0.1);
-  border: 1px dashed rgba(255, 255, 255, 0.34);
-  border-radius: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 16px;
 }
-.vp-codebox__text { flex: 1; min-width: 0; display: flex; flex-direction: column; }
-.vp-codebox__value { font-size: clamp(1.5rem, 1.15rem + 1.5vw, 2.05rem); font-weight: 800; letter-spacing: 0.22em; text-indent: 0.22em; line-height: 1.2; color: #fff; }
-.vp-codebox__label { font-size: 0.82rem; color: rgba(255, 255, 255, 0.6); }
 
-.vp-codebox__copy {
+/* A URL is one unbroken string with no spaces to wrap at, so it is told where it may
+   break rather than being allowed to push the panel wider than the screen. */
+.vp-linkbox__url {
+  flex: 1;
+  min-width: 0;
+  font-size: 0.98rem;
+  color: rgba(255, 255, 255, 0.92);
+  overflow-wrap: anywhere;
+}
+
+.vp-linkbox__copy {
   flex: none;
-  display: grid;
-  place-items: center;
-  width: 48px;
-  height: 48px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.65rem 1.15rem;
   border: 0;
-  border-radius: 14px;
+  border-radius: 12px;
   background: #fff;
   color: var(--vp-dark);
-  font-size: 1.35rem;
+  font-size: 0.98rem;
+  font-weight: 700;
   transition: transform 0.2s ease, background-color 0.2s ease, color 0.2s ease;
 }
-.vp-codebox__copy:hover, .vp-codebox__copy:focus-visible { transform: translateY(-2px); background: var(--vp-blue); color: #fff; }
+.vp-linkbox__copy:hover, .vp-linkbox__copy:focus-visible { transform: translateY(-2px); background: var(--vp-blue); color: #fff; }
+
+/* The code is the other way in - for someone typing it into the profile screen - so it
+   sits beside the button rather than competing with the link above. */
+.vp-hero-panel__aside { font-size: 0.92rem; color: rgba(255, 255, 255, 0.66); }
+.vp-hero-panel__aside strong { color: #fff; font-weight: 700; letter-spacing: 0.12em; }
 
 /* Holds its line whether or not it is saying anything, so confirming a copy does not shove
    what follows down the page. */
@@ -2322,8 +2337,11 @@ a { color: var(--vp-blue); }
   .vp-hero-panel__actions .vp-act { flex: 1 1 100%; }
   /* They would sit behind the figure at this width. */
   .vp-hero-panel__coins { display: none; }
-  .vp-codebox { padding-left: 1rem; }
-  .vp-codebox__value { letter-spacing: 0.14em; text-indent: 0.14em; }
+  /* The URL and a button will not share a line on a phone, so the button takes its own
+     and spans the box rather than being squeezed against the edge. */
+  .vp-linkbox { flex-wrap: wrap; padding: 0.8rem 0.9rem; }
+  .vp-linkbox__url { flex: 1 0 100%; font-size: 0.92rem; }
+  .vp-linkbox__copy { flex: 1 0 100%; justify-content: center; }
 }
 
 @media (max-width: 420px) {

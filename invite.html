@@ -82,15 +82,14 @@
 
         <div class="vp-screen__head" data-anim="up">
           <p class="vp-screen__eyebrow">Invite</p>
-          <h1 class="vp-screen__title">Bring a friend, take a cut</h1>
+          <h1 class="vp-screen__title">Recommend VivaPoll to a friend</h1>
         </div>
 
-        <!-- ============ YOUR CODE ============ -->
-        <!-- The code is the whole screen, so it sits in the panel at the size of a
-             headline with both of its actions beside it, rather than in a box further
-             down the page. -->
-        <section class="vp-hero-panel" aria-labelledby="vp-code-title" data-anim="mask" data-anim-delay="0.06">
-          <h2 id="vp-code-title" class="visually-hidden">Your referral code</h2>
+        <!-- ============ YOUR LINK ============ -->
+        <!-- The link is what a friend actually uses, so it is the thing the panel is
+             built around, with the two ways of handing it over right beside it. -->
+        <section class="vp-hero-panel" aria-labelledby="vp-link-title" data-anim="mask" data-anim-delay="0.06">
+          <h2 id="vp-link-title" class="visually-hidden">Your invitation link</h2>
 
           <!-- Drawn rather than drafted in as artwork: each coin is a span the stylesheet
                places and sizes, so it costs no requests and stays crisp at any size.
@@ -99,19 +98,21 @@
             <span>€</span><span>€</span><span>€</span>
           </span>
 
-          <span class="vp-hero-panel__label">Your referral code</span>
+          <span class="vp-hero-panel__label">Share VivaPoll with your friends</span>
           <p class="vp-hero-panel__line">
-            Earn <strong>10%</strong> of everything the people you invite complete, for as
-            long as they keep going. No cap, and it never comes out of their share.
+            Invite them to answer online surveys and earn real rewards for it. Once someone
+            joins through your link and completes <strong>3 surveys</strong> — profiling
+            surveys do not count — you earn <strong>€2.50</strong> for that person.
           </p>
 
-          <div class="vp-codebox">
-            <span class="vp-codebox__text">
-              <strong class="vp-codebox__value" data-invite-code>K7M2QX</strong>
-              <span class="vp-codebox__label">Yours alone — it never expires</span>
-            </span>
-            <button type="button" class="vp-codebox__copy" data-invite-copy aria-label="Copy your referral code">
-              <i class="bi bi-copy" aria-hidden="true"></i>
+          <p class="vp-hero-panel__line vp-hero-panel__line--tight">
+            Here is the link your friends need to sign up:
+          </p>
+
+          <div class="vp-linkbox">
+            <span class="vp-linkbox__url" data-invite-link>https://vivapoll.com/signup?ref=K7M2QX</span>
+            <button type="button" class="vp-linkbox__copy" data-invite-copy>
+              <i class="bi bi-copy" aria-hidden="true"></i><span>Copy</span>
             </button>
           </div>
 
@@ -120,9 +121,11 @@
 
           <div class="vp-hero-panel__actions">
             <button type="button" class="vp-act" data-invite-share>
-              Invite a friend <i class="bi bi-send" aria-hidden="true"></i>
+              Send to a friend <i class="bi bi-send" aria-hidden="true"></i>
             </button>
-            <a href="#" class="vp-act vp-act--ghost">Earning insights <i class="bi bi-bar-chart" aria-hidden="true"></i></a>
+            <span class="vp-hero-panel__aside">
+              Or give them your code: <strong data-invite-code>K7M2QX</strong>
+            </span>
           </div>
         </section>
 
@@ -131,13 +134,13 @@
           <article class="vp-tile">
             <span class="vp-tile__label"><i class="bi bi-send" aria-hidden="true"></i>Invited</span>
             <strong class="vp-tile__value">0</strong>
-            <span class="vp-tile__foot">Share your code to start</span>
+            <span class="vp-tile__foot">Friends who signed up through your link</span>
           </article>
 
           <article class="vp-tile">
-            <span class="vp-tile__label"><i class="bi bi-person-check" aria-hidden="true"></i>Signed up</span>
+            <span class="vp-tile__label"><i class="bi bi-person-check" aria-hidden="true"></i>Qualified</span>
             <strong class="vp-tile__value">0</strong>
-            <span class="vp-tile__foot">They count once they finish a task</span>
+            <span class="vp-tile__foot">Those who finished their 3 surveys</span>
           </article>
 
           <article class="vp-tile">
@@ -157,20 +160,20 @@
           <div class="vp-steps-row" data-anim="up" data-anim-delay="0.16" data-anim-stagger="0.07" data-anim-group>
             <article class="vp-step-card">
               <span class="vp-step-card__n" aria-hidden="true">1</span>
-              <h3 class="vp-step-card__t">Send your code</h3>
-              <p class="vp-step-card__p">Copy it, or use the share button to hand it over in whatever app you already use.</p>
+              <h3 class="vp-step-card__t">Share your link</h3>
+              <p class="vp-step-card__p">Copy it, or use the button to send it in whatever app you already use.</p>
             </article>
 
             <article class="vp-step-card">
               <span class="vp-step-card__n" aria-hidden="true">2</span>
-              <h3 class="vp-step-card__t">They sign up</h3>
-              <p class="vp-step-card__p">Your friend enters the code when they create their account. That is the whole setup.</p>
+              <h3 class="vp-step-card__t">They join and answer</h3>
+              <p class="vp-step-card__p">Your friend signs up through the link and completes 3 surveys. Profiling surveys do not count towards the three.</p>
             </article>
 
             <article class="vp-step-card">
               <span class="vp-step-card__n" aria-hidden="true">3</span>
-              <h3 class="vp-step-card__t">You both earn</h3>
-              <p class="vp-step-card__p">Ten per cent of everything they complete lands in your balance, alongside your own work.</p>
+              <h3 class="vp-step-card__t">You earn €2.50</h3>
+              <p class="vp-step-card__p">For each person who gets there, paid into your balance alongside your own work.</p>
             </article>
           </div>
 
