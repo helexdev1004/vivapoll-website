@@ -1,34 +1,3 @@
-/* VivaPoll – page motion (GSAP + ScrollTrigger). Loaded on every page.
- *
- * Everything here is bidirectional: it plays as you scroll down and rewinds as you
- * scroll back up, so the page reads the same travelling either way.
- *
- * What it does
- *   · the hero headline drops in letter by letter, each through the top of its own line
- *   · headings and copy rise into place, in sequence
- *   · cards hinge up out of the page in 3D, one after another
- *   · the statistics count up to their figure, and count back down on the way out
- *   · the illustration, its reward card and the background circles drift at their own
- *     speeds against the scroll
- *   · a progress bar across the top tracks how far down the page you are
- *
- * Markup drives the simple cases:
- *   data-anim="up|down|left|right|zoom|fade|tilt|mask|focus|flip|swing|chars"
- *   data-anim-group      animate this element's children in sequence
- *   data-anim-delay="0.15"
- *   data-anim-stagger="0.14"   gap between a group's children
- *   data-anim-once       reveal once and never rewind (used by the legal pages)
- *   data-parallax="-70"  drift this far, tied to the scrollbar, the whole way past
- *   data-count           count this number up
- *
- * The homepage-only pieces - the hero parallax, the counting statistics - look for their
- * own elements and simply do nothing on pages that have none, so this one file drives
- * every page without knowing which it is on.
- *
- * Nothing here is load-bearing. The hidden start state only applies while `.vp-anim` is
- * on <html>, and that class comes off the moment this file runs - so a blocked CDN or a
- * JavaScript error leaves an ordinary, fully visible page behind.
- */
 (function () {
   'use strict';
 

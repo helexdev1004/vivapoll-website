@@ -144,44 +144,49 @@
 
           <div class="tab-content">
             <div class="tab-pane fade show active" id="vp-pane-you" role="tabpanel" aria-labelledby="vp-seg-you" tabindex="0">
-              <!-- The best-paying entry from each of the three lists, and nothing that is
-                   not also in one of them: the survey, game and profiling rows below are
-                   where these three come from, figure for figure. -->
+              <!-- The best-paying entry from each of the three lists, and each one is the
+                   row from that list, markup and all - a featured survey is a survey row,
+                   a featured game is a game row. Nothing here has a style of its own. -->
               <ul class="vp-offer-list list-unstyled mb-0">
                 <li>
-                  <a href="#" class="vp-offer vp-offer--survey" aria-label="Survey 2712408, Prime Insights, 35 minutes, pays €0.85">
-                    <span class="vp-offer__icon" aria-hidden="true"><i class="bi bi-file-earmark-text"></i></span>
-                    <span class="vp-offer__body">
-                      <strong class="vp-offer__name">Survey ID #2712408</strong>
-                      <span class="vp-offer__fact"><i class="bi bi-briefcase" aria-hidden="true"></i><span>Prime Insights</span></span>
-                      <span class="vp-offer__time"><i class="bi bi-clock" aria-hidden="true"></i><span>35 min</span></span>
+                  <a href="#" class="vp-survey" aria-label="€0.85, survey 2712408, 35 minutes, Prime Insights">
+                    <span class="vp-survey__icon" aria-hidden="true"><i class="bi bi-file-earmark-text"></i></span>
+                    <span class="vp-survey__body">
+                      <strong class="vp-survey__pay">€ 0.85</strong>
+                      <span class="vp-survey__meta">
+                        <span>Survey ID #2712408</span>
+                        <span>35 min</span>
+                        <span>Prime Insights</span>
+                      </span>
                     </span>
-                    <span class="vp-offer__pay">+ €0.85</span>
-                    <i class="bi bi-chevron-right vp-offer__go" aria-hidden="true"></i>
                   </a>
                 </li>
                 <li>
-                  <a href="#" class="vp-offer vp-offer--game" aria-label="MONOPOLY GO!, 17 steps, complete within 30 days, worth €120.57 in total">
-                    <span class="vp-offer__icon" aria-hidden="true"><i class="bi bi-dice-5-fill"></i></span>
-                    <span class="vp-offer__body">
-                      <strong class="vp-offer__name">MONOPOLY GO!</strong>
-                      <span class="vp-offer__fact"><i class="bi bi-bar-chart" aria-hidden="true"></i><span>17 steps</span></span>
-                      <span class="vp-offer__time"><i class="bi bi-clock" aria-hidden="true"></i><span>Complete within 30 days</span></span>
+                  <a href="#" class="vp-game" aria-label="MONOPOLY GO!, earn up to €120.57 in total over 17 steps, to be completed within 30 days">
+                    <span class="vp-game__icon vp-game__icon--a" aria-hidden="true"><i class="bi bi-dice-5-fill"></i></span>
+                    <span class="vp-game__lead">
+                      <span class="vp-game__pay">€120.57</span>
+                      <span class="vp-game__total">Total</span>
                     </span>
-                    <span class="vp-offer__pay">€120.57 <small>total</small></span>
-                    <i class="bi bi-chevron-right vp-offer__go" aria-hidden="true"></i>
+                    <span class="vp-game__name">MONOPOLY GO!</span>
+                    <span class="vp-game__facts">
+                      <span class="vp-game__fact"><i class="bi bi-bar-chart-fill" aria-hidden="true"></i>17 steps</span>
+                      <span class="vp-game__fact"><i class="bi bi-clock-fill" aria-hidden="true"></i>Complete within 30 days</span>
+                    </span>
+                    <span class="vp-game__go" aria-hidden="true"><i class="bi bi-chevron-right"></i></span>
                   </a>
                 </li>
                 <li>
-                  <a href="#" class="vp-offer vp-offer--profiling" aria-label="Profiling survey 3100845, Toluna, 6 minutes, pays €0.32">
-                    <span class="vp-offer__icon" aria-hidden="true"><i class="bi bi-file-earmark-plus-fill"></i></span>
-                    <span class="vp-offer__body">
-                      <strong class="vp-offer__name">Survey ID #3100845</strong>
-                      <span class="vp-offer__fact"><i class="bi bi-briefcase" aria-hidden="true"></i><span>Toluna</span></span>
-                      <span class="vp-offer__time"><i class="bi bi-clock" aria-hidden="true"></i><span>6 min</span></span>
+                  <a href="#" class="vp-survey vp-survey--profiling" aria-label="€0.32, survey 3100845, 6 minutes, Toluna">
+                    <span class="vp-survey__icon" aria-hidden="true"><i class="bi bi-file-earmark-plus-fill"></i></span>
+                    <span class="vp-survey__body">
+                      <strong class="vp-survey__pay">€ 0.32</strong>
+                      <span class="vp-survey__meta">
+                        <span>Survey ID #3100845</span>
+                        <span>6 min</span>
+                        <span>Toluna</span>
+                      </span>
                     </span>
-                    <span class="vp-offer__pay">+ €0.32</span>
-                    <i class="bi bi-chevron-right vp-offer__go" aria-hidden="true"></i>
                   </a>
                 </li>
               </ul>
