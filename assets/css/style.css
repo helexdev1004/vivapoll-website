@@ -2176,7 +2176,28 @@ a { color: var(--vp-blue); }
 .vp-ledger li { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 0.4rem 0.9rem; padding: 1rem 1.25rem; }
 .vp-ledger li + li { border-top: 1px solid var(--vp-border); }
 
-.vp-ledger__icon { grid-row: 1 / span 2; display: grid; place-items: center; width: 40px; height: 40px; border-radius: 12px; background: var(--vp-light-blue); color: var(--vp-blue); font-size: 1.1rem; }
+/* The tiles carry the same colours as the lists the money came from on the dashboard, so
+   a row is recognised the same way in both places: a filled tile with a white glyph,
+   scaled down to suit a list of four. */
+.vp-ledger__icon {
+  grid-row: 1 / span 2;
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: var(--vp-tile, var(--vp-blue));
+  color: #fff;
+  font-size: 1.15rem;
+}
+
+/* Blue as the survey rows, green as the profiling rows, and one of the games' own
+   gradients - the purple, since blue and green are already spoken for. Referrals take
+   the gold of the coins on the invite screen. */
+.vp-ledger__icon--surveys   { --vp-tile: var(--vp-blue); }
+.vp-ledger__icon--profiling { --vp-tile: linear-gradient(145deg, #63b86f, #3f8c4e); }
+.vp-ledger__icon--games     { --vp-tile: linear-gradient(140deg, #9f7aea, #5b35e8); }
+.vp-ledger__icon--referrals { --vp-tile: linear-gradient(140deg, #f7b733, #d9860c); }
 .vp-ledger__name { grid-column: 2; font-weight: 600; color: var(--vp-dark); }
 .vp-ledger__sum { grid-column: 3; grid-row: 1 / span 2; font-weight: 800; color: var(--vp-dark); font-variant-numeric: tabular-nums; }
 .vp-ledger__sum--none { color: var(--vp-muted); font-weight: 600; }
