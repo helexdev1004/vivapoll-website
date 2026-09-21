@@ -80,9 +80,11 @@
     <main id="main" class="vp-app__main">
       <div class="container vp-screen">
 
+        <!-- No headline over the panel: the balance below is the headline, and a line of
+             prose above it only said the same thing in words. The eyebrow carries the
+             page's heading so the document still has exactly one h1. -->
         <div class="vp-screen__head" data-anim="up">
-          <p class="vp-screen__eyebrow">My wallet</p>
-          <h1 class="vp-screen__title">Everything you have earned</h1>
+          <h1 class="vp-screen__eyebrow">My wallet</h1>
         </div>
 
         <!-- ============ BALANCE ============ -->
@@ -130,12 +132,6 @@
               <path class="vp-spark__area" d="M0,25 L20,21 L40,23 L60,13 L80,15 L100,5 L100,30 L0,30 Z" />
               <path class="vp-spark__line" d="M0,25 L20,21 L40,23 L60,13 L80,15 L100,5" vector-effect="non-scaling-stroke" />
             </svg>
-          </article>
-
-          <article class="vp-tile">
-            <span class="vp-tile__label"><i class="bi bi-hourglass-split" aria-hidden="true"></i>Pending</span>
-            <strong class="vp-tile__value">€0.40</strong>
-            <span class="vp-tile__foot">Clears once the partner confirms</span>
           </article>
 
           <article class="vp-tile">
