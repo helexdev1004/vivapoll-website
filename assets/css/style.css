@@ -1896,6 +1896,12 @@ a { color: var(--vp-blue); }
 /* The facts share one line and wrap together rather than one at a time, so a long client
    name never leaves a lone word stranded under the duration. */
 .vp-survey__meta { display: flex; flex-wrap: wrap; gap: 0.15rem 1.35rem; font-size: 0.95rem; color: var(--vp-muted); }
+/* Each fact keeps its icon on its own line: inline-flex rather than a plain inline, so a
+   wrap never leaves a clock stranded above the minutes it belongs to. */
+.vp-survey__meta > span { display: inline-flex; align-items: center; gap: 0.42rem; }
+.vp-survey__meta .bi { font-size: 0.92rem; color: var(--vp-blue); }
+/* The icons take the row's own colour, so a green-tiled row is green throughout. */
+.vp-survey--profiling .vp-survey__meta .bi { color: #3f8c4e; }
 
 /* Profiling surveys are the same row in every respect but their tile, which is green so
    the two lists are told apart at a glance rather than by reading the heading. */
