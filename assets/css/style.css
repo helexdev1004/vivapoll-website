@@ -2541,6 +2541,7 @@ a { color: var(--vp-blue); }
 .vp-modal__close:hover, .vp-modal__close:focus-visible { background: var(--vp-light-blue); color: var(--vp-dark); }
 
 .vp-modal__body { padding: 0.4rem 1.6rem 0.2rem; }
+.vp-modal__ask { margin: 0; font-size: 1.02rem; line-height: 1.6; color: var(--vp-text); }
 
 .vp-modal__foot { display: flex; gap: 0.7rem; padding: 1.1rem 1.6rem 1.5rem; }
 .vp-modal__cancel, .vp-modal__save {
@@ -2556,6 +2557,11 @@ a { color: var(--vp-blue); }
 .vp-modal__cancel:hover, .vp-modal__cancel:focus-visible { background: #d6e8ff; }
 .vp-modal__save { background: var(--vp-blue); color: #fff; box-shadow: 0 10px 24px rgba(8, 116, 252, 0.26); }
 .vp-modal__save:hover, .vp-modal__save:focus-visible { transform: translateY(-2px); background: var(--vp-blue-dark); color: #fff; }
+
+/* A dialog that asks before something irreversible looks like it. */
+.vp-modal__icon--danger { background: #fdeaea; color: #c02c2c; }
+.vp-modal__save--danger { background: #c02c2c; box-shadow: 0 10px 24px rgba(192, 44, 44, 0.26); }
+.vp-modal__save--danger:hover, .vp-modal__save--danger:focus-visible { background: #a72424; }
 
 /* The dialog's own icon sits at the top of the field, which is where the auth pages put
    it; inside the dialog the label sits above the field, so the offset is the same. */

@@ -235,14 +235,14 @@
               <i class="bi bi-chevron-right vp-row__go" aria-hidden="true"></i>
             </a>
 
-            <a href="#" class="vp-row vp-row--danger">
+            <button type="button" class="vp-row vp-row--danger" data-bs-toggle="modal" data-bs-target="#vpDeleteModal">
               <span class="vp-row__icon" aria-hidden="true"><i class="bi bi-trash3"></i></span>
               <span class="vp-row__text">
                 <span class="vp-row__label">Delete account</span>
                 <span class="vp-row__note">Removes your account and everything in it. This cannot be undone</span>
               </span>
               <i class="bi bi-chevron-right vp-row__go" aria-hidden="true"></i>
-            </a>
+            </button>
           </div>
         </section>
       </div>
@@ -263,6 +263,38 @@
   <!-- Outside .vp-page on purpose: that element sets isolation:isolate, and a dialog
        inside it cannot rise above the backdrop Bootstrap appends to the body - every
        click inside the dialog lands on the backdrop instead. -->
+
+  <!-- ============ DELETE ACCOUNT ============ -->
+  <!-- Asked before anything happens, and the safe way out is the one that reads as the
+       obvious button: deleting is the red one, and it is not the default. -->
+  <div class="modal fade" id="vpDeleteModal" tabindex="-1" aria-labelledby="vpDeleteTitle" aria-describedby="vpDeleteBody" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content vp-modal">
+        <div class="vp-modal__head">
+          <span class="vp-modal__icon vp-modal__icon--danger" aria-hidden="true"><i class="bi bi-exclamation-triangle"></i></span>
+          <div>
+            <h2 class="vp-modal__title" id="vpDeleteTitle">Delete your account?</h2>
+          </div>
+          <button type="button" class="vp-modal__close" data-bs-dismiss="modal" aria-label="Close">
+            <i class="bi bi-x-lg" aria-hidden="true"></i>
+          </button>
+        </div>
+
+        <div class="vp-modal__body">
+          <p class="vp-modal__ask" id="vpDeleteBody">
+            Are you sure you want to delete your account and unsubscribe from participating
+            in surveys and games? Unsubscribing means that you will lose the account balance
+            collected so far.
+          </p>
+        </div>
+
+        <div class="vp-modal__foot">
+          <button type="button" class="vp-modal__cancel" data-bs-dismiss="modal">Keep my account</button>
+          <button type="button" class="vp-modal__save vp-modal__save--danger">Delete account</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- ============ EDIT A FIELD ============ -->
   <!-- One dialog for all seven, filled in by profile.js from the row that opened it.
