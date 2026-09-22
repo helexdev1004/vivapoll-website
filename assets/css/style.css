@@ -2516,6 +2516,36 @@ a { color: var(--vp-blue); }
 .vp-row__go { flex: none; color: var(--vp-muted); font-size: 1.1rem; transition: transform 0.2s ease, color 0.2s ease; }
 .vp-row:hover .vp-row__go, .vp-row:focus-visible .vp-row__go { transform: translateX(3px); color: var(--vp-blue); }
 
+/* ---------- An outcome screen ---------- */
+/* One thing happened and there is one thing to do about it, so the screen is a single
+   centred column with nothing else competing for attention. */
+.vp-outcome__main { display: flex; align-items: center; }
+.vp-outcome { max-width: 34rem; margin: 0 auto; padding: 1rem 0 2rem; text-align: center; }
+
+.vp-outcome__art { width: min(320px, 78vw); height: auto; margin-bottom: 1.6rem; }
+
+.vp-outcome__title { margin: 0; font-size: clamp(1.5rem, 1.1rem + 1.8vw, 2.1rem); font-weight: 800; letter-spacing: -0.035em; line-height: 1.25; color: var(--vp-dark); }
+.vp-outcome__sub { margin: 0.7rem auto 0; max-width: 28rem; font-size: 1.02rem; line-height: 1.55; color: var(--vp-muted); }
+
+.vp-outcome__go {
+  display: block;
+  width: 100%;
+  max-width: 22rem;
+  margin: 1.6rem auto 0;
+  padding: 0.95rem 1.5rem;
+  border-radius: 16px;
+  background: var(--vp-blue);
+  color: #fff;
+  font-size: 1.08rem;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 0 12px 26px rgba(8, 116, 252, 0.24);
+  transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+}
+.vp-outcome__go:hover, .vp-outcome__go:focus-visible { transform: translateY(-2px); background: var(--vp-blue-dark); color: #fff; box-shadow: 0 18px 34px rgba(8, 116, 252, 0.3); }
+
+.vp-outcome__note { margin: 1.4rem auto 0; max-width: 30rem; font-size: 0.9rem; line-height: 1.55; color: var(--vp-muted); }
+
 /* ---------- The password dialog ---------- */
 .vp-modal { border: 0; border-radius: 24px; box-shadow: 0 30px 70px rgba(11, 20, 55, 0.28); }
 

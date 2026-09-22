@@ -23,4 +23,23 @@
     pill.addEventListener('shown.bs.tab', function () { apply(pill); });
     if (pill.classList.contains('active')) apply(pill);
   });
+
+  /* ---------------------------------------------- arriving on a particular tab */
+
+  // Another page can send someone straight to one of these lists - the "you did not
+  // qualify" screen sends them to the surveys - by naming the pane in the address:
+  // dashboard.html#surveys. Only the four names below are accepted, so a stray hash
+  // cannot point this at some other element on the page.
+  var PANES = { you: 'vp-seg-you', surveys: 'vp-seg-surveys', profiling: 'vp-seg-profiling', games: 'vp-seg-games' };
+
+  var asked = PANES[(window.location.hash || '').replace('#', '')];
+  if (!asked || !window.bootstrap) return;
+
+  var pill = document.getElementById(asked);
+  if (!pill || pill.classList.contains('active')) return;
+
+  window.bootstrap.Tab.getOrCreateInstance(pill).show();
+  // The tabs sit some way down the page, so bring them into view rather than leaving the
+  // reader at the top wondering what changed.
+  document.querySelector('.vp-segments').scrollIntoView({ block: 'center', behavior: 'smooth' });
 })();
