@@ -150,19 +150,19 @@
         <div class="vp-bento" data-anim="up" data-anim-delay="0.1" data-anim-stagger="0.07" data-anim-group>
           <article class="vp-tile">
             <span class="vp-tile__label"><i class="bi bi-send" aria-hidden="true"></i>Invited</span>
-            <strong class="vp-tile__value">0</strong>
+            <strong class="vp-tile__value">3</strong>
             <span class="vp-tile__foot">Friends who signed up through your link</span>
           </article>
 
           <article class="vp-tile">
             <span class="vp-tile__label"><i class="bi bi-person-check" aria-hidden="true"></i>Qualified</span>
-            <strong class="vp-tile__value">0</strong>
+            <strong class="vp-tile__value">1</strong>
             <span class="vp-tile__foot">Those who finished their 3 surveys</span>
           </article>
 
           <article class="vp-tile">
             <span class="vp-tile__label"><i class="bi bi-cash-coin" aria-hidden="true"></i>Earned</span>
-            <strong class="vp-tile__value">€0.00</strong>
+            <strong class="vp-tile__value">€1.00</strong>
             <span class="vp-tile__foot">Paid into the same balance</span>
           </article>
         </div>
@@ -198,6 +198,70 @@
             Referral earnings follow the same payout rules as the rest of your balance.
             <a href="terms-and-conditions.html">Read terms</a>
           </p>
+        </section>
+
+        <!-- ============ WHO HAS JOINED ============ -->
+        <!-- Usernames are shown with their last five characters masked: enough for the
+             reader to recognise who they invited, not enough to identify a stranger. The
+             stars fill as each of the three surveys is finished, so a row shows how close
+             that person is to earning the bonus rather than only whether they have. -->
+        <section class="vp-screen__section" aria-labelledby="vp-friends-title" data-anim="up" data-anim-delay="0.2">
+          <div class="vp-screen__h">
+            <h2 id="vp-friends-title">Friends who joined</h2>
+            <span>3 friends</span>
+          </div>
+
+          <div class="vp-table-card">
+            <table class="vp-table">
+              <caption class="visually-hidden">Everyone who signed up through your link, how far through their three surveys they are, and what each has earned you.</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Username</th>
+                  <th scope="col">Date</th>
+                  <th scope="col">Surveys taken</th>
+                  <th scope="col" class="vp-table__end">Your bonus</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="vp-table__who">rgarnen<span class="vp-mask" aria-hidden="true">*****</span><span class="visually-hidden">, last five characters hidden</span></td>
+                  <td data-label="Date">22 September 2026</td>
+                  <td data-label="Surveys taken">
+                    <span class="vp-stars" role="img" aria-label="3 of 3 surveys taken">
+                      <i class="bi bi-star-fill is-on" aria-hidden="true"></i>
+                      <i class="bi bi-star-fill is-on" aria-hidden="true"></i>
+                      <i class="bi bi-star-fill is-on" aria-hidden="true"></i>
+                    </span>
+                  </td>
+                  <td data-label="Your bonus" class="vp-table__end"><strong class="vp-table__sum">€1.00</strong></td>
+                </tr>
+                <tr>
+                  <td class="vp-table__who">mlopez<span class="vp-mask" aria-hidden="true">*****</span><span class="visually-hidden">, last five characters hidden</span></td>
+                  <td data-label="Date">19 September 2026</td>
+                  <td data-label="Surveys taken">
+                    <span class="vp-stars" role="img" aria-label="2 of 3 surveys taken">
+                      <i class="bi bi-star-fill is-on" aria-hidden="true"></i>
+                      <i class="bi bi-star-fill is-on" aria-hidden="true"></i>
+                      <i class="bi bi-star-fill" aria-hidden="true"></i>
+                    </span>
+                  </td>
+                  <td data-label="Your bonus" class="vp-table__end"><span class="vp-table__sum vp-table__sum--none">€0.00</span></td>
+                </tr>
+                <tr>
+                  <td class="vp-table__who">kdeboer<span class="vp-mask" aria-hidden="true">*****</span><span class="visually-hidden">, last five characters hidden</span></td>
+                  <td data-label="Date">15 September 2026</td>
+                  <td data-label="Surveys taken">
+                    <span class="vp-stars" role="img" aria-label="1 of 3 surveys taken">
+                      <i class="bi bi-star-fill is-on" aria-hidden="true"></i>
+                      <i class="bi bi-star-fill" aria-hidden="true"></i>
+                      <i class="bi bi-star-fill" aria-hidden="true"></i>
+                    </span>
+                  </td>
+                  <td data-label="Your bonus" class="vp-table__end"><span class="vp-table__sum vp-table__sum--none">€0.00</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </section>
       </div>
     </main>

@@ -2371,6 +2371,50 @@ a { color: var(--vp-blue); }
 .vp-fineprint { margin: 1rem 0 0; font-size: 0.88rem; color: var(--vp-muted); }
 .vp-fineprint a { color: var(--vp-blue); font-weight: 600; text-decoration: none; }
 
+/* ---------- Invite: who has joined ---------- */
+/* The same white card every other list on the signed-in side sits in, with a table
+   inside it rather than a list, because these rows have four things to say each and the
+   columns are what let them be compared. */
+.vp-table-card { background: #fff; border-radius: 20px; box-shadow: 0 8px 24px rgba(28, 82, 160, 0.05); overflow: hidden; }
+
+.vp-table { width: 100%; margin: 0; border-collapse: collapse; }
+.vp-table th, .vp-table td { padding: 0.95rem 1.25rem; text-align: left; vertical-align: middle; }
+.vp-table thead th { font-size: 0.82rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--vp-muted); }
+.vp-table tbody tr { border-top: 1px solid var(--vp-border); }
+.vp-table tbody tr:hover { background: var(--vp-light-blue); }
+.vp-table__end { text-align: right; }
+
+.vp-table__who { font-weight: 600; color: var(--vp-dark); }
+/* The hidden characters are part of the name rather than a redaction mark, so they are
+   quieter than the letters but still on the same line. */
+.vp-mask { color: var(--vp-muted); letter-spacing: 0.08em; }
+
+.vp-table__sum { font-weight: 800; color: var(--vp-dark); font-variant-numeric: tabular-nums; }
+.vp-table__sum--none { font-weight: 600; color: var(--vp-muted); }
+
+/* Three stars that fill as the three surveys are finished, so a row shows how far along
+   somebody is rather than only whether they have finished. Same glyph throughout - only
+   the colour changes - which is what makes it read as filling up. */
+.vp-stars { display: inline-flex; gap: 0.3rem; }
+.vp-stars .bi { font-size: 1rem; color: var(--vp-border); }
+.vp-stars .is-on { color: #f5b301; }
+
+@media (max-width: 575.98px) {
+  /* Four columns will not fit a phone, and a table that scrolls sideways is worse than
+     one that stops being a table. Each row becomes a small card, with the column heading
+     carried down onto the cell it labels. */
+  .vp-table, .vp-table tbody, .vp-table tr, .vp-table td { display: block; }
+  .vp-table thead { display: none; }
+  .vp-table tr { padding: 0.9rem 1rem; }
+  .vp-table td { padding: 0; display: flex; align-items: center; justify-content: space-between; gap: 1rem; text-align: right; }
+  .vp-table td + td { margin-top: 0.45rem; }
+  .vp-table td::before { content: attr(data-label); font-size: 0.85rem; font-weight: 500; color: var(--vp-muted); }
+  /* Qualified on the cell as well as the class: the rule above is `.vp-table td`, which
+     otherwise wins and pushes the masked characters to the far side of the row, away
+     from the name they belong to. */
+  .vp-table td.vp-table__who { display: block; text-align: left; font-size: 1.02rem; margin-bottom: 0.2rem; }
+}
+
 /* ---------- Profile ---------- */
 /* Who is signed in, on the same dark panel the balance and the referral code use. */
 .vp-whoami { display: flex; align-items: center; gap: 1.1rem; }

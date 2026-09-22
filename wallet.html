@@ -115,19 +115,19 @@
 
           <span class="vp-hero-panel__label">Available balance</span>
           <p class="vp-hero-panel__figure mb-0">
-            <strong class="vp-hero-panel__amount">€2.75</strong>
+            <strong class="vp-hero-panel__amount">€3.75</strong>
             <span class="vp-hero-panel__unit">EUR</span>
           </p>
 
           <!-- The same reading as the bar on the dashboard: how much of the minimum payout
                has been reached. One custom property carries it, so a single number changes
                when there is a back end behind this. -->
-          <div class="vp-meter" style="--vp-meter: 27.5%">
-            <span class="vp-meter__track" role="img" aria-label="€2.75 of the €10.00 minimum payout, 28 per cent">
+          <div class="vp-meter" style="--vp-meter: 37.5%">
+            <span class="vp-meter__track" role="img" aria-label="€3.75 of the €10.00 minimum payout, 38 per cent">
               <span class="vp-meter__fill"></span>
             </span>
             <p class="vp-meter__note">
-              <span><strong>€7.25</strong> more to reach the minimum</span>
+              <span><strong>€6.25</strong> more to reach the minimum</span>
               <span>Minimum €10.00</span>
             </p>
           </div>
@@ -144,7 +144,7 @@
         <div class="vp-bento" data-anim="up" data-anim-delay="0.1" data-anim-stagger="0.07" data-anim-group>
           <article class="vp-tile">
             <span class="vp-tile__label"><i class="bi bi-graph-up-arrow" aria-hidden="true"></i>This month</span>
-            <strong class="vp-tile__value">€2.75</strong>
+            <strong class="vp-tile__value">€3.75</strong>
             <!-- A shape, not a chart: it says the month has been climbing and claims
                  nothing finer than that. The stroke is kept at an even weight while the
                  box stretches, which is what non-scaling-stroke is for. -->
@@ -156,8 +156,8 @@
 
           <article class="vp-tile">
             <span class="vp-tile__label"><i class="bi bi-trophy" aria-hidden="true"></i>Lifetime</span>
-            <strong class="vp-tile__value">€18.60</strong>
-            <span class="vp-tile__foot">Across 46 completed tasks</span>
+            <strong class="vp-tile__value">€19.60</strong>
+            <span class="vp-tile__foot">Since you joined</span>
           </article>
         </div>
 
@@ -187,6 +187,12 @@
               <div class="vp-ledger">
                 <ul class="vp-ledger__list list-unstyled mb-0">
                   <li>
+                    <span class="vp-ledger__icon vp-ledger__icon--referrals" aria-hidden="true"><i class="bi bi-person-plus"></i></span>
+                    <span class="vp-ledger__name">Referral bonus — rgarnen*****</span>
+                    <span class="vp-ledger__when">22 September</span>
+                    <span class="vp-ledger__sum">€1.00</span>
+                  </li>
+                  <li>
                     <span class="vp-ledger__icon vp-ledger__icon--surveys" aria-hidden="true"><i class="bi bi-file-earmark-text"></i></span>
                     <span class="vp-ledger__name">Survey #2712671</span>
                     <span class="vp-ledger__when">21 September</span>
@@ -204,18 +210,18 @@
                     <span class="vp-ledger__when">19 September</span>
                     <span class="vp-ledger__sum">€0.35</span>
                   </li>
-                  <li>
-                    <span class="vp-ledger__icon vp-ledger__icon--surveys" aria-hidden="true"><i class="bi bi-file-earmark-text"></i></span>
-                    <span class="vp-ledger__name">Survey #2712408</span>
-                    <span class="vp-ledger__when">18 September</span>
-                    <span class="vp-ledger__sum">€0.85</span>
-                  </li>
                 </ul>
 
                 <!-- Everything older, folded away until it is asked for. Bootstrap's own
                      collapse does the work, so this needs no JavaScript of ours. -->
                 <div class="collapse" id="vp-all-activity">
                   <ul class="vp-ledger__list list-unstyled mb-0">
+                    <li>
+                      <span class="vp-ledger__icon vp-ledger__icon--surveys" aria-hidden="true"><i class="bi bi-file-earmark-text"></i></span>
+                      <span class="vp-ledger__name">Survey #2712408</span>
+                      <span class="vp-ledger__when">18 September</span>
+                      <span class="vp-ledger__sum">€0.85</span>
+                    </li>
                     <li>
                       <span class="vp-ledger__icon vp-ledger__icon--surveys" aria-hidden="true"><i class="bi bi-file-earmark-text"></i></span>
                       <span class="vp-ledger__name">Survey #2712950</span>
