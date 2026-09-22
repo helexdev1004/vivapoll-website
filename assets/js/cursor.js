@@ -48,6 +48,27 @@
   var ring = make('div', 'vp-cursor-ring');
   var core = make('div', 'vp-cursor-core');
 
+  // The pointer itself: an arrow rather than a bead, filled with a lilac-to-cyan gradient
+  // and outlined in white so it holds its shape over a photograph or a blue button as
+  // well as over the pale page. Built here rather than in the markup so the fourteen
+  // pages do not each carry a copy of it.
+  //
+  // The tip sits at (2,2) in the drawing, and the element is nudged by that much when it
+  // is placed, so the point of the arrow is exactly the point being pointed at.
+  core.innerHTML =
+    '<svg viewBox="0 0 26 34" width="26" height="34" aria-hidden="true" focusable="false">' +
+      '<defs>' +
+        '<linearGradient id="vpCursorFill" x1="2" y1="2" x2="21" y2="30" gradientUnits="userSpaceOnUse">' +
+          '<stop offset="0" stop-color="#cbb2ff" />' +
+          '<stop offset="0.48" stop-color="#6ba6ff" />' +
+          '<stop offset="1" stop-color="#3fd8ef" />' +
+        '</linearGradient>' +
+      '</defs>' +
+      '<path d="M2 2 L2 27.4 L8.5 21.5 L12.5 31.1 L17.1 29.1 L13.2 19.8 L21.6 19.3 Z" ' +
+            'fill="url(#vpCursorFill)" stroke="rgba(255,255,255,0.92)" stroke-width="1.7" ' +
+            'stroke-linejoin="round" />' +
+    '</svg>';
+
   /* --------------------------------------------------------------- the wash */
 
   // A fixed pool, reused round-robin. However hard you scribble, this is the ceiling.
@@ -196,7 +217,9 @@
     // Stretched along the direction of travel, squeezed across it - the faster the more
     // so, the way a drop of water deforms as it is flung. Kept shallow on purpose.
     var pull = Math.min(speed / 72, 0.3);
-    core.style.transform = 'translate3d(' + pointer.x + 'px,' + pointer.y + 'px,0) translate(-50%,-50%)';
+    // Not centred: an arrow points from its tip, so the drawing is pulled back by the
+    // two pixels that sit between the element's corner and the point of the arrow.
+    core.style.transform = 'translate3d(' + pointer.x + 'px,' + pointer.y + 'px,0) translate(-2px,-2px)';
     ring.style.transform =
       'translate3d(' + ringPos.x + 'px,' + ringPos.y + 'px,0) translate(-50%,-50%) ' +
       'rotate(' + angle + 'deg) scale(' + (1 + pull) + ',' + (1 - pull * 0.5) + ')';

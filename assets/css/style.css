@@ -2905,20 +2905,25 @@ a { color: var(--vp-blue); }
 .vp-cursor-on .vp-cursor-core,
 .vp-cursor-on .vp-cursor-ring { opacity: 1; }
 
-/* A blue glass bead: lit from the top left, deepening to the brand blue, wrapped in a
-   thin white collar and a blue halo. The collar is what keeps it readable on a
-   photograph or on top of a blue button, where a flat dot would vanish. */
+/* The arrow. Its shape and gradient live in cursor.js; what is here is where it sits and
+   how it answers what is under it.
+ *
+   The glow is a drop-shadow rather than a box-shadow: a box-shadow would trace the
+   element's rectangle, and this element is an arrow inside that rectangle. */
 .vp-cursor-core {
-  width: 14px;
-  height: 14px;
-  border-radius: 50%;
-  background: radial-gradient(circle at 34% 30%, #bcdcff 0%, #4ea0ff 38%, var(--vp-blue) 72%, #0a5bc4 100%);
-  box-shadow:
-    0 0 0 2px rgba(255, 255, 255, 0.92),
-    0 0 10px rgba(8, 116, 252, 0.5),
-    0 0 22px rgba(8, 116, 252, 0.2);
-  transition: opacity 0.2s ease, width 0.22s ease, height 0.22s ease;
+  width: 26px;
+  height: 34px;
+  /* It grows and shrinks about its own tip, which is the one point that must not move. */
+  transform-origin: 2px 2px;
+  filter:
+    drop-shadow(0 0 6px rgba(120, 130, 255, 0.55))
+    drop-shadow(0 0 16px rgba(80, 180, 255, 0.35))
+    drop-shadow(0 2px 3px rgba(11, 20, 55, 0.25));
+  /* `scale` rather than `transform`: the transform is written every frame by the script,
+     and a second one here would simply be overwritten. These compose instead. */
+  transition: opacity 0.2s ease, scale 0.22s cubic-bezier(0.34, 1.4, 0.64, 1);
 }
+.vp-cursor-core svg { display: block; }
 
 /* The ring is hairline and mostly light, so it reads as a lens around the bead rather
    than as a second heavy shape competing with it. */
@@ -2943,10 +2948,10 @@ a { color: var(--vp-blue); }
   background: rgba(8, 116, 252, 0.12);
   border-color: rgba(8, 116, 252, 1);
 }
-.vp-cursor-hot .vp-cursor-core { width: 8px; height: 8px; }
+.vp-cursor-hot .vp-cursor-core { scale: 0.82; }
 
 .vp-cursor-down .vp-cursor-ring { width: 30px; height: 30px; background: rgba(8, 116, 252, 0.26); }
-.vp-cursor-down .vp-cursor-core { width: 18px; height: 18px; }
+.vp-cursor-down .vp-cursor-core { scale: 0.7; }
 
 /* The native pointer is hidden only while ours is on screen, and comes back over text
    fields where the caret is genuinely more useful. */
