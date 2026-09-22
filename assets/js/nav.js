@@ -123,6 +123,24 @@
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(reset);
   }
 
+  /* ------------------------------------------------- the app bar, once it is stuck */
+
+  // A sticky bar that looks identical to the page behind it is not readable as a bar.
+  // The shadow arrives the moment the page moves, which is what tells the eye the menu
+  // is in front of the content rather than part of it.
+  var appbar = document.querySelector('.vp-appbar');
+  if (appbar) {
+    var stuck = false;
+    var check = function () {
+      var now = window.scrollY > 4;
+      if (now === stuck) return;
+      stuck = now;
+      appbar.classList.toggle('is-stuck', now);
+    };
+    window.addEventListener('scroll', check, { passive: true });
+    check();
+  }
+
   /* ------------------------------------------------------------- leaving a page */
 
   // Anything in the header that goes somewhere else on this site: the tabs, the log in /
