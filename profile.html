@@ -116,7 +116,6 @@
             <div class="vp-whoami__text">
               <p class="vp-whoami__name">Alex Carter</p>
               <p class="vp-whoami__mail">alex.carter@example.com</p>
-              <span class="vp-badge"><i class="bi bi-shield-check" aria-hidden="true"></i>Signed in with Google</span>
             </div>
           </div>
         </section>
@@ -144,38 +143,88 @@
           </article>
         </div>
 
-        <!-- ============ SETTINGS ============ -->
-        <section class="vp-screen__section" aria-labelledby="vp-settings-title" data-anim="up" data-anim-delay="0.14">
+        <!-- ============ YOUR DETAILS ============ -->
+        <!-- Each row shows what it currently holds, so the screen can be read without
+             opening anything. Password is the exception: what it holds is not something
+             to display, so it shows its length and opens the dialog instead. -->
+        <section class="vp-screen__section" aria-labelledby="vp-details-title" data-anim="up" data-anim-delay="0.14">
+          <div class="vp-screen__h">
+            <h2 id="vp-details-title">Your details</h2>
+            <span>8 fields</span>
+          </div>
+
+          <div class="vp-rows">
+            <a href="#" class="vp-row">
+              <span class="vp-row__icon" aria-hidden="true"><i class="bi bi-person"></i></span>
+              <span class="vp-row__text"><span class="vp-row__label">First name</span></span>
+              <span class="vp-row__value">Alex</span>
+              <i class="bi bi-chevron-right vp-row__go" aria-hidden="true"></i>
+            </a>
+
+            <a href="#" class="vp-row">
+              <span class="vp-row__icon" aria-hidden="true"><i class="bi bi-person-badge"></i></span>
+              <span class="vp-row__text"><span class="vp-row__label">Last name</span></span>
+              <span class="vp-row__value">Carter</span>
+              <i class="bi bi-chevron-right vp-row__go" aria-hidden="true"></i>
+            </a>
+
+            <button type="button" class="vp-row" data-bs-toggle="modal" data-bs-target="#vpPasswordModal">
+              <span class="vp-row__icon" aria-hidden="true"><i class="bi bi-lock"></i></span>
+              <span class="vp-row__text"><span class="vp-row__label">Password</span></span>
+              <span class="vp-row__value" aria-hidden="true">••••••••</span>
+              <span class="visually-hidden">Change your password</span>
+              <i class="bi bi-chevron-right vp-row__go" aria-hidden="true"></i>
+            </button>
+
+            <a href="#" class="vp-row">
+              <span class="vp-row__icon" aria-hidden="true"><i class="bi bi-gender-ambiguous"></i></span>
+              <span class="vp-row__text"><span class="vp-row__label">Gender</span></span>
+              <span class="vp-row__value">Female</span>
+              <i class="bi bi-chevron-right vp-row__go" aria-hidden="true"></i>
+            </a>
+
+            <a href="#" class="vp-row">
+              <span class="vp-row__icon" aria-hidden="true"><i class="bi bi-calendar-event"></i></span>
+              <span class="vp-row__text"><span class="vp-row__label">Birth date</span></span>
+              <span class="vp-row__value">14 March 1994</span>
+              <i class="bi bi-chevron-right vp-row__go" aria-hidden="true"></i>
+            </a>
+
+            <a href="#" class="vp-row">
+              <span class="vp-row__icon" aria-hidden="true"><i class="bi bi-globe-americas"></i></span>
+              <span class="vp-row__text"><span class="vp-row__label">Country</span></span>
+              <span class="vp-row__value">Netherlands</span>
+              <i class="bi bi-chevron-right vp-row__go" aria-hidden="true"></i>
+            </a>
+
+            <a href="#" class="vp-row">
+              <span class="vp-row__icon" aria-hidden="true"><i class="bi bi-map"></i></span>
+              <span class="vp-row__text"><span class="vp-row__label">Region</span></span>
+              <span class="vp-row__value">North Holland</span>
+              <i class="bi bi-chevron-right vp-row__go" aria-hidden="true"></i>
+            </a>
+
+            <a href="#" class="vp-row">
+              <span class="vp-row__icon" aria-hidden="true"><i class="bi bi-mailbox"></i></span>
+              <span class="vp-row__text"><span class="vp-row__label">Postal code</span></span>
+              <span class="vp-row__value">1017 CV</span>
+              <i class="bi bi-chevron-right vp-row__go" aria-hidden="true"></i>
+            </a>
+          </div>
+        </section>
+
+        <!-- ============ ELSEWHERE ============ -->
+        <section class="vp-screen__section" aria-labelledby="vp-settings-title" data-anim="up" data-anim-delay="0.16">
           <div class="vp-screen__h">
             <h2 id="vp-settings-title">Account</h2>
           </div>
 
           <div class="vp-rows">
             <a href="profile-data.html" class="vp-row">
-              <span class="vp-row__icon" aria-hidden="true"><i class="bi bi-person"></i></span>
+              <span class="vp-row__icon" aria-hidden="true"><i class="bi bi-ui-checks"></i></span>
               <span class="vp-row__text">
                 <span class="vp-row__label">Profile data</span>
-                <span class="vp-row__note">Name, date of birth and the details surveys match on</span>
-              </span>
-              <i class="bi bi-chevron-right vp-row__go" aria-hidden="true"></i>
-            </a>
-
-            <!-- A state, not a destination: it says where the setting stands and nothing
-                 here can change it until there is something behind it. -->
-            <div class="vp-row">
-              <span class="vp-row__icon" aria-hidden="true"><i class="bi bi-geo-alt"></i></span>
-              <span class="vp-row__text">
-                <span class="vp-row__label">Location</span>
-                <span class="vp-row__note">Used to show surveys available where you are</span>
-              </span>
-              <span class="vp-state"><i class="bi bi-circle-fill" aria-hidden="true"></i>Enabled</span>
-            </div>
-
-            <a href="#" class="vp-row">
-              <span class="vp-row__icon" aria-hidden="true"><i class="bi bi-ticket-perforated"></i></span>
-              <span class="vp-row__text">
-                <span class="vp-row__label">Enter invitation code</span>
-                <span class="vp-row__note">Were you invited? Add your friend's code</span>
+                <span class="vp-row__note">The topics surveys are matched on</span>
               </span>
               <i class="bi bi-chevron-right vp-row__go" aria-hidden="true"></i>
             </a>
@@ -231,10 +280,76 @@
     </footer>
   </div>
 
+  <!-- Outside .vp-page on purpose: that element sets isolation:isolate, and a dialog
+       inside it cannot rise above the backdrop Bootstrap appends to the body - every
+       click inside the dialog lands on the backdrop instead. -->
+  <!-- ============ CHANGE PASSWORD ============ -->
+  <!-- Bootstrap's dialog, so Escape, the backdrop, the focus trap and returning focus
+       to the row that opened it all come for free. Nothing is sent anywhere: there is
+       no back end behind this yet, and the form does not pretend otherwise. -->
+  <div class="modal fade" id="vpPasswordModal" tabindex="-1" aria-labelledby="vpPasswordTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content vp-modal">
+        <div class="vp-modal__head">
+          <span class="vp-modal__icon" aria-hidden="true"><i class="bi bi-lock"></i></span>
+          <div>
+            <h2 class="vp-modal__title" id="vpPasswordTitle">Change your password</h2>
+            <p class="vp-modal__sub">Pick something you do not use anywhere else.</p>
+          </div>
+          <button type="button" class="vp-modal__close" data-bs-dismiss="modal" aria-label="Close">
+            <i class="bi bi-x-lg" aria-hidden="true"></i>
+          </button>
+        </div>
+
+        <form class="vp-modal__body" novalidate>
+          <div class="mb-3">
+            <label class="vp-form-label" for="vpCurrentPassword">Current password</label>
+            <div class="vp-input">
+              <i class="bi bi-lock vp-input__icon" aria-hidden="true"></i>
+              <input type="password" class="form-control vp-form-control vp-form-control--toggle" id="vpCurrentPassword" autocomplete="current-password" placeholder="Enter your current password">
+              <button type="button" class="vp-input__toggle" data-vp-toggle-password="vpCurrentPassword" aria-label="Show password" aria-pressed="false">
+                <i class="bi bi-eye-slash" aria-hidden="true"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label class="vp-form-label" for="vpNewPassword">New password</label>
+            <div class="vp-input">
+              <i class="bi bi-shield-lock vp-input__icon" aria-hidden="true"></i>
+              <input type="password" class="form-control vp-form-control vp-form-control--toggle" id="vpNewPassword" autocomplete="new-password" placeholder="At least 8 characters">
+              <button type="button" class="vp-input__toggle" data-vp-toggle-password="vpNewPassword" aria-label="Show password" aria-pressed="false">
+                <i class="bi bi-eye-slash" aria-hidden="true"></i>
+              </button>
+            </div>
+            <p class="vp-form-hint">Minimum 8 characters, with at least one number.</p>
+          </div>
+
+          <div class="mb-1">
+            <label class="vp-form-label" for="vpRepeatPassword">Repeat new password</label>
+            <div class="vp-input">
+              <i class="bi bi-shield-lock vp-input__icon" aria-hidden="true"></i>
+              <input type="password" class="form-control vp-form-control vp-form-control--toggle" id="vpRepeatPassword" autocomplete="new-password" placeholder="Type it once more">
+              <button type="button" class="vp-input__toggle" data-vp-toggle-password="vpRepeatPassword" aria-label="Show password" aria-pressed="false">
+                <i class="bi bi-eye-slash" aria-hidden="true"></i>
+              </button>
+            </div>
+          </div>
+        </form>
+
+        <div class="vp-modal__foot">
+          <button type="button" class="vp-modal__cancel" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="vp-modal__save">Update password</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script src="assets/js/animations.js"></script>
+  <script src="assets/js/profile.js"></script>
   <script src="assets/js/nav.js"></script>
   <script src="assets/js/cursor.js"></script>
 </body>
