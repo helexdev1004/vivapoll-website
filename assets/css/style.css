@@ -2578,8 +2578,11 @@ a { color: var(--vp-blue); }
 
 /* Below this the four labelled pills are wider than the screen. The labels go and the
    icons carry the row - each link still names its destination to a screen reader, and
-   the current one is still the filled pill. */
-@media (max-width: 419.98px) {
+   the current one is still the filled pill.
+ *
+ * The threshold is measured, not guessed: the row needs 473px of inner width, which is
+ * what a 540px viewport gives with room to spare and a 480px one does not. */
+@media (max-width: 539.98px) {
   /* Equal pills spread across the row rather than stretched to fill it: a pill four
      times wider than the icon in it stops reading as a pill. */
   .vp-appnav__item { justify-content: center; min-width: 3.4rem; padding: 0.55rem 0.9rem; }
