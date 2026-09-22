@@ -154,19 +154,21 @@
           </div>
 
           <div class="vp-rows">
-            <a href="#" class="vp-row">
+            <button type="button" class="vp-row" data-edit data-kind="text" data-label="First name" data-value="Alex">
               <span class="vp-row__icon" aria-hidden="true"><i class="bi bi-person"></i></span>
               <span class="vp-row__text"><span class="vp-row__label">First name</span></span>
-              <span class="vp-row__value">Alex</span>
+              <span class="vp-row__value" data-shown>Alex</span>
+              <span class="visually-hidden">Change your first name</span>
               <i class="bi bi-chevron-right vp-row__go" aria-hidden="true"></i>
-            </a>
+            </button>
 
-            <a href="#" class="vp-row">
+            <button type="button" class="vp-row" data-edit data-kind="text" data-label="Last name" data-value="Carter">
               <span class="vp-row__icon" aria-hidden="true"><i class="bi bi-person-badge"></i></span>
               <span class="vp-row__text"><span class="vp-row__label">Last name</span></span>
-              <span class="vp-row__value">Carter</span>
+              <span class="vp-row__value" data-shown>Carter</span>
+              <span class="visually-hidden">Change your last name</span>
               <i class="bi bi-chevron-right vp-row__go" aria-hidden="true"></i>
-            </a>
+            </button>
 
             <button type="button" class="vp-row" data-bs-toggle="modal" data-bs-target="#vpPasswordModal">
               <span class="vp-row__icon" aria-hidden="true"><i class="bi bi-lock"></i></span>
@@ -176,40 +178,45 @@
               <i class="bi bi-chevron-right vp-row__go" aria-hidden="true"></i>
             </button>
 
-            <a href="#" class="vp-row">
+            <button type="button" class="vp-row" data-edit data-kind="choice" data-label="Gender" data-value="Female" data-options="Female|Male|Other|Prefer not to say">
               <span class="vp-row__icon" aria-hidden="true"><i class="bi bi-gender-ambiguous"></i></span>
               <span class="vp-row__text"><span class="vp-row__label">Gender</span></span>
-              <span class="vp-row__value">Female</span>
+              <span class="vp-row__value" data-shown>Female</span>
+              <span class="visually-hidden">Change your gender</span>
               <i class="bi bi-chevron-right vp-row__go" aria-hidden="true"></i>
-            </a>
+            </button>
 
-            <a href="#" class="vp-row">
+            <button type="button" class="vp-row" data-edit data-kind="date" data-label="Birth date" data-value="1994-03-14">
               <span class="vp-row__icon" aria-hidden="true"><i class="bi bi-calendar-event"></i></span>
               <span class="vp-row__text"><span class="vp-row__label">Birth date</span></span>
-              <span class="vp-row__value">14 March 1994</span>
+              <span class="vp-row__value" data-shown>14 March 1994</span>
+              <span class="visually-hidden">Change your birth date</span>
               <i class="bi bi-chevron-right vp-row__go" aria-hidden="true"></i>
-            </a>
+            </button>
 
-            <a href="#" class="vp-row">
+            <button type="button" class="vp-row" data-edit data-kind="country" data-label="Country" data-value="NL">
               <span class="vp-row__icon" aria-hidden="true"><i class="bi bi-globe-americas"></i></span>
               <span class="vp-row__text"><span class="vp-row__label">Country</span></span>
-              <span class="vp-row__value">Netherlands</span>
+              <span class="vp-row__value" data-shown>Netherlands</span>
+              <span class="visually-hidden">Change your country</span>
               <i class="bi bi-chevron-right vp-row__go" aria-hidden="true"></i>
-            </a>
+            </button>
 
-            <a href="#" class="vp-row">
+            <button type="button" class="vp-row" data-edit data-kind="region" data-label="Region" data-value="Noord-Holland">
               <span class="vp-row__icon" aria-hidden="true"><i class="bi bi-map"></i></span>
               <span class="vp-row__text"><span class="vp-row__label">Region</span></span>
-              <span class="vp-row__value">North Holland</span>
+              <span class="vp-row__value" data-shown>Noord-Holland</span>
+              <span class="visually-hidden">Change your region</span>
               <i class="bi bi-chevron-right vp-row__go" aria-hidden="true"></i>
-            </a>
+            </button>
 
-            <a href="#" class="vp-row">
+            <button type="button" class="vp-row" data-edit data-kind="text" data-label="Postal code" data-value="1017 CV">
               <span class="vp-row__icon" aria-hidden="true"><i class="bi bi-mailbox"></i></span>
               <span class="vp-row__text"><span class="vp-row__label">Postal code</span></span>
-              <span class="vp-row__value">1017 CV</span>
+              <span class="vp-row__value" data-shown>1017 CV</span>
+              <span class="visually-hidden">Change your postal code</span>
               <i class="bi bi-chevron-right vp-row__go" aria-hidden="true"></i>
-            </a>
+            </button>
           </div>
         </section>
 
@@ -256,6 +263,40 @@
   <!-- Outside .vp-page on purpose: that element sets isolation:isolate, and a dialog
        inside it cannot rise above the backdrop Bootstrap appends to the body - every
        click inside the dialog lands on the backdrop instead. -->
+
+  <!-- ============ EDIT A FIELD ============ -->
+  <!-- One dialog for all seven, filled in by profile.js from the row that opened it.
+       Seven near-identical dialogs would be seven places to keep in step. -->
+  <div class="modal fade" id="vpEditModal" tabindex="-1" aria-labelledby="vpEditTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content vp-modal">
+        <div class="vp-modal__head">
+          <span class="vp-modal__icon" aria-hidden="true"><i class="bi bi-pencil" data-edit-icon></i></span>
+          <div>
+            <h2 class="vp-modal__title" id="vpEditTitle" data-edit-title>Edit</h2>
+            <p class="vp-modal__sub" data-edit-sub>This is only used to match you with surveys.</p>
+          </div>
+          <button type="button" class="vp-modal__close" data-bs-dismiss="modal" aria-label="Close">
+            <i class="bi bi-x-lg" aria-hidden="true"></i>
+          </button>
+        </div>
+
+        <form class="vp-modal__body" novalidate>
+          <label class="vp-form-label" for="vpEditInput" data-edit-label>Value</label>
+          <!-- The control itself is replaced when the dialog opens: a text box, a list or
+               a date picker, depending on the field. -->
+          <div data-edit-control></div>
+          <p class="vp-form-hint" data-edit-hint hidden></p>
+        </form>
+
+        <div class="vp-modal__foot">
+          <button type="button" class="vp-modal__cancel" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="vp-modal__save" data-edit-save>Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- ============ CHANGE PASSWORD ============ -->
   <!-- Bootstrap's dialog, so Escape, the backdrop, the focus trap and returning focus
        to the row that opened it all come for free. Nothing is sent anywhere: there is
@@ -322,6 +363,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script src="assets/js/animations.js"></script>
+  <script src="assets/js/geo.js"></script>
   <script src="assets/js/profile.js"></script>
   <script src="assets/js/nav.js"></script>
   <script src="assets/js/cursor.js"></script>
