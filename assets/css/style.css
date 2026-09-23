@@ -2199,8 +2199,9 @@ a { color: var(--vp-blue); }
   transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
 }
 .vp-act:hover:not(:disabled), .vp-act:focus-visible:not(:disabled) { transform: translateY(-2px); box-shadow: 0 14px 30px rgba(0, 0, 0, 0.28); color: var(--vp-dark); }
-/* Below the minimum there is nothing to withdraw, and a button that only refuses is worse
-   than one that says so plainly. */
+/* Nothing is disabled today - cashing out leads to the list of rewards whatever the
+   balance is, and the bar above says how far off the minimum it still is. Kept because a
+   button that cannot act should look like it, not because anything uses it now. */
 .vp-act:disabled { background: rgba(255, 255, 255, 0.16); color: rgba(255, 255, 255, 0.66); cursor: not-allowed; }
 
 .vp-act--ghost { background: rgba(255, 255, 255, 0.1); color: #fff; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.24); }
@@ -2435,6 +2436,55 @@ a { color: var(--vp-blue); }
   .vp-table td.vp-table__who { display: block; text-align: left; font-size: 1.02rem; margin-bottom: 0.2rem; }
 }
 
+/* ---------- Cash out ---------- */
+/* The balance sits opposite the page heading rather than under it: it is the figure the
+   whole screen is about, and that is where the eye lands before it starts down the list. */
+.vp-screen__head--split { display: flex; align-items: flex-start; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap; }
+.vp-screen__head--split > div { flex: 1 1 22rem; min-width: 0; }
+
+.vp-balance-note { text-align: right; }
+.vp-balance-note__label { display: block; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--vp-muted); }
+.vp-balance-note__sum { display: block; margin-top: 0.15rem; font-size: clamp(1.9rem, 4vw, 2.45rem); font-weight: 800; letter-spacing: -0.03em; color: var(--vp-blue); font-variant-numeric: tabular-nums; }
+
+/* Every row is one choice, so the whole row has to be clickable. The control is a real
+   <button> in the first cell whose ::after is stretched across the row: one tab stop and
+   one spoken name per option, rather than seven bare hit areas that say nothing. */
+.vp-table--pick tbody tr { position: relative; }
+.vp-pick { display: flex; align-items: center; gap: 0.85rem; width: 100%; padding: 0; border: 0; background: none; font: inherit; color: inherit; text-align: left; }
+.vp-pick::after { content: ''; position: absolute; inset: 0; }
+/* The focus ring is drawn by the stretched layer rather than by the button, or it would
+   trace the first cell and stop halfway across the row it is selecting. */
+.vp-pick:focus-visible { outline: none; }
+.vp-pick:focus-visible::after { box-shadow: inset 0 0 0 2px var(--vp-blue); }
+
+/* The same filled tile the wallet's ledger uses, so a reward is recognised the way an
+   earning is: one colour per kind of thing, a white glyph on top. */
+.vp-pick__icon { flex: none; display: grid; place-items: center; width: 42px; height: 42px; border-radius: 12px; background: var(--vp-tile, var(--vp-blue)); color: #fff; font-size: 1.15rem; }
+.vp-pick__name { font-weight: 600; color: var(--vp-dark); }
+/* "gift card" says what the thing is rather than whose it is, so it is said more quietly
+   than the brand beside it. */
+.vp-pick__kind { font-weight: 500; color: var(--vp-muted); }
+
+.vp-pick__icon--shop   { --vp-tile: linear-gradient(140deg, #ff8f57, #ef5b25); }
+.vp-pick__icon--food   { --vp-tile: linear-gradient(140deg, #ffc043, #e28a06); }
+.vp-pick__icon--stream { --vp-tile: linear-gradient(140deg, #f0554f, #c22a27); }
+.vp-pick__icon--market { --vp-tile: linear-gradient(145deg, #63b86f, #3f8c4e); }
+.vp-pick__icon--style  { --vp-tile: linear-gradient(140deg, #9f7aea, #5b35e8); }
+.vp-pick__icon--cash   { --vp-tile: linear-gradient(140deg, #4ea0ff, var(--vp-blue)); }
+.vp-pick__icon--card   { --vp-tile: linear-gradient(140deg, #5b7cfa, #2540b8); }
+
+.vp-screen__note { display: flex; align-items: center; gap: 0.5rem; margin: 0.85rem 0 0; font-size: 0.9rem; color: var(--vp-muted); }
+.vp-screen__note .bi { color: var(--vp-blue); }
+
+@media (max-width: 575.98px) {
+  /* Once the head has wrapped, a right-aligned balance is aligned to nothing. */
+  .vp-balance-note { text-align: left; }
+  /* Qualified on the cell as well as the class, the way .vp-table__who is: the generic
+     rule turns every cell into a label-and-value row, and this one already carries its
+     own icon and name and wants the full width. */
+  .vp-table--pick td.vp-pick__cell { display: block; margin-bottom: 0.55rem; }
+}
+
 /* ---------- Profile ---------- */
 /* Who is signed in, on the same dark panel the balance and the referral code use. */
 .vp-whoami { display: flex; align-items: center; gap: 1.1rem; }
@@ -2610,6 +2660,8 @@ a { color: var(--vp-blue); }
 
 /* A dialog that asks before something irreversible looks like it. */
 .vp-modal__icon--danger { background: #fdeaea; color: #c02c2c; }
+/* The other end of the same idea: green for the dialog that is telling you it worked. */
+.vp-modal__icon--good { background: #e6f6ec; color: #2f8a4b; }
 .vp-modal__save--danger { background: #c02c2c; box-shadow: 0 10px 24px rgba(192, 44, 44, 0.26); }
 .vp-modal__save--danger:hover, .vp-modal__save--danger:focus-visible { background: #a72424; }
 

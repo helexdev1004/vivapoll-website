@@ -133,10 +133,11 @@
           </div>
 
           <div class="vp-hero-panel__actions">
-            <!-- Below the minimum there is nothing to withdraw yet, so the button says so
-                 rather than leading somewhere that would only refuse. -->
-            <button type="button" class="vp-act" disabled>Cash out</button>
-            <a href="#" class="vp-act vp-act--ghost">Payout methods <i class="bi bi-arrow-right" aria-hidden="true"></i></a>
+            <!-- Both lead to the same screen, which is the one that lists what a balance
+                 can be turned into. The bar above has already said how far off the
+                 minimum this balance is, so a disabled button would only repeat it. -->
+            <a href="payout-methods.html" class="vp-act">Cash out</a>
+            <a href="payout-methods.html" class="vp-act vp-act--ghost">Payout methods <i class="bi bi-arrow-right" aria-hidden="true"></i></a>
           </div>
         </section>
 
