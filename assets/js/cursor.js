@@ -5,10 +5,8 @@
  *     slight - it should be noticed at the edge of attention, never compete with the
  *     page. The hue turns with distance travelled, so a sweep across the page draws the
  *     colour through the spectrum.
- *   · a blue glass bead sits on the pointer, collared in white so it stays legible
- *     over the pale page, over photographs and over the blue buttons alike
- *   · an outer ring trails behind, leaning and stretching along the direction of travel
- *   · the ring opens up over anything clickable
+ *   · a gradient arrow sits on the pointer, its tip exactly on the point being pointed at
+ *   · it draws in over anything clickable
  *   · clicking bursts a puff of powder and throws a ring out from the point you pressed
  *
  * Only runs for a real mouse. Touch, pens and anyone who asked for reduced motion keep
@@ -45,28 +43,31 @@
   size();
   addEventListener('resize', size);
 
-  var ring = make('div', 'vp-cursor-ring');
   var core = make('div', 'vp-cursor-core');
 
-  // The pointer itself: an arrow rather than a bead, filled with a lilac-to-cyan gradient
-  // and outlined in white so it holds its shape over a photograph or a blue button as
-  // well as over the pale page. Built here rather than in the markup so the fourteen
-  // pages do not each carry a copy of it.
+  // The pointer itself. One solid gradient shape with soft corners and no white outline -
+  // the outline was what made the last one read as the system cursor rather than as the
+  // reference. Built here rather than in the markup so the fourteen pages do not each
+  // carry a copy of it.
   //
   // The tip sits at (2,2) in the drawing, and the element is nudged by that much when it
   // is placed, so the point of the arrow is exactly the point being pointed at.
   core.innerHTML =
-    '<svg viewBox="0 0 26 34" width="26" height="34" aria-hidden="true" focusable="false">' +
+    '<svg viewBox="0 0 24 36" width="24" height="36" aria-hidden="true" focusable="false">' +
       '<defs>' +
-        '<linearGradient id="vpCursorFill" x1="2" y1="2" x2="21" y2="30" gradientUnits="userSpaceOnUse">' +
-          '<stop offset="0" stop-color="#cbb2ff" />' +
-          '<stop offset="0.48" stop-color="#6ba6ff" />' +
-          '<stop offset="1" stop-color="#3fd8ef" />' +
+        '<linearGradient id="vpCursorFill" x1="3" y1="1" x2="19" y2="31" gradientUnits="userSpaceOnUse">' +
+          '<stop offset="0" stop-color="#d7bdff" />' +
+          '<stop offset="0.42" stop-color="#8fb4ff" />' +
+          '<stop offset="0.74" stop-color="#5ecdf5" />' +
+          '<stop offset="1" stop-color="#3ce0e0" />' +
         '</linearGradient>' +
       '</defs>' +
-      '<path d="M2 2 L2 27.4 L8.5 21.5 L12.5 31.1 L17.1 29.1 L13.2 19.8 L21.6 19.3 Z" ' +
-            'fill="url(#vpCursorFill)" stroke="rgba(255,255,255,0.92)" stroke-width="1.7" ' +
-            'stroke-linejoin="round" />' +
+      // Tip at the top left, a straight left edge, and the tail cut away underneath. The
+      // stroke is the same gradient as the fill, which is what rounds every corner: with
+      // a white one it stopped being the reference and became the Windows pointer.
+      '<path d="M2 2 L19.8 19.8 L12.2 20.2 L17 30.2 L11.9 32.7 L7 22.6 L2 26.8 Z" ' +
+            'fill="url(#vpCursorFill)" stroke="url(#vpCursorFill)" stroke-width="2.6" ' +
+            'stroke-linejoin="round" stroke-linecap="round" />' +
     '</svg>';
 
   /* --------------------------------------------------------------- the wash */
@@ -103,10 +104,7 @@
   /* -------------------------------------------------------------- tracking */
 
   var pointer = { x: innerWidth / 2, y: innerHeight / 2 };
-  var ringPos = { x: pointer.x, y: pointer.y };
   var last = { x: pointer.x, y: pointer.y };
-  var speed = 0;
-  var angle = 0;
   var bursts = [];
   var visible = false;
 
@@ -147,8 +145,6 @@
     var dx = pointer.x - last.x;
     var dy = pointer.y - last.y;
     var step = Math.sqrt(dx * dx + dy * dy);
-    speed += (Math.min(step, 70) - speed) * 0.2;
-    if (step > 0.4) angle = Math.atan2(dy, dx) * 180 / Math.PI;
     last.x = pointer.x;
     last.y = pointer.y;
 
@@ -167,9 +163,6 @@
         bleed(pointer.x - dx * back, pointer.y - dy * back, dx, dy, 1, 0.5);
       }
     }
-
-    ringPos.x += (pointer.x - ringPos.x) * 0.16;
-    ringPos.y += (pointer.y - ringPos.y) * 0.16;
 
     ctx.clearRect(0, 0, innerWidth, innerHeight);
 
@@ -214,15 +207,9 @@
       ctx.stroke();
     }
 
-    // Stretched along the direction of travel, squeezed across it - the faster the more
-    // so, the way a drop of water deforms as it is flung. Kept shallow on purpose.
-    var pull = Math.min(speed / 72, 0.3);
     // Not centred: an arrow points from its tip, so the drawing is pulled back by the
     // two pixels that sit between the element's corner and the point of the arrow.
     core.style.transform = 'translate3d(' + pointer.x + 'px,' + pointer.y + 'px,0) translate(-2px,-2px)';
-    ring.style.transform =
-      'translate3d(' + ringPos.x + 'px,' + ringPos.y + 'px,0) translate(-50%,-50%) ' +
-      'rotate(' + angle + 'deg) scale(' + (1 + pull) + ',' + (1 - pull * 0.5) + ')';
 
     requestAnimationFrame(frame);
   }

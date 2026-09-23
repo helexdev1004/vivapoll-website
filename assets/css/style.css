@@ -2888,7 +2888,6 @@ a { color: var(--vp-blue); }
 /* Everything here is inert until cursor.js adds `vp-cursor-on`, and that script only
    runs for a real mouse - touch and reduced-motion visitors keep the ordinary pointer. */
 .vp-cursor-canvas,
-.vp-cursor-ring,
 .vp-cursor-core {
   position: fixed;
   top: 0;
@@ -2902,64 +2901,44 @@ a { color: var(--vp-blue); }
 .vp-cursor-canvas { z-index: 2147482999; }
 
 .vp-cursor-on .vp-cursor-canvas,
-.vp-cursor-on .vp-cursor-core,
-.vp-cursor-on .vp-cursor-ring { opacity: 1; }
+.vp-cursor-on .vp-cursor-core { opacity: 1; }
 
-/* The arrow. Its shape and gradient live in cursor.js; what is here is where it sits and
-   how it answers what is under it.
+/* The arrow, and nothing else - there is no second shape trailing it. A ring that eased
+   towards the pointer could never keep up with a fast hand, and it read as a stray blob
+   sitting somewhere else on the page rather than as part of the cursor.
+ *
+   The shape and its gradient live in cursor.js; what is here is where it sits and how it
+   answers what is under it.
  *
    The glow is a drop-shadow rather than a box-shadow: a box-shadow would trace the
    element's rectangle, and this element is an arrow inside that rectangle. */
 .vp-cursor-core {
-  width: 26px;
-  height: 34px;
+  width: 24px;
+  height: 36px;
   /* It grows and shrinks about its own tip, which is the one point that must not move. */
   transform-origin: 2px 2px;
   filter:
-    drop-shadow(0 0 6px rgba(120, 130, 255, 0.55))
-    drop-shadow(0 0 16px rgba(80, 180, 255, 0.35))
-    drop-shadow(0 2px 3px rgba(11, 20, 55, 0.25));
+    drop-shadow(0 0 7px rgba(140, 140, 255, 0.6))
+    drop-shadow(0 0 18px rgba(80, 200, 255, 0.4))
+    drop-shadow(0 2px 4px rgba(11, 20, 55, 0.28));
   /* `scale` rather than `transform`: the transform is written every frame by the script,
      and a second one here would simply be overwritten. These compose instead. */
   transition: opacity 0.2s ease, scale 0.22s cubic-bezier(0.34, 1.4, 0.64, 1);
 }
 .vp-cursor-core svg { display: block; }
 
-/* The ring is hairline and mostly light, so it reads as a lens around the bead rather
-   than as a second heavy shape competing with it. */
-.vp-cursor-ring {
-  width: 40px;
-  height: 40px;
-  border: 1.5px solid rgba(8, 116, 252, 0.75);
-  border-radius: 50%;
-  box-shadow:
-    0 0 0 1px rgba(255, 255, 255, 0.7),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.55),
-    0 0 18px rgba(8, 116, 252, 0.28);
-  transition: width 0.28s cubic-bezier(0.34, 1.4, 0.64, 1),
-              height 0.28s cubic-bezier(0.34, 1.4, 0.64, 1),
-              background-color 0.28s ease, border-color 0.28s ease, opacity 0.2s ease;
-}
-
-/* Over something clickable the ring opens and fills, and the bead draws in tight. */
-.vp-cursor-hot .vp-cursor-ring {
-  width: 70px;
-  height: 70px;
-  background: rgba(8, 116, 252, 0.12);
-  border-color: rgba(8, 116, 252, 1);
-}
-.vp-cursor-hot .vp-cursor-core { scale: 0.82; }
-
-.vp-cursor-down .vp-cursor-ring { width: 30px; height: 30px; background: rgba(8, 116, 252, 0.26); }
-.vp-cursor-down .vp-cursor-core { scale: 0.7; }
+/* Over something clickable it draws in tight, and tighter still while pressed. With the
+   ring gone this is the whole of the cursor's answer to the page, so it is worth more
+   than it was: a fifth of the size is plainly visible. */
+.vp-cursor-hot .vp-cursor-core { scale: 0.8; }
+.vp-cursor-down .vp-cursor-core { scale: 0.68; }
 
 /* The native pointer is hidden only while ours is on screen, and comes back over text
    fields where the caret is genuinely more useful. */
 .vp-cursor-on, .vp-cursor-on * { cursor: none; }
 .vp-cursor-on.vp-cursor-text,
 .vp-cursor-on.vp-cursor-text * { cursor: auto; }
-.vp-cursor-text .vp-cursor-core,
-.vp-cursor-text .vp-cursor-ring { opacity: 0; }
+.vp-cursor-text .vp-cursor-core { opacity: 0; }
 
 /* Ripple from the point of the click. */
 .vp-rippling { overflow: hidden; }
