@@ -2016,106 +2016,196 @@ a { color: var(--vp-blue); }
 
 .vp-offers__empty { margin: 0; padding: 2.5rem 1.5rem; background: #fff; border-radius: 18px; text-align: center; color: var(--vp-muted); }
 
-/* Survey rows lead with what the survey pays, because that is what the reader is
-   choosing between. Everything else - which survey it is, how long it takes, who is
-   asking - is one quiet line underneath, beside a tile that marks the row as a survey. */
-.vp-survey-list { display: flex; flex-direction: column; gap: 0.85rem; }
+/* ---------- Offer rows: surveys, profiling surveys and games ----------
+   One row for all three lists, built to SondageDirect's design: a white card with a
+   hairline edge; the category as a bar down the left that runs the full height on hover;
+   a filled tile with a glow under it that tilts as you arrive; the figure stacked over
+   the facts, each fact on a round badge of its own; and a button that says what it does,
+   tinted at rest and filled with the row's colour on hover.
 
-.vp-survey {
-  display: flex;
-  align-items: center;
-  gap: 1.1rem;
+   The colours stay VivaPoll's - blue surveys, green profiling, amber games - because the
+   wallet's activity list marks the same kinds of thing with the same three colours, and
+   a row should be recognised the same way in both places.
+
+   Every colour in a row comes from five custom properties set once per category, so the
+   tile, the bar, the badges, the button and the hover wash cannot drift apart. */
+.vp-survey,
+.vp-game {
+  --row-1: #3d94ff;                       /* tile and bar, the lit end */
+  --row-2: #0759d1;                       /* ... the deep end, and the filled button */
+  --row-glow: rgba(7, 89, 209, 0.4);
+  --row-tint: #edf5fe;                    /* badges, the resting button, the hover wash */
+  --row-ink: #0560d6;                     /* text and glyphs on that tint */
+  position: relative;
   min-height: var(--vp-row-h);
-  padding: 1.1rem 1.4rem;
+  padding: 1rem 1.15rem 1rem 1.6rem;
   background: #fff;
+  border: 1px solid var(--vp-border);
   border-radius: 18px;
   box-shadow: 0 8px 24px rgba(28, 82, 160, 0.05);
+  overflow: hidden;
   text-decoration: none;
-  transition: box-shadow 0.25s ease, transform 0.25s ease;
+  transition: transform 0.25s cubic-bezier(0.22, 0.8, 0.3, 1), box-shadow 0.25s ease,
+              border-color 0.25s ease, background 0.3s ease;
 }
-.vp-survey:hover, .vp-survey:focus-visible { transform: translateY(-2px); box-shadow: 0 18px 38px rgba(28, 82, 160, 0.12); }
 
-.vp-survey__icon {
+/* Profiling surveys are the same row in every respect but their colour, which is green so
+   the two survey lists are told apart at a glance rather than by reading the heading.
+   Each ink is dark enough to hold 4.5:1 on its own tint, and each deep end to hold it
+   under white text - amber is the lightest hue here, so it sits furthest from its tile. */
+.vp-survey--profiling {
+  --row-1: #5cb86a; --row-2: #2f7d40; --row-glow: rgba(47, 125, 64, 0.4);
+  --row-tint: #e6f5ea; --row-ink: #2a7239;
+}
+.vp-game {
+  --row-1: #f2a428; --row-2: #a85a06; --row-glow: rgba(168, 90, 6, 0.4);
+  --row-tint: #fff3e0; --row-ink: #925006;
+}
+
+/* The category as an edge down the left: inset at rest, the full height when hovered. */
+.vp-survey::before,
+.vp-game::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 14px;
+  bottom: 14px;
+  width: 4px;
+  border-radius: 0 4px 4px 0;
+  background: linear-gradient(180deg, var(--row-1), var(--row-2));
+  transition: top 0.25s cubic-bezier(0.22, 0.8, 0.3, 1), bottom 0.25s cubic-bezier(0.22, 0.8, 0.3, 1);
+}
+
+/* A wash of the row's own colour comes in from the right. A tint rather than a change of
+   tone: the card stays white where the text is and only takes colour where there is
+   nothing to read. */
+.vp-survey:hover, .vp-survey:focus-visible,
+.vp-game:hover, .vp-game:focus-visible {
+  transform: translateY(-3px);
+  border-color: #c9e0fb;
+  box-shadow: 0 18px 38px rgba(28, 82, 160, 0.14);
+  background: linear-gradient(100deg, #fff 58%, var(--row-tint) 100%);
+}
+.vp-survey:hover::before, .vp-survey:focus-visible::before,
+.vp-game:hover::before, .vp-game:focus-visible::before { top: 0; bottom: 0; }
+/* A keyboard needs more than the hover look: the lift alone is easy to miss on a list of
+   identical cards. */
+.vp-survey:focus-visible, .vp-game:focus-visible { outline: 2px solid var(--row-2); outline-offset: 3px; }
+
+/* Filled and lit, with a glow in its own colour beneath it. */
+.vp-survey__icon,
+.vp-game__icon {
   flex: none;
   display: grid;
   place-items: center;
-  width: 62px;
-  height: 62px;
-  border-radius: 16px;
-  background: var(--vp-blue);
+  width: 58px;
+  height: 58px;
+  border-radius: 17px;
+  background: linear-gradient(145deg, var(--row-1), var(--row-2));
+  box-shadow: 0 8px 18px -5px var(--row-glow);
   color: #fff;
-  font-size: 1.75rem;
+  font-size: 1.6rem;
+  transition: transform 0.25s cubic-bezier(0.22, 0.8, 0.3, 1), box-shadow 0.25s ease;
+}
+.vp-survey:hover .vp-survey__icon, .vp-survey:focus-visible .vp-survey__icon,
+.vp-game:hover .vp-game__icon, .vp-game:focus-visible .vp-game__icon {
+  transform: translateY(-2px) rotate(-3deg);
+  box-shadow: 0 14px 26px -6px var(--row-glow);
 }
 
-.vp-survey__body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 0.2rem; }
+/* A game's tile is that game's own mark, the way an app icon is, so each keeps its own
+   colours. Set on the tile alone: the rest of the row still speaks for the category. */
+.vp-game__icon--a { --row-1: #ff7a59; --row-2: #e02f2f; --row-glow: rgba(224, 47, 47, 0.4); }
+.vp-game__icon--b { --row-1: #9f7aea; --row-2: #5b35e8; --row-glow: rgba(91, 53, 232, 0.4); }
+.vp-game__icon--c { --row-1: #4ea0ff; --row-2: #0757c4; --row-glow: rgba(7, 87, 196, 0.4); }
+.vp-game__icon--d { --row-1: #35c98a; --row-2: #0a7a4c; --row-glow: rgba(10, 122, 76, 0.4); }
+
+/* A round badge on every fact, which is what stops the line reading as one run-on string
+   of numbers. Filled glyphs: at this size an outline one goes thin and grey. */
+.vp-survey__meta .bi,
+.vp-game__fact .bi {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 23px;
+  height: 23px;
+  border-radius: 50%;
+  background: var(--row-tint);
+  color: var(--row-ink);
+  font-size: 0.7rem;
+}
+
+/* How long it takes, as four bars as well as a number - the length can be compared down
+   the list at a glance, without reading every figure. The bars are drawn, so they say
+   nothing to a screen reader; the minutes beside them do. */
+.vp-len { display: inline-flex; align-items: flex-end; gap: 3px; margin-right: 2px; }
+.vp-len i { display: block; width: 4px; border-radius: 2px; background: #dee8f4; }
+.vp-len i:nth-child(1) { height: 7px; }
+.vp-len i:nth-child(2) { height: 10px; }
+.vp-len i:nth-child(3) { height: 13px; }
+.vp-len i:nth-child(4) { height: 16px; }
+.vp-len i.on { background: var(--row-2); }
+
+/* A button that says what it does, not an arrow the reader has to infer it from. Tinted
+   at rest so it does not shout over the figure, and it fills with the row's colour as
+   the pointer arrives - the one piece of the row that changes state outright, which is
+   what makes the whole card read as live. A solid fill rather than the tile's gradient:
+   the lit end of a gradient is too pale to carry white text. */
+.vp-survey__go,
+.vp-game__go {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.7rem 0.95rem 0.7rem 1.1rem;
+  border-radius: 13px;
+  background: var(--row-tint);
+  color: var(--row-ink);
+  font-size: 0.86rem;
+  font-weight: 700;
+  white-space: nowrap;
+  transition: background-color 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
+}
+.vp-survey__go .bi, .vp-game__go .bi { font-size: 0.9rem; transition: transform 0.25s cubic-bezier(0.22, 0.8, 0.3, 1); }
+.vp-survey:hover .vp-survey__go, .vp-survey:focus-visible .vp-survey__go,
+.vp-game:hover .vp-game__go, .vp-game:focus-visible .vp-game__go {
+  background-color: var(--row-2);
+  color: #fff;
+  box-shadow: 0 8px 18px -5px var(--row-glow), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+.vp-survey:hover .vp-survey__go .bi, .vp-survey:focus-visible .vp-survey__go .bi,
+.vp-game:hover .vp-game__go .bi, .vp-game:focus-visible .vp-game__go .bi { transform: translateX(3px); }
+
+/* --- Survey rows ---
+   They lead with what the survey pays, because that is what the reader is choosing
+   between; which survey it is, how long it takes and who is asking sit on one line
+   underneath. */
+.vp-survey-list { display: flex; flex-direction: column; gap: 0.85rem; }
+
+.vp-survey { display: flex; align-items: center; gap: 1.1rem; }
+
+.vp-survey__body { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 0.3rem; }
 
 .vp-survey__pay {
-  font-size: 1.5rem;
+  font-size: 1.6rem;
   font-weight: 800;
-  letter-spacing: -0.02em;
-  line-height: 1.2;
+  letter-spacing: -0.025em;
+  line-height: 1.15;
   color: var(--vp-dark);
+  font-variant-numeric: tabular-nums;
 }
 
 /* The facts share one line and wrap together rather than one at a time, so a long client
    name never leaves a lone word stranded under the duration. */
-.vp-survey__meta { display: flex; flex-wrap: wrap; gap: 0.15rem 1.35rem; font-size: 0.95rem; color: var(--vp-muted); }
-/* Each fact keeps its icon on its own line: inline-flex rather than a plain inline, so a
-   wrap never leaves a clock stranded above the minutes it belongs to. */
-.vp-survey__meta > span { display: inline-flex; align-items: center; gap: 0.5rem; }
+.vp-survey__meta { display: flex; flex-wrap: wrap; gap: 0.3rem 1.35rem; font-size: 0.9rem; color: var(--vp-muted); font-variant-numeric: tabular-nums; }
+/* Each fact keeps its badge on its own line: a wrap never leaves a clock stranded above
+   the minutes it belongs to. */
+.vp-survey__meta > span { display: inline-flex; align-items: center; gap: 0.5rem; white-space: nowrap; }
 
-/* Each icon sits in a tinted disc of its own. At this size a bare outline glyph goes thin
-   and grey against the text beside it; a filled one on a disc keeps its shape and gives
-   the line something to scan down. */
-.vp-survey__meta .bi {
-  display: grid;
-  place-items: center;
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  background: var(--vp-light-blue);
-  color: var(--vp-blue);
-  font-size: 0.7rem;
-}
-/* The discs take the row's own colour, so a green-tiled row is green throughout. */
-.vp-survey--profiling .vp-survey__meta .bi { background: #e4f4e8; color: #3f8c4e; }
-
-/* The same round mark the game rows carry, so every row in every list says "this opens"
-   the same way. It takes the row's own colour rather than one colour for all three. */
-.vp-survey__go {
-  flex: none;
-  display: grid;
-  place-items: center;
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  background: var(--vp-light-blue);
-  color: var(--vp-blue);
-  font-size: 1.1rem;
-  transition: transform 0.2s ease;
-}
-.vp-survey:hover .vp-survey__go, .vp-survey:focus-visible .vp-survey__go { transform: translateX(3px); }
-
-/* Profiling surveys are the same row in every respect but their colour, which is green so
-   the two lists are told apart at a glance rather than by reading the heading. */
-.vp-survey--profiling .vp-survey__icon { background: linear-gradient(145deg, #63b86f, #3f8c4e); }
-.vp-survey--profiling .vp-survey__go { background: #e4f4e8; color: #3f8c4e; }
-
-@media (max-width: 575.98px) {
-  .vp-survey { gap: 0.9rem; padding: 0.9rem 1rem; }
-  .vp-survey__icon { width: 50px; height: 50px; border-radius: 14px; font-size: 1.45rem; }
-  .vp-survey__pay { font-size: 1.3rem; }
-  .vp-survey__go { width: 34px; height: 34px; font-size: 1rem; }
-  .vp-survey__meta { gap: 0.1rem 0.9rem; font-size: 0.88rem; }
-  /* All three facts will not share a line on a phone. Rather than let each row break
-     wherever it happens to run out - which left the list with five different heights -
-     the survey's name takes the first line and the other two share the second. */
-  .vp-survey__meta > :first-child { flex: 1 0 100%; }
-}
-
-/* Game rows carry a tile, then the total on offer, the title, and what it takes to earn
-   it. Three rows of text beside a square, so the grid is two columns with the tile and
-   the chevron each spanning all three. */
+/* --- Game rows ---
+   A tile, then the total on offer, the title, and what it takes to earn it: three lines
+   of text beside a square, so the grid is three columns with the tile and the button
+   each spanning all three lines. */
 .vp-game-list { display: flex; flex-direction: column; gap: 0.85rem; }
 
 .vp-game {
@@ -2123,35 +2213,13 @@ a { color: var(--vp-blue); }
   grid-template-columns: auto minmax(0, 1fr) auto;
   align-items: center;
   gap: 0.15rem 1.1rem;
-  min-height: var(--vp-row-h);
-  padding: 1rem 1.3rem;
-  background: #fff;
-  border-radius: 18px;
-  box-shadow: 0 8px 24px rgba(28, 82, 160, 0.05);
-  text-decoration: none;
-  transition: box-shadow 0.25s ease, transform 0.25s ease;
 }
-.vp-game:hover, .vp-game:focus-visible { transform: translateY(-2px); box-shadow: 0 18px 38px rgba(28, 82, 160, 0.12); }
 
-.vp-game__icon {
-  grid-column: 1;
-  grid-row: 1 / span 3;
-  display: grid;
-  place-items: center;
-  width: 62px;
-  height: 62px;
-  border-radius: 16px;
-  color: #fff;
-  font-size: 1.75rem;
-}
-.vp-game__icon--a { background: linear-gradient(140deg, #ff7a59, #e02f2f); }
-.vp-game__icon--b { background: linear-gradient(140deg, #9f7aea, #5b35e8); }
-.vp-game__icon--c { background: linear-gradient(140deg, #4ea0ff, #0757c4); }
-.vp-game__icon--d { background: linear-gradient(140deg, #35c98a, #0a7a4c); }
+.vp-game__icon { grid-column: 1; grid-row: 1 / span 3; }
 
 .vp-game__lead { grid-column: 2; grid-row: 1; display: flex; align-items: baseline; gap: 0.45rem; min-width: 0; }
-.vp-game__pay { font-size: clamp(1.4rem, 1.15rem + 0.8vw, 1.8rem); font-weight: 800; letter-spacing: -0.03em; line-height: 1.15; color: var(--vp-dark); }
-.vp-game__total { font-size: 0.92rem; color: var(--vp-muted); }
+.vp-game__pay { font-size: 1.6rem; font-weight: 800; letter-spacing: -0.025em; line-height: 1.15; color: var(--vp-dark); font-variant-numeric: tabular-nums; }
+.vp-game__total { font-size: 0.9rem; color: var(--vp-muted); }
 
 /* One line, cut with an ellipsis. Some of these titles are very long and a wrap would
    push the row's facts out of line with its neighbours. */
@@ -2162,49 +2230,70 @@ a { color: var(--vp-blue); }
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  font-size: 1.05rem;
+  font-size: 1.02rem;
   font-weight: 600;
   color: var(--vp-dark);
 }
 
-.vp-game__facts { grid-column: 2; grid-row: 3; display: flex; flex-wrap: wrap; gap: 0.15rem 1rem; min-width: 0; margin-top: 0.2rem; }
-.vp-game__fact { display: inline-flex; align-items: center; gap: 0.5rem; min-width: 0; font-size: 0.93rem; color: var(--vp-muted); }
+.vp-game__facts { grid-column: 2; grid-row: 3; display: flex; flex-wrap: wrap; gap: 0.3rem 1.35rem; min-width: 0; margin-top: 0.2rem; }
+.vp-game__fact { display: inline-flex; align-items: center; gap: 0.5rem; min-width: 0; font-size: 0.9rem; color: var(--vp-muted); white-space: nowrap; }
 
-/* The same tinted disc the survey facts carry, in the games' own amber, so a fact reads
-   the same way whichever list it is in. */
-.vp-game__fact .bi {
-  flex: none;
-  display: grid;
-  place-items: center;
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  background: #fff1dd;
-  color: #d97d06;
-  font-size: 0.7rem;
+.vp-game__go { grid-column: 3; grid-row: 1 / span 3; }
+
+/* Between a phone and a tablet the button still sits beside the facts, and at 82px it is
+   wider than the round chevron it replaced. A game's two facts then came up 12px short of
+   one line and wrapped, which made game rows taller than survey rows only here. Slightly
+   narrower gaps and a slimmer button give that room back. */
+@media (max-width: 767.98px) {
+  .vp-game { column-gap: 0.85rem; }
+  .vp-game__facts { column-gap: 1rem; }
+  .vp-survey__go, .vp-game__go { padding-inline: 0.95rem 0.8rem; }
 }
 
-.vp-game__go {
-  grid-column: 3;
-  grid-row: 1 / span 3;
-  display: grid;
-  place-items: center;
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  background: #fff1dd;
-  color: #d97d06;
-  font-size: 1.1rem;
-}
-
+/* On a phone the button drops to a line of its own at the foot of the card, rather than
+   squeezing the facts into two words each. It drops on every row, not only on the rows
+   that happen to run out of room, so the list keeps one shape. */
 @media (max-width: 575.98px) {
-  .vp-game { padding: 0.85rem 1rem; gap: 0.1rem 0.85rem; }
-  .vp-game__icon { width: 50px; height: 50px; border-radius: 14px; font-size: 1.45rem; }
-  .vp-game__go { width: 34px; height: 34px; font-size: 1rem; }
+  /* The tile and the gap beside it are named once: the survey body's width is worked out
+     from them below, and the two must never disagree. Everything here is a little slimmer
+     than on a desktop, the way SondageDirect's phone rows are - the second line of facts
+     has to hold a client's name at 375px, the commonest small phone. */
+  .vp-survey, .vp-game { --tile: 46px; --tile-gap: 0.8rem; --badge: 21px; padding: 0.95rem 0.85rem 0.95rem 1.1rem; }
+  .vp-survey__icon, .vp-game__icon { width: var(--tile); height: var(--tile); border-radius: 13px; font-size: 1.3rem; }
+  .vp-survey__pay, .vp-game__pay { font-size: 1.35rem; }
+  .vp-survey__go, .vp-game__go { padding: 0.55rem 0.8rem 0.55rem 0.95rem; font-size: 0.82rem; }
+  .vp-survey__meta .bi, .vp-game__fact .bi { width: var(--badge); height: var(--badge); font-size: 0.65rem; }
+  .vp-len { gap: 2px; }
+  .vp-len i { width: 3px; }
+
+  .vp-survey { flex-wrap: wrap; gap: 0.75rem var(--tile-gap); }
+  /* Sized to fill the rest of the first line exactly, which is what forces the button
+     onto the next one whatever the row says. */
+  .vp-survey__body { flex: 1 1 calc(100% - var(--tile) - var(--tile-gap)); }
+  .vp-survey__go { order: 3; margin-left: auto; }
+  .vp-survey__meta { gap: 0.25rem 0.75rem; font-size: 0.85rem; }
+  .vp-survey__meta > span { gap: 0.4rem; }
+  /* All three facts will not share a line here. Rather than let each row break wherever
+     it happens to run out, the survey's number takes the first line and the other two
+     share the second. */
+  .vp-survey__meta > :first-child { flex: 1 0 100%; }
+  /* The client's name is the one fact whose length changes from row to row, so it is the
+     one that gives way: cut with an ellipsis rather than wrapped, which means no name can
+     make its row taller than the rows around it. A zero basis is what stops it forcing a
+     wrap in the first place - flex lines are decided before anything shrinks. The full
+     name is still in the row's label for a screen reader. */
+  .vp-survey__meta > span:nth-child(3) { display: block; flex: 1 1 0; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+  /* As a block it lays its badge out inline rather than centring it, and an inline badge
+     sets a line box a pixel taller than the badge itself - enough to make a survey row a
+     pixel taller than a profiling one. The line is pinned to the badge instead. */
+  .vp-survey__meta > span:nth-child(3) { height: var(--badge); line-height: var(--badge); }
+  .vp-survey__meta > span:nth-child(3) .bi { display: inline-grid; vertical-align: top; margin-right: 0.4rem; }
+
+  .vp-game { grid-template-columns: auto minmax(0, 1fr); gap: 0.15rem var(--tile-gap); }
+  .vp-game__go { grid-column: 1 / -1; grid-row: 4; justify-self: end; margin-top: 0.6rem; }
   .vp-game__name { font-size: 0.98rem; }
   .vp-game__fact { font-size: 0.85rem; }
-  /* Both facts on one line each at this width, so neither is orphaned. */
-  .vp-game__facts { flex-direction: column; gap: 0.1rem; }
+  .vp-game__facts { flex-direction: column; gap: 0.25rem; }
 }
 
 /* ---------- Signed-in screens: one shared vocabulary ---------- */
@@ -3121,4 +3210,13 @@ a { color: var(--vp-blue); }
   .vp-leaving main,
   .vp-leaving .vp-footer,
   .vp-leaving .vp-auth-footer { opacity: 1; transform: none; }
+
+  /* The offer rows keep their colour change on hover - that is information, not motion -
+     but not the lift, the tilted tile or the nudged chevron. */
+  .vp-survey:hover, .vp-survey:focus-visible,
+  .vp-game:hover, .vp-game:focus-visible,
+  .vp-survey:hover .vp-survey__icon, .vp-survey:focus-visible .vp-survey__icon,
+  .vp-game:hover .vp-game__icon, .vp-game:focus-visible .vp-game__icon,
+  .vp-survey:hover .vp-survey__go .bi, .vp-survey:focus-visible .vp-survey__go .bi,
+  .vp-game:hover .vp-game__go .bi, .vp-game:focus-visible .vp-game__go .bi { transform: none; }
 }
