@@ -545,59 +545,6 @@
     return true;
   }
 
-  // --- she looks up ---
-
-  // Hero illustration turns toward the pointer when it's close.
-  // quickTo re-aims one tween instead of stacking new ones on every mousemove
-  function initGaze() {
-    var stage = document.querySelector('.vp-hero__stage');
-    if (!stage || !desktop.matches) return;
-    if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
-
-    var img = stage.querySelector('.vp-hero__img');
-    var card = stage.querySelector('.vp-reward-card');
-
-    // rotationY, not rotateY - quickTo doesn't map the alias
-    var set = {
-      rotY: gsap.quickTo(stage, 'rotationY', { duration: 0.8, ease: 'power3.out' }),
-      rotX: gsap.quickTo(stage, 'rotationX', { duration: 0.8, ease: 'power3.out' }),
-      x:    gsap.quickTo(stage, 'x',         { duration: 0.8, ease: 'power3.out' }),
-      y:    gsap.quickTo(stage, 'y',         { duration: 0.8, ease: 'power3.out' })
-    };
-    // parallax already uses y, so this uses xPercent
-    var lead = img ? gsap.quickTo(img, 'xPercent', { duration: 1, ease: 'power3.out' }) : null;
-    var trail = card ? gsap.quickTo(card, 'xPercent', { duration: 1.25, ease: 'power3.out' }) : null;
-
-    function rest() {
-      set.rotY(0); set.rotX(0); set.x(0); set.y(0);
-      if (lead) lead(0);
-      if (trail) trail(0);
-    }
-
-    function aim(e) {
-      var b = stage.getBoundingClientRect();
-      if (!b.width) return;
-      var dx = (e.clientX - (b.left + b.width / 2)) / (b.width / 2);
-      var dy = (e.clientY - (b.top + b.height / 2)) / (b.height / 2);
-
-      // full effect near her, fades out about a figure's width away
-      var reach = Math.min(1, Math.max(0, (2.3 - Math.sqrt(dx * dx + dy * dy)) / 1.3));
-      var k = reach * reach;
-      if (!k) { rest(); return; }
-
-      var cl = gsap.utils.clamp;
-      set.rotY(cl(-11, 11, dx * 10 * k));
-      set.rotX(cl(-8, 8, -dy * 7 * k));
-      set.x(cl(-14, 14, dx * 12 * k));
-      set.y(cl(-9, 9, dy * 7 * k));
-      if (lead) lead(cl(-2.2, 2.2, dx * 1.8 * k));
-      if (trail) trail(cl(-1.6, 1.6, dx * -1.2 * k));
-    }
-
-    window.addEventListener('mousemove', aim, { passive: true });
-    document.addEventListener('mouseleave', rest);
-  }
-
   // --- magnetic keys ---
 
   // Main CTA leans toward the pointer (mouse only)
@@ -681,7 +628,6 @@
     initPinnedSteps();
     initPinnedStats();
     initQuoteRail();
-    initGaze();
     initMagnets();
     // Top progress bar only when there's no section rail
     if (!initRail()) initProgress();

@@ -465,8 +465,8 @@ a { color: var(--vp-blue); }
 
 .vp-hero__app-label { margin: 2.6rem 0 0.9rem; font-size: 1.05rem; color: var(--vp-muted); }
 
-/* Illustration + floating cards. Perspective is for the pointer tilt in animations.js */
-.vp-hero__visual { position: relative; padding-top: 3.5rem; perspective: 1100px; }
+/* Illustration + floating cards */
+.vp-hero__visual { position: relative; padding-top: 3.5rem; }
 
 /* Desktop: illustration on the right, card flush with the container edge */
 .vp-hero__stage { position: relative; width: 106.5%; margin-left: -14%; }
