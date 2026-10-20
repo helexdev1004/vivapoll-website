@@ -526,6 +526,59 @@ a { color: var(--vp-blue); }
 
 .vp-reward-card__chevron { margin-left: auto; font-size: 1rem; color: var(--vp-blue); }
 
+/* Card animations. Uses translate/scale/rotate instead of transform because GSAP
+   already sets transform on the card (parallax) and on the rows (reveal).
+   One 6s loop: each row "gets paid" in turn, then a light sweeps across the card. */
+/* The light sweep is a second background layer, parked off the card until it runs */
+.vp-reward-card {
+  background:
+    linear-gradient(110deg, transparent 35%, rgba(8, 116, 252, 0.08) 50%, transparent 65%) 140% 0 / 250% 100% no-repeat,
+    #fff;
+  animation:
+    vp-card-float 6s ease-in-out 1.6s infinite,
+    vp-card-shine 6s ease-in-out 3.6s infinite;
+}
+
+.vp-reward-card__icon { animation: vp-credit-icon 6s ease-out infinite; }
+/* top, not translate - transforms don't apply to inline text */
+.vp-reward-card__text span { position: relative; top: 0; animation: vp-credit-amount 6s ease-out infinite; }
+
+.vp-reward-card li:nth-child(1) .vp-reward-card__icon,
+.vp-reward-card li:nth-child(1) .vp-reward-card__text span { animation-delay: 1.6s; }
+.vp-reward-card li:nth-child(2) .vp-reward-card__icon,
+.vp-reward-card li:nth-child(2) .vp-reward-card__text span { animation-delay: 2.2s; }
+.vp-reward-card li:nth-child(3) .vp-reward-card__icon,
+.vp-reward-card li:nth-child(3) .vp-reward-card__text span { animation-delay: 2.8s; }
+
+.vp-reward-card__chevron { transition: translate 0.2s ease; }
+.vp-reward-card__item:hover .vp-reward-card__chevron,
+.vp-reward-card__item:focus-visible .vp-reward-card__chevron { translate: 3px 0; }
+
+@keyframes vp-card-float {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 -7px; }
+}
+
+@keyframes vp-card-shine {
+  0% { background-position: 140% 0, 0 0; }
+  20%, 100% { background-position: -40% 0, 0 0; }
+}
+
+@keyframes vp-credit-icon {
+  0% { scale: 1; rotate: 0deg; }
+  3% { scale: 1.16; rotate: -8deg; }
+  6% { scale: 0.96; rotate: 3deg; }
+  9%, 100% { scale: 1; rotate: 0deg; }
+}
+
+/* Darker green than --vp-green so the amount stays readable while it flashes */
+@keyframes vp-credit-amount {
+  0% { top: 0; color: var(--vp-blue); }
+  3% { top: -3px; color: #0a7d34; }
+  14% { top: 0; color: #0a7d34; }
+  22%, 100% { top: 0; color: var(--vp-blue); }
+}
+
 @media (min-width: 1200px) {
   .vp-hero { padding: 2.25rem 0 0.75rem; }
   .vp-hero__content { padding-left: 0.4rem; }
@@ -2784,6 +2837,13 @@ a { color: var(--vp-blue); }
   .vp-leaving main,
   .vp-leaving .vp-footer,
   .vp-leaving .vp-auth-footer { opacity: 1; transform: none; }
+
+  /* Hero card loops */
+  .vp-reward-card,
+  .vp-reward-card__icon,
+  .vp-reward-card__text span { animation: none; }
+  .vp-reward-card__item:hover .vp-reward-card__chevron,
+  .vp-reward-card__item:focus-visible .vp-reward-card__chevron { translate: none; }
 
   /* No lift or tilt on the offer rows */
   .vp-survey:hover, .vp-survey:focus-visible,
