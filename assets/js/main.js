@@ -1,5 +1,5 @@
-/* VivaPoll homepage – language switching and small enhancements.
-   Bootstrap handles the navbar collapse, dropdown and accordion. */
+// Language switching and small page enhancements.
+// Bootstrap handles the navbar collapse, dropdowns and accordion.
 (function () {
   const STORAGE_KEY = 'vp-lang';
   const DEFAULT_LANG = 'en';
@@ -13,9 +13,9 @@
   };
 
   const dictionaries = window.VP_I18N || {};
-  // Optional page-specific translations (e.g. legal pages) loaded before this script.
+  // Page-specific translations (e.g. legal pages), loaded before this script
   const pageDictionaries = window.VP_I18N_PAGE || {};
-  // English originals captured from the HTML, used as the fallback for every language.
+  // English text captured from the HTML, used as the fallback
   let domDefaults = null;
 
   function captureDomDefaults() {
@@ -61,7 +61,7 @@
     return Boolean(lang && dictionaries[lang] && LANG_NAMES[lang]);
   }
 
-  // Priority: ?lang= in the URL, then the saved choice, then the browser language.
+  // Priority: ?lang= in the URL, then the saved choice, then the browser language
   function detectInitialLang() {
     const fromUrl = new URLSearchParams(window.location.search).get('lang');
     if (isSupported(fromUrl)) return fromUrl;
@@ -75,7 +75,7 @@
     return DEFAULT_LANG;
   }
 
-  // Desktop hero: shrink the headline a little (never below 76%) when a translation needs more than two lines.
+  // Desktop hero: shrink the headline a bit (min 76%) if a translation runs past two lines
   function fitHeroTitle() {
     const title = document.querySelector('.vp-hero__title');
     if (!title) return;
@@ -120,7 +120,7 @@
       });
     });
 
-    // Pages that share one translation file pick their own title key via <body data-i18n-title="...">.
+    // Pages that share a translation file set their title key with <body data-i18n-title="...">
     const titleKey = document.body.dataset.i18nTitle || 'meta.title';
     if (dict[titleKey]) document.title = dict[titleKey];
     const metaDescription = document.querySelector('meta[name="description"]');
@@ -144,7 +144,7 @@
   document.addEventListener('DOMContentLoaded', () => {
     applyLanguage(detectInitialLang());
 
-    // Re-fit the hero headline once web fonts are ready and whenever the window is resized.
+    // Re-fit the hero headline once fonts load and on resize
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitHeroTitle);
     let resizeTimer;
     window.addEventListener('resize', () => {
@@ -160,26 +160,26 @@
       });
     });
 
-    // Legal pages: highlight the first section until Bootstrap ScrollSpy marks one as active.
+    // Legal pages: highlight the first section until ScrollSpy picks one
     const tocLinks = document.querySelectorAll('#vpTocNav .nav-link');
     if (tocLinks.length) {
       const ensureActive = () => {
         if (!document.querySelector('#vpTocNav .nav-link.active')) tocLinks[0].classList.add('active');
       };
       ensureActive();
-      // Bootstrap ScrollSpy initialises on window load and may clear the active link; restore it.
+      // ScrollSpy initialises on load and can clear the active link, so restore it
       window.addEventListener('load', () => window.setTimeout(ensureActive, 100));
       window.addEventListener('scroll', () => window.requestAnimationFrame(ensureActive), { passive: true });
     }
 
-    // Legal pages: collapse the mobile "On this page" list after a section is chosen.
+    // Legal pages: collapse the mobile "On this page" list after a section is picked
     const tocList = document.getElementById('vpTocList');
     if (tocList && window.bootstrap) {
       const tocCollapse = bootstrap.Collapse.getOrCreateInstance(tocList, { toggle: false });
       tocList.querySelectorAll('a').forEach((link) => {
         link.addEventListener('click', (event) => {
           if (!(window.matchMedia('(max-width: 991.98px)').matches && tocList.classList.contains('show'))) return;
-          // Close the list first, then scroll: the collapsing list changes the page height.
+          // Close the list first, then scroll - collapsing it changes the page height
           event.preventDefault();
           event.stopPropagation();
           const hash = link.getAttribute('href');
@@ -193,7 +193,7 @@
       });
     }
 
-    // Close the mobile menu after a nav link or language is chosen.
+    // Close the mobile menu after a link or language is picked
     const navCollapse = document.getElementById('vpNav');
     if (navCollapse && window.bootstrap) {
       const collapse = bootstrap.Collapse.getOrCreateInstance(navCollapse, { toggle: false });

@@ -16,10 +16,7 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
   <link href="assets/css/style.css" rel="stylesheet">
 
-  <!-- Arms the scroll animations before first paint, so nothing flashes into place.
-       Skipped entirely when the visitor asks for reduced motion, and a failsafe drops
-       the class again if GSAP has not started within 2.5s - a sign-in form must never be
-       left hidden because a CDN was slow or blocked. -->
+  <!-- Hide [data-anim] elements until GSAP starts (skipped for reduced motion, 2.5s fallback) -->
   <script>
     (function () {
       if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
@@ -42,7 +39,7 @@
       <span class="vp-circle vp-circle--11"></span>
     </div>
 
-    <!-- ============ HEADER (same menu bar as every other page) ============ -->
+    <!-- ============ HEADER ============ -->
     <header class="vp-header">
       <nav class="navbar navbar-expand-md vp-navbar" aria-label="Main navigation">
         <div class="container">

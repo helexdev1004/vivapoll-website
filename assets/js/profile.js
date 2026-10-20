@@ -1,21 +1,12 @@
-/* VivaPoll – the profile screen's two dialogs.
- *
- * Both are Bootstrap modals, so opening, closing, Escape, the backdrop and the focus trap
- * need nothing from here. What is here is the part Bootstrap cannot know: which control a
- * field wants, and what the row should read afterwards.
- *
- * Nothing is sent anywhere. Saving changes what the row displays and no more - there is
- * no back end behind this yet, and a reload puts every field back as it was.
- */
+// Profile page: password dialog and the field edit dialog.
+// Bootstrap handles the modals; this only builds the right input and updates the row.
+// Nothing is saved yet (no backend) - a reload resets the values.
 (function () {
   'use strict';
 
-  /* ------------------------------------------------ the password dialog's eyes */
+  // --- password dialog ---
 
-  // The same `data-vp-toggle-password` attribute the sign-in and sign-up pages use, so
-  // the markup reads the same wherever a password field appears. Their handler lives in
-  // auth.js, which is not loaded here: it also carries the translated strings and the
-  // sign-up validation, none of which the signed-in pages have or want.
+  // Same data-vp-toggle-password as the auth pages (auth.js isn't loaded here)
   document.querySelectorAll('[data-vp-toggle-password]').forEach(function (btn) {
     btn.addEventListener('click', function () {
       var input = document.getElementById(btn.dataset.vpTogglePassword);
@@ -31,8 +22,7 @@
 
   var passwordModal = document.getElementById('vpPasswordModal');
   if (passwordModal) {
-    // Leaving should leave nothing behind: anything typed is cleared and every field goes
-    // back to hidden, so the next open starts clean rather than showing a half-entry.
+    // Clear the fields and re-hide them when the dialog closes
     passwordModal.addEventListener('hidden.bs.modal', function () {
       passwordModal.querySelectorAll('input').forEach(function (input) {
         input.value = '';
@@ -46,7 +36,7 @@
     });
   }
 
-  /* --------------------------------------------------------- editing a field */
+  // --- edit dialog ---
 
   var editModal = document.getElementById('vpEditModal');
   if (!editModal || !window.bootstrap) return;
@@ -72,8 +62,7 @@
     }
   }
 
-  // "1994-03-14" as a reader would write it. The date input needs the first form; the row
-  // shows the second.
+  // "1994-03-14" -> "14 March 1994" for the row
   function readableDate(iso) {
     var parts = String(iso).split('-');
     if (parts.length !== 3) return iso;
@@ -86,8 +75,7 @@
     return document.querySelector('[data-edit][data-kind="' + kind + '"]');
   }
 
-  // The regions on offer depend on the country, and countries without a list get a single
-  // option rather than an empty menu.
+  // Countries without a region list get a single option
   function regionsFor(code) {
     return GEO.REGIONS[code] || ['Not applicable'];
   }
@@ -137,7 +125,7 @@
     }
 
     if (kind === 'date') {
-      // Nobody on this product is under 16, and a birth date in the future is a typo.
+      // No future dates
       return makeInput('date', value, { max: new Date().toISOString().slice(0, 10) });
     }
 
@@ -183,8 +171,7 @@
     });
   });
 
-  // Focus the control once the dialog has finished opening - before that it is not
-  // focusable, and Bootstrap would take the focus back anyway.
+  // Focus after the dialog has opened (Bootstrap moves focus before that)
   editModal.addEventListener('shown.bs.modal', function () {
     var control = editModal.querySelector('#vpEditInput');
     if (control) control.focus();
@@ -203,9 +190,7 @@
     if (openRow.dataset.kind === 'country') {
       shown.textContent = countryName(value);
 
-      // A region belongs to a country. When the country changes, a region from the old one
-      // is no longer on offer, so it moves to the first of the new country's rather than
-      // being left as something the form would not accept.
+      // Changing the country resets the region to the new country's first one
       var regionRow = row('region');
       if (regionRow) {
         var list = regionsFor(value);

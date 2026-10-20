@@ -1,6 +1,6 @@
-/* VivaPoll – Log in / Sign up page behaviour (frontend only, no backend). */
+// Log in / Sign up (frontend only, no backend)
 (function () {
-  // The two lists live in geo.js so the profile screen can offer the same ones.
+  // Country/region codes are in geo.js (shared with the profile page)
   const COUNTRIES = (window.VP_GEO || {}).COUNTRIES || [];
   const REGIONS = (window.VP_GEO || {}).REGIONS || {};
 
@@ -95,7 +95,7 @@
     });
   }
 
-  // Re-localise dynamic option text when the language changes.
+  // Re-localise option text when the language changes
   document.addEventListener('vp:languagechange', () => {
     renderCountries();
     renderRegions();

@@ -1,6 +1,5 @@
 /* ==========================================================================
-   VivaPoll – Homepage styles
-   Built on Bootstrap 5.3. Sections are organised in page order.
+   VivaPoll - main stylesheet (Bootstrap 5.3 + custom)
    ========================================================================== */
 
 /* ---------- 0. Design tokens ---------- */
@@ -52,8 +51,6 @@ a { color: var(--vp-blue); }
   .container { max-width: 1180px; }
 }
 
-.vp-sprite { position: absolute; width: 0; height: 0; overflow: hidden; }
-
 .vp-skip-link {
   position: absolute;
   top: 12px;
@@ -65,8 +62,7 @@ a { color: var(--vp-blue); }
   box-shadow: var(--vp-shadow);
 }
 
-/* Clips decorative circles horizontally. `overflow: clip` (unlike `hidden`) does not create a
-   scroll container, so the sticky table of contents and Bootstrap ScrollSpy keep working. */
+/* overflow: clip (not hidden) so sticky positioning and scrollspy keep working */
 .vp-page {
   position: relative;
   isolation: isolate;
@@ -111,7 +107,7 @@ a { color: var(--vp-blue); }
 }
 
 /* ---------- 3. Header ---------- */
-/* Header pinned to the top on every page, with a very light see-through blue background */
+/* Sticky header, light translucent background */
 :root { --vp-header-h: 86px; }
 
 .vp-header {
@@ -143,7 +139,7 @@ a { color: var(--vp-blue); }
   transition: color 0.18s ease, transform 0.22s cubic-bezier(0.34, 1.5, 0.64, 1);
 }
 
-/* The tab answers the click straight away, before the next page has been asked for. */
+/* Pressed state, set by nav.js on click */
 .vp-nav .nav-link.is-pressed { transform: translateY(-3px); color: var(--vp-blue); }
 
 .vp-nav .nav-link:hover,
@@ -162,10 +158,7 @@ a { color: var(--vp-blue); }
   background: var(--vp-blue);
 }
 
-/* One underline shared by the whole menu, so it can travel between tabs instead of one
-   blinking off and another blinking on. nav.js positions it and adds `vp-nav--live`,
-   which is also what retires the per-tab underline above - so with no JavaScript, or
-   below the width where the tabs sit in a row, the plain CSS mark is still there. */
+/* Sliding underline - nav.js adds .vp-nav--live, the plain underline is the fallback */
 .vp-nav { position: relative; }
 
 .vp-nav__rail {
@@ -183,9 +176,7 @@ a { color: var(--vp-blue); }
 .vp-nav--live .vp-nav__rail { opacity: 1; }
 .vp-nav--live .nav-link.active::after { opacity: 0; }
 
-/* Leaving for another page: the content lifts away while the menu bar holds still, so
-   the two pages read as one place. Kept short - this is in front of a navigation the
-   visitor has already asked for. */
+/* Page exit transition (nav.js adds .vp-leaving before navigating) */
 .vp-leaving main,
 .vp-leaving .vp-footer,
 .vp-leaving .vp-auth-footer,
@@ -283,7 +274,7 @@ a { color: var(--vp-blue); }
   .vp-btn { padding: 0.45rem 0.9rem; font-size: 0.95rem; }
 }
 
-/* Tablet portrait: tighten the header so everything stays on one line */
+/* Tablet portrait: keep the header on one line */
 @media (min-width: 768px) and (max-width: 991.98px) {
   .vp-brand img { height: 28px; }
   .vp-nav { margin-left: 1rem; gap: 0.85rem; }
@@ -315,14 +306,9 @@ a { color: var(--vp-blue); }
 }
 
 /* ---------- 4. Shared section pieces ---------- */
-/* Every section gets the same generous breathing room, so the page reads as a stack of
-   distinct blocks rather than one continuous column of content. */
 .vp-section { position: relative; padding: 4.5rem 0; }
 
-/* Sections alternate between the page tint and a plain white band. The tint is simply
-   the body showing through, which keeps the decorative circles visible on those bands;
-   the white ones sit opaque on top and hide them. Alternating like this is what makes
-   each section obvious at a glance. */
+/* Alternate white bands with the page tint */
 .vp-band { background: #fff; }
 
 @media (max-width: 991.98px) {
@@ -359,7 +345,6 @@ a { color: var(--vp-blue); }
   gap: 0.75rem 2rem;
 }
 
-/* Centred heading, for sections whose cards are centred too. */
 .vp-section-head--center { max-width: 640px; margin-inline: auto; margin-bottom: 2.6rem; text-align: center; }
 .vp-section-head--center .vp-section-sub { margin-inline: auto; }
 
@@ -388,7 +373,6 @@ a { color: var(--vp-blue); }
 .vp-link-arrow:hover { color: var(--vp-blue-dark); }
 .vp-link-arrow:hover i { transform: translateX(4px); }
 
-
 .vp-hand {
   position: absolute;
   margin: 0;
@@ -399,8 +383,6 @@ a { color: var(--vp-blue); }
   color: var(--vp-blue-text);
   pointer-events: none;
 }
-
-.vp-hand__arrow { display: block; width: 1.3em; height: auto; margin: 0.15em 0 0 1.9em; }
 
 /* Store badges (hero + CTA) */
 .vp-store-badges { display: flex; flex-wrap: wrap; gap: 1.4rem; }
@@ -440,7 +422,7 @@ a { color: var(--vp-blue); }
 .vp-store-badge__text strong { font-size: 1.45rem; font-weight: 500; letter-spacing: -0.02em; }
 
 /* ---------- 5. Hero ---------- */
-/* Room under the illustration so the band below starts clear of her feet. */
+/* Extra bottom space for the illustration */
 .vp-hero { padding: 1.5rem 0 4rem; }
 
 .vp-hero__content { position: relative; z-index: 2; }
@@ -483,27 +465,22 @@ a { color: var(--vp-blue); }
 
 .vp-hero__app-label { margin: 2.6rem 0 0.9rem; font-size: 1.05rem; color: var(--vp-muted); }
 
-/* Visual: illustration + floating elements, positioned relative to the image.
-   The camera here is what turns the character's tilt into a turn rather than a squash -
-   animations.js rotates the stage toward the pointer. */
+/* Illustration + floating cards. Perspective is for the pointer tilt in animations.js */
 .vp-hero__visual { position: relative; padding-top: 3.5rem; perspective: 1100px; }
 
-/* Desktop: the illustration sits to the right, its reward card finishing flush with
-   the container edge so the section lines up with the header above it. */
+/* Desktop: illustration on the right, card flush with the container edge */
 .vp-hero__stage { position: relative; width: 106.5%; margin-left: -14%; }
 
 .vp-hero__img { display: block; width: 100%; height: auto; }
 
 .vp-hero__tag {
   position: absolute;
-  /* Low on the bean bag's left shoulder: she holds her phone up at chest height in
-     this artwork, so the old spot sat right on top of it. */
+  /* Keep clear of the phone in the artwork */
   left: 3.5%;
   top: 56%;
   margin: 0;
   padding: 0.45rem 0.85rem;
   border-radius: 8px;
-  /* See-through blue label so the illustration stays visible behind it */
   background: rgba(8, 116, 252, 0.13);
   border: 1px solid rgba(8, 116, 252, 0.28);
   text-shadow: 0 0 6px rgba(255, 255, 255, 0.9), 0 0 2px rgba(255, 255, 255, 0.9);
@@ -520,11 +497,7 @@ a { color: var(--vp-blue); }
 .vp-reward-card {
   position: absolute;
   z-index: 2;
-  /* Sits exactly where the card sits in the source artwork, overlapping the bean bag's
-     shoulder. The illustration is cut along that same edge, so the card covers the cut -
-     it starts just left of it (the cut lands at 62.8%) so no strip of page background
-     shows through between the two. Width grows by the same amount the left edge moved,
-     which keeps the right edge flush with the container. */
+  /* Lines up with the edge baked into the artwork (cut at 62.8%) */
   left: 62%;
   top: 5.7%;
   width: 46.1%;
@@ -553,11 +526,10 @@ a { color: var(--vp-blue); }
 
 .vp-reward-card__chevron { margin-left: auto; font-size: 1rem; color: var(--vp-blue); }
 
-
 @media (min-width: 1200px) {
   .vp-hero { padding: 2.25rem 0 0.75rem; }
   .vp-hero__content { padding-left: 0.4rem; }
-  /* The illustration overlaps the text column on desktop: keep longer translations clear of it */
+  /* Keep longer translations clear of the illustration */
   .vp-hero__title { max-width: 510px; }
   .vp-hero__lead { max-width: 465px; }
 }
@@ -609,10 +581,7 @@ a { color: var(--vp-blue); }
 /* ---------- 6. How VivaPoll works ---------- */
 .vp-how__sub { color: var(--vp-dark); }
 
-
-/* Each step is tinted with its own accent and carries its number as a large ghosted
-   figure, so the four read as a sequence at a glance. The accent lives in the chip and
-   the numeral; the heading stays dark, which keeps the row calm. */
+/* Each step has its own accent colour and a big faded number */
 .vp-step {
   position: relative;
   height: 100%;
@@ -679,11 +648,7 @@ a { color: var(--vp-blue); }
   .vp-step__icon { width: 46px; height: 46px; margin-bottom: 0.85rem; }
 }
 
-
 /* ---------- 7. Stats ---------- */
-/* Four cards rather than one long divided pill. Each carries its own accent as a tinted
-   glow behind the icon and a matching hairline on hover, so the row reads as one system
-   instead of four unrelated ornaments. The figure leads; colour is left to the chip. */
 .vp-stat {
   --vp-stat-accent: var(--vp-blue);
   --vp-stat-glow: rgba(8, 116, 252, 0.16);
@@ -698,8 +663,7 @@ a { color: var(--vp-blue); }
   transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
 }
 
-/* A soft wash of the card's accent bleeding in from the top corner. A radial gradient
-   rather than a blurred circle, so it fades out instead of ending as a visible edge. */
+/* Corner glow in the card's accent colour */
 .vp-stat::before {
   content: "";
   position: absolute;
@@ -707,10 +671,7 @@ a { color: var(--vp-blue); }
   background: radial-gradient(150px 130px at 100% 0%, var(--vp-stat-glow), transparent 72%);
 }
 
-/* Hover lifts with light rather than with a transform. While the section is held, the
-   cards carry an inline transform of their own from the scrubbed wave, and an inline
-   style beats a stylesheet one - a hover lift written here would simply be ignored for
-   as long as that lasted, and then start working again afterwards. */
+/* No transform on hover - the scroll animation sets inline transforms on these cards */
 .vp-stat:hover {
   border-color: var(--vp-stat-accent);
   box-shadow: 0 20px 44px rgba(28, 82, 160, 0.16);
@@ -742,7 +703,7 @@ a { color: var(--vp-blue); }
   display: block;
   font-size: 1.02rem;
   color: var(--vp-muted);
-  /* Dutch supplies "Gebruikersbeoordeling", which is wider than a card on a phone. */
+  /* Long Dutch label on small screens */
   overflow-wrap: break-word;
   hyphens: auto;
 }
@@ -752,8 +713,7 @@ a { color: var(--vp-blue); }
 .vp-stat--rating    { --vp-stat-accent: #f0980b; --vp-stat-glow: rgba(240, 152, 11, 0.16); }
 .vp-stat--people    { --vp-stat-accent: #ec3f6b; --vp-stat-glow: rgba(236, 63, 107, 0.14); }
 
-/* The last card holds a phrase, not a figure, so it is set smaller - a long word at
-   figure size would crowd the card, and it grows further in Dutch and German. */
+/* Last card is a phrase, not a number */
 .vp-stat--people .vp-stat__value {
   font-size: clamp(1.3rem, 0.85rem + 1.1vw, 1.8rem);
   letter-spacing: -0.025em;
@@ -766,14 +726,9 @@ a { color: var(--vp-blue); }
 }
 
 /* ---------- 8. Testimonials ---------- */
-.vp-panel--soft { background: rgba(233, 245, 253, 0.8); }
-
 .vp-testimonials .vp-section-head { margin-bottom: 2.25rem; }
 
-/* A rail of quote cards. With no JavaScript, or on anything narrower than a desktop, it
-   is an ordinary horizontal strip you swipe, snapping card to card. On wide screens
-   animations.js pins the section and drives the same track sideways from the scrollbar -
-   the markup and the layout are identical either way, only what moves it changes. */
+/* Quote rail: swipeable strip, scroll-driven on desktop (animations.js) */
 .vp-quotes { position: relative; margin-top: 0.5rem; }
 
 .vp-quotes__track {
@@ -791,7 +746,7 @@ a { color: var(--vp-blue); }
   scroll-snap-align: center;
 }
 
-/* Under the rail: how far along the quotes you are. */
+/* Progress bar under the rail */
 .vp-quotes__meter {
   height: 3px;
   margin: 0.5rem auto 0;
@@ -810,10 +765,7 @@ a { color: var(--vp-blue); }
   transform-origin: left center;
 }
 
-/* Two columns: what was said on the left, who said it beside their picture on the right.
-   Each card carries its own accent, which tints the quote badge, the rule, the location
-   pin and the ring around the photo - the blues and greens of the rest of the site
-   rather than the blush of the layout it is modelled on. */
+/* Quote card: quote on the left, person + photo on the right */
 .vp-quote {
   position: relative;
   display: grid;
@@ -831,7 +783,6 @@ a { color: var(--vp-blue); }
 
 .vp-quote__body { min-width: 0; }
 
-/* The mark sits in a soft disc of its own accent, as in the reference. */
 .vp-quote__badge {
   display: grid;
   place-items: center;
@@ -845,7 +796,6 @@ a { color: var(--vp-blue); }
   line-height: 1;
 }
 
-/* A serif italic. The whole character of this card comes from it. */
 .vp-quote__text {
   margin: 0;
   font-family: Lora, Georgia, "Times New Roman", serif;
@@ -879,7 +829,7 @@ a { color: var(--vp-blue); }
 }
 .vp-quote__place .bi { color: var(--vp-quote-accent, var(--vp-blue)); font-size: 1.05rem; }
 
-/* The picture, tilted in its frame, with a handwritten note tucked under one corner. */
+/* Tilted photo with a handwritten note */
 .vp-quote__side { position: relative; }
 
 .vp-quote__frame {
@@ -922,7 +872,7 @@ a { color: var(--vp-blue); }
 .vp-quote--mint   { --vp-quote-accent: #12a86e; }
 .vp-quote--amber  { --vp-quote-accent: #ef8b1f; }
 
-/* One column once there is no room for two, picture first. */
+/* Single column on small screens */
 @media (max-width: 767.98px) {
   .vp-quote { grid-template-columns: 1fr; gap: 1.75rem; padding: 2rem 1.5rem 2.25rem; }
   .vp-quote__side { order: -1; width: 11rem; margin: 0 auto; }
@@ -931,8 +881,7 @@ a { color: var(--vp-blue); }
   .vp-quote__name { font-size: 1.2rem; }
 }
 
-/* Pinned mode. animations.js adds this once it has taken the track over, which also
-   turns the native scrolling off - two things moving the same strip would fight. */
+/* Desktop: animations.js takes over the track and turns off native scrolling */
 .vp-quotes--driven .vp-quotes__track {
   overflow: visible;
   scroll-snap-type: none;
@@ -944,63 +893,13 @@ a { color: var(--vp-blue); }
   .vp-quotes__item { flex-basis: 88vw; }
 }
 
-/* Centred cards: the portrait sits on top inside a coloured ring, the person is named
-   under it, then the rating, then what they said. */
-.vp-testimonial {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  height: 100%;
-  margin: 0;
-  padding: 2.5rem 1.75rem 2rem;
-  background: #fff;
-  border: 1px solid var(--vp-border);
-  border-radius: var(--vp-radius);
-  box-shadow: 0 10px 30px rgba(28, 82, 160, 0.05);
-  text-align: center;
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-}
-
-.vp-testimonial:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 22px 46px rgba(28, 82, 160, 0.12);
-}
-
-.vp-testimonial__photo {
-  display: block;
-  width: 88px;
-  height: 88px;
-  margin-bottom: 1.1rem;
-  border-radius: 50%;
-  object-fit: cover;
-  /* White gap, then the card's own accent as a ring. */
-  box-shadow: 0 0 0 4px #fff, 0 0 0 6px var(--vp-testi-ring);
-}
-
-.vp-testimonial__author { margin: 0 0 0.7rem; }
-.vp-testimonial__name { display: block; font-size: 1.1rem; font-weight: 700; color: var(--vp-dark); }
-.vp-testimonial__role { display: block; margin-top: 0.1rem; font-size: 0.94rem; color: var(--vp-muted); }
-
 .vp-stars { display: flex; justify-content: center; gap: 0.2rem; margin: 0 0 1rem; font-size: 0.98rem; color: #fbb61a; }
-
-.vp-testimonial__quote {
-  margin: 0;
-  font-size: 1.04rem;
-  line-height: 1.7;
-  color: var(--vp-muted);
-}
-
-.vp-testimonial--peach { --vp-testi-ring: #f7a072; }
-.vp-testimonial--mint  { --vp-testi-ring: #4ec79a; }
-.vp-testimonial--sky   { --vp-testi-ring: #5b9df7; }
 
 .vp-testimonials__more { margin-top: 2.75rem; text-align: center; }
 .vp-testimonials__btn { padding: 0.85rem 2.2rem; font-size: 1.05rem; }
 
 @media (max-width: 767.98px) {
   .vp-testimonials .vp-section-head { margin-bottom: 1.5rem; }
-  .vp-testimonial { padding: 2rem 1.35rem 1.7rem; }
-  .vp-testimonial__photo { width: 76px; height: 76px; }
   .vp-testimonials__more { margin-top: 2rem; }
 }
 
@@ -1051,8 +950,6 @@ a { color: var(--vp-blue); }
 }
 
 /* ---------- 10. CTA ---------- */
-/* A solid blue block closes the page: after a run of white and tinted bands it reads as
-   a full stop, and it is the one place on the page asking for the download. */
 .vp-cta__panel {
   display: flex;
   flex-direction: column;
@@ -1077,7 +974,6 @@ a { color: var(--vp-blue); }
 .vp-cta__text { margin: 0; font-size: 1.08rem; color: rgba(255, 255, 255, 0.88); }
 
 .vp-cta__badges { justify-content: center; }
-
 
 @media (max-width: 991.98px) {
   .vp-cta__panel { padding: 2.6rem 2rem; }
@@ -1116,18 +1012,6 @@ a { color: var(--vp-blue); }
 
 .vp-footer__nav a:hover { color: var(--vp-blue); }
 
-.vp-socials { display: flex; align-items: center; gap: 1.35rem; }
-
-.vp-socials a {
-  display: inline-flex;
-  font-size: 2.1rem;
-  line-height: 1;
-  color: var(--vp-dark);
-  transition: color 0.2s ease, transform 0.2s ease;
-}
-
-.vp-socials a:hover { color: var(--vp-blue); transform: translateY(-2px); }
-
 .vp-footer__claim { margin: 1.1rem 0 0; font-size: 1.05rem; line-height: 1.45; color: var(--vp-muted); }
 
 @media (min-width: 992px) {
@@ -1141,7 +1025,6 @@ a { color: var(--vp-blue); }
 @media (max-width: 767.98px) {
   .vp-footer { padding: 2.5rem 0 2.5rem; text-align: center; }
   .vp-footer__brand .vp-brand img { margin-inline: auto; }
-  .vp-socials { justify-content: center; }
 }
 
 /* ---------- 12. Legal pages (Privacy Policy, Terms & Conditions) ---------- */
@@ -1149,7 +1032,7 @@ a { color: var(--vp-blue); }
 
 .vp-legal-hero { position: relative; padding: 1.5rem 0 0; }
 
-/* Both legal pages share exactly the same hero sizes so navigating between them feels consistent */
+/* Same hero sizing on both legal pages */
 .vp-legal-hero__content { padding-block: 1rem 2.5rem; }
 
 .vp-legal-hero__eyebrow { font-size: 1.05rem; letter-spacing: 0.08em; margin-bottom: 0.9rem; }
@@ -1174,7 +1057,7 @@ a { color: var(--vp-blue); }
   color: var(--vp-dark);
 }
 
-/* Same illustration height on both pages; the wrapper hugs the image so note positions stay put */
+/* Wrapper hugs the image so the notes stay in place */
 .vp-legal-hero__visual { position: relative; width: fit-content; max-width: 100%; margin-left: auto; }
 
 .vp-legal-hero__img { display: block; width: auto; max-width: 100%; height: 340px; object-fit: contain; }
@@ -1195,14 +1078,14 @@ a { color: var(--vp-blue); }
   background: rgba(255, 255, 255, 0.72);
   border-radius: 18px;
   box-shadow: 0 8px 26px rgba(28, 82, 160, 0.06);
-  /* Still scrollable (wheel/touch) when taller than the screen, but without a visible scrollbar */
+  /* Scrollable, but no visible scrollbar */
   scrollbar-width: none;
   -ms-overflow-style: none;
 }
 
 .vp-toc::-webkit-scrollbar { display: none; }
 
-/* Shorter desktop screens: tighten the list so it usually fits without scrolling */
+/* Shorter screens: tighter list */
 @media (min-width: 992px) and (max-height: 960px) {
   .vp-toc { padding-block: 1.2rem 1rem; }
   .vp-toc__title { margin-bottom: 0.5rem; font-size: 1.2rem; }
@@ -1286,7 +1169,7 @@ a { color: var(--vp-blue); }
 .vp-legal__body strong { font-weight: 600; color: var(--vp-dark); }
 .vp-legal__body a { color: var(--vp-blue); }
 
-/* Legal footer: store badges under the brand */
+/* Store badges under the brand */
 .vp-store-badges--sm { gap: 0.9rem; margin-top: 1.25rem; }
 .vp-store-badges--sm .vp-store-badge { min-width: 0; min-height: 56px; padding: 0.45rem 1rem; gap: 0.55rem; box-shadow: 0 0 0 1px var(--vp-border), 0 4px 12px rgba(28, 82, 160, 0.06); }
 .vp-store-badges--sm .vp-store-badge__icon { width: 26px; height: 26px; font-size: 1.6rem; }
@@ -1329,7 +1212,7 @@ a { color: var(--vp-blue); }
 .vp-legal-hero--bordered { border-bottom: 1px solid var(--vp-border); }
 
 .vp-legal-hero__note--support { left: 53%; top: 11%; }
-/* About: girl on the left of the column, handwritten note to her right (where she gestures) */
+/* About hero: girl on the left, note on the right */
 .vp-legal-hero__visual--about { margin-left: 4%; margin-right: auto; }
 .vp-legal-hero__note--about { left: 77%; top: 6%; white-space: nowrap; line-height: 1.12; }
 
@@ -1426,7 +1309,7 @@ a { color: var(--vp-blue); }
 }
 .vp-about-owner i { color: var(--vp-blue); }
 
-/* Mission: centred statement with a Companies ⇄ VivaPoll ⇄ You flow */
+/* Mission + Companies / VivaPoll / You flow */
 .vp-about-mission { padding-top: 2.5rem; }
 .vp-about-mission__panel { max-width: 860px; margin: 0 auto; text-align: center; }
 .vp-about-flow { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 0.75rem 1rem; margin-bottom: 1.75rem; }
@@ -1515,11 +1398,10 @@ a { color: var(--vp-blue); }
   .vp-about-flow { flex-direction: column; }
 }
 
-/* ---------- 15. Log in / Sign up pages ---------- */
+/* ---------- 15. Log in / Sign up ---------- */
 .vp-auth-page { background: var(--vp-bg); }
 .vp-auth { display: flex; flex-direction: column; min-height: 100vh; }
 
-/* The log in / sign up pages use the same sticky menu bar as every other page. */
 .vp-auth-main { flex: 1; display: flex; align-items: center; padding: 1rem 0 2.5rem; }
 .vp-auth-main > .container { width: 100%; }
 
@@ -1573,7 +1455,7 @@ a { color: var(--vp-blue); }
 .vp-auth-card--wide .vp-input__toggle { top: 24px; }
 .vp-input__toggle:hover { color: var(--vp-blue); background: var(--vp-light-blue); }
 
-/* Bootstrap validation icons would collide with our own icons */
+/* Bootstrap's validation icons clash with ours */
 .vp-form-control.is-invalid, .was-validated .vp-form-control:invalid,
 .vp-form-control.is-valid, .was-validated .vp-form-control:valid { background-image: none; }
 .was-validated .vp-form-control:valid { border-color: var(--vp-border); }
@@ -1613,13 +1495,9 @@ a { color: var(--vp-blue); }
 
 .vp-auth-visual { position: relative; z-index: 1; }
 .vp-auth-visual img { display: block; width: 100%; height: auto; }
-/* She sits beside the card rather than tucked behind it, so her whole pose reads. */
+/* Sign in: illustration beside the card */
 .vp-auth-visual--signin { margin-left: 0; margin-top: 7rem; }
-/* She is centred against the form rather than standing on its base line: the sign-up form
-   runs past the bottom of most screens, and pinning her to the bottom of it put her below
-   the fold. The height cap is what keeps her there - centred in a form this tall, she has
-   to be no more than about two thirds of the window to clear the fold on a short laptop
-   screen, and the cap gives up her drawn size before it gives up being visible. */
+/* Sign up: centred, height capped so she stays above the fold on short screens */
 .vp-auth-visual--signup { position: relative; max-width: 392px; margin: 0 auto; }
 
 .vp-auth-visual--signup img {
@@ -1630,10 +1508,7 @@ a { color: var(--vp-blue); }
   margin: 0 auto;
 }
 
-/* The illustration is cut off at her shoes with nothing under them, so away from the
-   bottom of the screen she read as hovering. This is the contact shadow she is missing:
-   a soft ellipse spread under her crossed legs, sitting behind her so the shoes stay
-   crisp on top of it. */
+/* Contact shadow under her shoes */
 .vp-auth-visual--signup::after {
   content: "";
   position: absolute;
@@ -1657,16 +1532,11 @@ a { color: var(--vp-blue); }
   .vp-auth-sub { margin-bottom: 1.5rem; font-size: 1rem; }
 }
 
-/* ---------- 16. Signed-in dashboard ---------- */
-/* A different shell from the marketing pages: its own slim app bar carrying the four
-   destinations, and no marketing navigation at all. */
+/* ---------- 16. Signed-in pages ---------- */
 .vp-app-page { background: var(--vp-bg); }
 .vp-app { display: flex; flex-direction: column; min-height: 100vh; }
 
-/* The bar used to be the page's own background colour, which left no edge to see and no
-   way to tell the menu from the content behind it. It is its own surface now: white,
-   with a hairline under it, and a shadow that arrives once the page has moved so the bar
-   reads as a layer over the content rather than part of it. */
+/* White app bar, shadow once scrolled (nav.js adds .is-stuck) */
 .vp-appbar {
   position: sticky;
   top: 0;
@@ -1684,17 +1554,12 @@ a { color: var(--vp-blue); }
   box-shadow: 0 10px 30px rgba(28, 82, 160, 0.1);
 }
 
-/* Three columns rather than space-between: the outer two share whatever is left over, so
-   the menu sits on the centre of the bar and stays there however wide the logo or the
-   account controls turn out to be. */
+/* 3-column grid keeps the menu centred */
 .vp-appbar__inner { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 1rem; }
 .vp-appbar__brand { justify-self: start; }
 .vp-appbar__brand img { display: block; height: 38px; width: auto; }
 .vp-appbar__actions { justify-self: end; display: flex; align-items: center; gap: 0.5rem; }
 
-/* Both controls look like controls before they are touched. A bare glyph that only grows
-   a background under the pointer gives the eye nothing to aim at, and on a bar this
-   uncluttered there is no other edge nearby to imply one. */
 .vp-appbar__icon {
   position: relative;
   display: grid;
@@ -1717,9 +1582,7 @@ a { color: var(--vp-blue); }
   color: #fff;
 }
 
-/* Unread marker. Decorative only - there is nothing behind it to count yet. The white
-   ring is what holds it off the glyph, and it reads on the pale ground and on the blue
-   one the button turns while hovered. */
+/* Unread dot (static for now) */
 .vp-appbar__dot {
   position: absolute;
   top: 6px;
@@ -1731,8 +1594,6 @@ a { color: var(--vp-blue); }
   box-shadow: 0 0 0 2.5px #fff, 0 2px 6px rgba(236, 63, 107, 0.45);
 }
 
-/* Filled, with the initial reversed out of it. A pale disc with a blue letter was the
-   one thing on the bar that still looked like a placeholder. */
 .vp-avatar {
   display: grid;
   place-items: center;
@@ -1748,9 +1609,7 @@ a { color: var(--vp-blue); }
 }
 .vp-avatar:hover, .vp-avatar:focus-visible { box-shadow: 0 6px 16px rgba(8, 116, 252, 0.35); color: #fff; }
 
-/* The avatar and its chevron are one control, so the chevron is part of the same button
-   rather than a second thing to aim at - and the pill around the pair is what says so at
-   a glance, rather than leaving two loose shapes sitting next to each other. */
+/* Avatar + chevron are one button */
 .vp-account {
   display: inline-flex;
   align-items: center;
@@ -1768,12 +1627,12 @@ a { color: var(--vp-blue); }
 .vp-account .bi { font-size: 0.85rem; transition: transform 0.2s ease, color 0.2s ease; }
 .vp-account:hover, .vp-account:focus-visible { background: #fff; box-shadow: inset 0 0 0 1px var(--vp-blue), 0 8px 20px rgba(28, 82, 160, 0.12); }
 .vp-account:hover .bi, .vp-account:focus-visible .bi { color: var(--vp-blue); }
-/* The chevron points at the menu it has opened, and the pill stays lit while it is open. */
+/* Open state */
 .vp-account[aria-expanded="true"] { background: #fff; box-shadow: inset 0 0 0 1px var(--vp-blue), 0 8px 20px rgba(28, 82, 160, 0.12); }
 .vp-account[aria-expanded="true"] .bi { transform: rotate(180deg); color: var(--vp-blue); }
 .vp-account[aria-expanded="true"] .vp-avatar { box-shadow: 0 6px 16px rgba(8, 116, 252, 0.35); }
 
-/* ---------- The account menu ---------- */
+/* ---------- Account menu ---------- */
 .vp-menu {
   --bs-dropdown-min-width: 17rem;
   padding: 0.4rem;
@@ -1783,11 +1642,10 @@ a { color: var(--vp-blue); }
   box-shadow: 0 20px 48px rgba(11, 20, 55, 0.18), 0 2px 6px rgba(11, 20, 55, 0.06);
 }
 
-/* Who is signed in, above the things they can do about it. */
 .vp-menu__head { display: flex; align-items: center; gap: 0.7rem; padding: 0.7rem 0.75rem 0.85rem; }
 .vp-menu__who { display: flex; flex-direction: column; min-width: 0; line-height: 1.35; }
 .vp-menu__who strong { font-size: 0.98rem; color: var(--vp-dark); }
-/* An address has no spaces to wrap at, and the menu is only so wide. */
+/* Long emails need to wrap */
 .vp-menu__who span { font-size: 0.85rem; color: var(--vp-muted); overflow-wrap: anywhere; }
 
 .vp-menu__rule { margin: 0.35rem 0.4rem; border: 0; border-top: 1px solid var(--vp-border); opacity: 1; }
@@ -1806,22 +1664,11 @@ a { color: var(--vp-blue); }
 .vp-menu__item .bi { font-size: 1.05rem; color: var(--vp-blue); }
 .vp-menu__item:hover, .vp-menu__item:focus-visible { background: var(--vp-light-blue); color: var(--vp-dark); }
 
-/* Leaving is not the same kind of act as the four above it. */
 .vp-menu__item--out, .vp-menu__item--out .bi { color: #c02c2c; }
 .vp-menu__item--out:hover, .vp-menu__item--out:focus-visible { background: #fdeaea; color: #c02c2c; }
 
-/* Bootstrap swaps display, which a transition cannot follow, so the open state is
-   animated rather than transitioned.
- *
- * The curve is a long tail-off rather than an ease: it covers most of the distance early
- * and settles without a bounce, which is what stops a short pop from reading as a snap.
- * Opacity finishes ahead of the movement so the panel is readable while it is still
- * settling, and both properties are promoted up front so the first frame is not the one
- * that pays for the layer. */
-/* `translate` and `scale`, not `transform`: Bootstrap positions this menu by writing a
-   transform onto it, and an animation's own transform outranks that inline style - which
-   left the panel sitting over the button it had just come out of. The separate properties
-   compose with the positioning instead of replacing it. */
+/* Open animation - Bootstrap toggles display, so a transition won't run */
+/* translate/scale instead of transform: Popper sets transform inline */
 @keyframes vp-menu-in {
   from { opacity: 0; translate: 0 -10px; scale: 0.96; }
   55% { opacity: 1; }
@@ -1837,9 +1684,7 @@ a { color: var(--vp-blue); }
   .vp-menu.show { animation: none; }
 }
 
-/* ---------- The app menu ---------- */
-/* The same four destinations the foot of the screen used to carry, moved up into the bar
-   so they sit with the account controls instead of floating over the content. */
+/* ---------- App menu ---------- */
 .vp-appnav { display: flex; align-items: center; gap: 0.25rem; }
 
 .vp-appnav__item {
@@ -1853,8 +1698,7 @@ a { color: var(--vp-blue); }
   font-size: 0.98rem;
   font-weight: 600;
   text-decoration: none;
-  /* One line each. "My Wallet" wrapping made its own pill taller than the other three,
-     which tipped the whole row out of alignment. */
+  /* Keep labels on one line */
   white-space: nowrap;
   transition: background-color 0.2s ease, color 0.18s ease, transform 0.22s cubic-bezier(0.34, 1.5, 0.64, 1);
 }
@@ -1862,8 +1706,7 @@ a { color: var(--vp-blue); }
 .vp-appnav__item:hover,
 .vp-appnav__item:focus-visible { background: rgba(8, 116, 252, 0.1); color: var(--vp-blue); transform: translateY(-1px); }
 
-/* The current page. The ring is what makes it legible against a white bar - a pale tint
-   on a pale surface was the reason the menu had no edge of its own. */
+/* Current page */
 .vp-appnav__item.is-active {
   background: var(--vp-light-blue);
   color: var(--vp-blue);
@@ -1871,7 +1714,7 @@ a { color: var(--vp-blue); }
 }
 .vp-appnav__item.is-active:hover, .vp-appnav__item.is-active:focus-visible { background: #d8e9ff; }
 
-/* The pill answers the click straight away, before the next page has been asked for. */
+/* Pressed state (nav.js) */
 .vp-appnav__item.is-pressed { transform: translateY(-3px); color: var(--vp-blue); }
 
 .vp-app__main { flex: 1; padding: 0.75rem 0 3rem; }
@@ -1885,16 +1728,12 @@ a { color: var(--vp-blue); }
   box-shadow: 0 10px 30px rgba(28, 82, 160, 0.06);
 }
 
-/* The character sits over the top edge of her card rather than inside it, which is what
-   stops the panel reading as a plain box with a picture in it. */
 .vp-welcome { display: flex; align-items: center; gap: 1rem; overflow: visible; min-height: 172px; }
 .vp-welcome__text { position: relative; z-index: 1; max-width: 27rem; }
 .vp-welcome__title { margin: 0 0 0.5rem; font-size: clamp(1.75rem, 1.2rem + 1.6vw, 2.5rem); font-weight: 800; letter-spacing: -0.03em; color: var(--vp-dark); }
 .vp-welcome__sub { margin: 0; font-size: 1.05rem; line-height: 1.5; color: var(--vp-muted); }
 
-/* Taller than the card on purpose: she stands on its base line and her head clears the
-   top edge, which is what stops the panel reading as a box with a picture dropped in it.
-   Nothing clips her - the card sets no overflow of its own. */
+/* Taller than the card on purpose - she stands on the bottom edge */
 .vp-welcome__girl {
   position: absolute;
   right: 1.75rem;
@@ -1904,8 +1743,7 @@ a { color: var(--vp-blue); }
   pointer-events: none;
 }
 
-/* The figure and the way through to the wallet, nothing else. How far off a payout is
-   lives on the wallet page, where there is room for it. */
+/* Balance card (links to the wallet) */
 .vp-balance {
   display: flex;
   align-items: center;
@@ -1914,8 +1752,7 @@ a { color: var(--vp-blue); }
   text-decoration: none;
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
-/* A wash of brand colour bled in from the corner, behind everything. It is what keeps a
-   white card with a number on it from reading as a table cell. */
+/* Corner glow */
 .vp-balance::before {
   content: '';
   position: absolute;
@@ -1929,9 +1766,6 @@ a { color: var(--vp-blue); }
 }
 .vp-balance:hover, .vp-balance:focus-visible { transform: translateY(-3px); box-shadow: 0 22px 46px rgba(28, 82, 160, 0.15); }
 
-/* Filled and lit from below rather than a pale square with a blue glyph in it: the same
-   treatment the ledger rows and the reward rows use, so a tile means one thing across the
-   whole signed-in side. */
 .vp-balance__icon {
   position: relative;
   display: grid;
@@ -1947,13 +1781,9 @@ a { color: var(--vp-blue); }
 }
 
 .vp-balance__text { position: relative; flex: 1; min-width: 0; }
-/* Small, spaced and quiet, so the label is read as a caption to the figure rather than
-   as a line of its own competing with it. */
 .vp-balance__label { display: block; margin-bottom: 0.1rem; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--vp-muted); }
 .vp-balance__value { display: block; font-size: clamp(1.7rem, 1.2rem + 1.2vw, 2.15rem); font-weight: 800; letter-spacing: -0.035em; color: var(--vp-dark); font-variant-numeric: tabular-nums; }
 
-/* A chip rather than a bare chevron: something to aim at, and something that can answer
-   the pointer when the card is hovered. */
 .vp-balance__go {
   position: relative;
   flex: none;
@@ -1962,8 +1792,7 @@ a { color: var(--vp-blue); }
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  /* The hairline is what holds it: the corner wash behind it is the same pale blue, and
-     without an edge the chip disappears into it. */
+  /* Border so the chip doesn't disappear into the glow */
   background: var(--vp-light-blue);
   box-shadow: inset 0 0 0 1px var(--vp-divider);
   color: var(--vp-blue);
@@ -1973,7 +1802,7 @@ a { color: var(--vp-blue); }
 .vp-balance:hover .vp-balance__go,
 .vp-balance:focus-visible .vp-balance__go { background: var(--vp-blue); color: #fff; transform: translateX(3px); box-shadow: 0 8px 18px rgba(8, 116, 252, 0.34); }
 
-/* Category switcher. One white trough holding four pills. */
+/* Category tabs */
 .vp-segments { margin: 1.1rem 0 1.9rem; padding: 0.4rem; background: #fff; border-radius: 18px; box-shadow: 0 8px 24px rgba(28, 82, 160, 0.05); }
 .vp-segments__list { display: flex; flex-wrap: nowrap; gap: 0.35rem; overflow-x: auto; scrollbar-width: none; }
 .vp-segments__list::-webkit-scrollbar { display: none; }
@@ -2004,38 +1833,22 @@ a { color: var(--vp-blue); }
 .vp-offers__all { display: inline-flex; align-items: center; gap: 0.4rem; color: var(--vp-blue); font-weight: 600; text-decoration: none; }
 .vp-offers__all:hover { text-decoration: underline; }
 
-/* Every category's list is built to the same measure - the same row height, tile, corner
-   and spacing - so switching tabs changes what the rows say, not how big they are. Only
-   the games rows run taller, and only where their own text needs the space. */
+/* Same row height for every list */
 .vp-app { --vp-row-h: 120px; }
 
 .vp-offer-list { display: flex; flex-direction: column; gap: 0.85rem; }
 
-/* A featured row is one of the three lists' own rows - a .vp-survey or a .vp-game -
-   so this list needs nothing but the spacing between them. */
-
 .vp-offers__empty { margin: 0; padding: 2.5rem 1.5rem; background: #fff; border-radius: 18px; text-align: center; color: var(--vp-muted); }
 
-/* ---------- Offer rows: surveys, profiling surveys and games ----------
-   One row for all three lists, built to SondageDirect's design: a white card with a
-   hairline edge; the category as a bar down the left that runs the full height on hover;
-   a filled tile with a glow under it that tilts as you arrive; the figure stacked over
-   the facts, each fact on a round badge of its own; and a button that says what it does,
-   tinted at rest and filled with the row's colour on hover.
-
-   The colours stay VivaPoll's - blue surveys, green profiling, amber games - because the
-   wallet's activity list marks the same kinds of thing with the same three colours, and
-   a row should be recognised the same way in both places.
-
-   Every colour in a row comes from five custom properties set once per category, so the
-   tile, the bar, the badges, the button and the hover wash cannot drift apart. */
+/* ---------- Offer rows (surveys, profiling, games) ----------
+   Colours come from the --row-* vars, set once per category */
 .vp-survey,
 .vp-game {
-  --row-1: #3d94ff;                       /* tile and bar, the lit end */
-  --row-2: #0759d1;                       /* ... the deep end, and the filled button */
+  --row-1: #3d94ff;                       /* light end */
+  --row-2: #0759d1;                       /* dark end, also the filled button */
   --row-glow: rgba(7, 89, 209, 0.4);
-  --row-tint: #edf5fe;                    /* badges, the resting button, the hover wash */
-  --row-ink: #0560d6;                     /* text and glyphs on that tint */
+  --row-tint: #edf5fe;                    /* badges, button, hover wash */
+  --row-ink: #0560d6;                     /* text on the tint */
   position: relative;
   min-height: var(--vp-row-h);
   padding: 1rem 1.15rem 1rem 1.6rem;
@@ -2049,10 +1862,7 @@ a { color: var(--vp-blue); }
               border-color 0.25s ease, background 0.3s ease;
 }
 
-/* Profiling surveys are the same row in every respect but their colour, which is green so
-   the two survey lists are told apart at a glance rather than by reading the heading.
-   Each ink is dark enough to hold 4.5:1 on its own tint, and each deep end to hold it
-   under white text - amber is the lightest hue here, so it sits furthest from its tile. */
+/* Profiling = green, games = amber. Inks are checked for 4.5:1 on their tints */
 .vp-survey--profiling {
   --row-1: #5cb86a; --row-2: #2f7d40; --row-glow: rgba(47, 125, 64, 0.4);
   --row-tint: #e6f5ea; --row-ink: #2a7239;
@@ -2062,7 +1872,7 @@ a { color: var(--vp-blue); }
   --row-tint: #fff3e0; --row-ink: #925006;
 }
 
-/* The category as an edge down the left: inset at rest, the full height when hovered. */
+/* Category bar on the left */
 .vp-survey::before,
 .vp-game::before {
   content: '';
@@ -2076,9 +1886,7 @@ a { color: var(--vp-blue); }
   transition: top 0.25s cubic-bezier(0.22, 0.8, 0.3, 1), bottom 0.25s cubic-bezier(0.22, 0.8, 0.3, 1);
 }
 
-/* A wash of the row's own colour comes in from the right. A tint rather than a change of
-   tone: the card stays white where the text is and only takes colour where there is
-   nothing to read. */
+/* Hover */
 .vp-survey:hover, .vp-survey:focus-visible,
 .vp-game:hover, .vp-game:focus-visible {
   transform: translateY(-3px);
@@ -2088,11 +1896,9 @@ a { color: var(--vp-blue); }
 }
 .vp-survey:hover::before, .vp-survey:focus-visible::before,
 .vp-game:hover::before, .vp-game:focus-visible::before { top: 0; bottom: 0; }
-/* A keyboard needs more than the hover look: the lift alone is easy to miss on a list of
-   identical cards. */
+/* Focus ring for keyboard users */
 .vp-survey:focus-visible, .vp-game:focus-visible { outline: 2px solid var(--row-2); outline-offset: 3px; }
 
-/* Filled and lit, with a glow in its own colour beneath it. */
 .vp-survey__icon,
 .vp-game__icon {
   flex: none;
@@ -2113,15 +1919,13 @@ a { color: var(--vp-blue); }
   box-shadow: 0 14px 26px -6px var(--row-glow);
 }
 
-/* A game's tile is that game's own mark, the way an app icon is, so each keeps its own
-   colours. Set on the tile alone: the rest of the row still speaks for the category. */
+/* Game tiles keep their own colours */
 .vp-game__icon--a { --row-1: #ff7a59; --row-2: #e02f2f; --row-glow: rgba(224, 47, 47, 0.4); }
 .vp-game__icon--b { --row-1: #9f7aea; --row-2: #5b35e8; --row-glow: rgba(91, 53, 232, 0.4); }
 .vp-game__icon--c { --row-1: #4ea0ff; --row-2: #0757c4; --row-glow: rgba(7, 87, 196, 0.4); }
 .vp-game__icon--d { --row-1: #35c98a; --row-2: #0a7a4c; --row-glow: rgba(10, 122, 76, 0.4); }
 
-/* A round badge on every fact, which is what stops the line reading as one run-on string
-   of numbers. Filled glyphs: at this size an outline one goes thin and grey. */
+/* Round badges on the facts */
 .vp-survey__meta .bi,
 .vp-game__fact .bi {
   flex: none;
@@ -2135,9 +1939,7 @@ a { color: var(--vp-blue); }
   font-size: 0.7rem;
 }
 
-/* How long it takes, as four bars as well as a number - the length can be compared down
-   the list at a glance, without reading every figure. The bars are drawn, so they say
-   nothing to a screen reader; the minutes beside them do. */
+/* Length bars (decorative, the minutes are in the text) */
 .vp-len { display: inline-flex; align-items: flex-end; gap: 3px; margin-right: 2px; }
 .vp-len i { display: block; width: 4px; border-radius: 2px; background: #dee8f4; }
 .vp-len i:nth-child(1) { height: 7px; }
@@ -2146,11 +1948,7 @@ a { color: var(--vp-blue); }
 .vp-len i:nth-child(4) { height: 16px; }
 .vp-len i.on { background: var(--row-2); }
 
-/* A button that says what it does, not an arrow the reader has to infer it from. Tinted
-   at rest so it does not shout over the figure, and it fills with the row's colour as
-   the pointer arrives - the one piece of the row that changes state outright, which is
-   what makes the whole card read as live. A solid fill rather than the tile's gradient:
-   the lit end of a gradient is too pale to carry white text. */
+/* Start / Play button - solid fill on hover, the gradient is too light for white text */
 .vp-survey__go,
 .vp-game__go {
   flex: none;
@@ -2176,10 +1974,7 @@ a { color: var(--vp-blue); }
 .vp-survey:hover .vp-survey__go .bi, .vp-survey:focus-visible .vp-survey__go .bi,
 .vp-game:hover .vp-game__go .bi, .vp-game:focus-visible .vp-game__go .bi { transform: translateX(3px); }
 
-/* --- Survey rows ---
-   They lead with what the survey pays, because that is what the reader is choosing
-   between; which survey it is, how long it takes and who is asking sit on one line
-   underneath. */
+/* Survey rows */
 .vp-survey-list { display: flex; flex-direction: column; gap: 0.85rem; }
 
 .vp-survey { display: flex; align-items: center; gap: 1.1rem; }
@@ -2195,17 +1990,10 @@ a { color: var(--vp-blue); }
   font-variant-numeric: tabular-nums;
 }
 
-/* The facts share one line and wrap together rather than one at a time, so a long client
-   name never leaves a lone word stranded under the duration. */
 .vp-survey__meta { display: flex; flex-wrap: wrap; gap: 0.3rem 1.35rem; font-size: 0.9rem; color: var(--vp-muted); font-variant-numeric: tabular-nums; }
-/* Each fact keeps its badge on its own line: a wrap never leaves a clock stranded above
-   the minutes it belongs to. */
 .vp-survey__meta > span { display: inline-flex; align-items: center; gap: 0.5rem; white-space: nowrap; }
 
-/* --- Game rows ---
-   A tile, then the total on offer, the title, and what it takes to earn it: three lines
-   of text beside a square, so the grid is three columns with the tile and the button
-   each spanning all three lines. */
+/* Game rows: tile | text | button */
 .vp-game-list { display: flex; flex-direction: column; gap: 0.85rem; }
 
 .vp-game {
@@ -2221,8 +2009,7 @@ a { color: var(--vp-blue); }
 .vp-game__pay { font-size: 1.6rem; font-weight: 800; letter-spacing: -0.025em; line-height: 1.15; color: var(--vp-dark); font-variant-numeric: tabular-nums; }
 .vp-game__total { font-size: 0.9rem; color: var(--vp-muted); }
 
-/* One line, cut with an ellipsis. Some of these titles are very long and a wrap would
-   push the row's facts out of line with its neighbours. */
+/* Long titles get an ellipsis */
 .vp-game__name {
   grid-column: 2;
   grid-row: 2;
@@ -2240,24 +2027,16 @@ a { color: var(--vp-blue); }
 
 .vp-game__go { grid-column: 3; grid-row: 1 / span 3; }
 
-/* Between a phone and a tablet the button still sits beside the facts, and at 82px it is
-   wider than the round chevron it replaced. A game's two facts then came up 12px short of
-   one line and wrapped, which made game rows taller than survey rows only here. Slightly
-   narrower gaps and a slimmer button give that room back. */
+/* 576-767px: tighter spacing so the game facts stay on one line */
 @media (max-width: 767.98px) {
   .vp-game { column-gap: 0.85rem; }
   .vp-game__facts { column-gap: 1rem; }
   .vp-survey__go, .vp-game__go { padding-inline: 0.95rem 0.8rem; }
 }
 
-/* On a phone the button drops to a line of its own at the foot of the card, rather than
-   squeezing the facts into two words each. It drops on every row, not only on the rows
-   that happen to run out of room, so the list keeps one shape. */
+/* Phones: button on its own line */
 @media (max-width: 575.98px) {
-  /* The tile and the gap beside it are named once: the survey body's width is worked out
-     from them below, and the two must never disagree. Everything here is a little slimmer
-     than on a desktop, the way SondageDirect's phone rows are - the second line of facts
-     has to hold a client's name at 375px, the commonest small phone. */
+  /* --tile and --tile-gap are used in the body width calc below */
   .vp-survey, .vp-game { --tile: 46px; --tile-gap: 0.8rem; --badge: 21px; padding: 0.95rem 0.85rem 0.95rem 1.1rem; }
   .vp-survey__icon, .vp-game__icon { width: var(--tile); height: var(--tile); border-radius: 13px; font-size: 1.3rem; }
   .vp-survey__pay, .vp-game__pay { font-size: 1.35rem; }
@@ -2267,25 +2046,16 @@ a { color: var(--vp-blue); }
   .vp-len i { width: 3px; }
 
   .vp-survey { flex-wrap: wrap; gap: 0.75rem var(--tile-gap); }
-  /* Sized to fill the rest of the first line exactly, which is what forces the button
-     onto the next one whatever the row says. */
+  /* Fills the first line so the button always wraps */
   .vp-survey__body { flex: 1 1 calc(100% - var(--tile) - var(--tile-gap)); }
   .vp-survey__go { order: 3; margin-left: auto; }
   .vp-survey__meta { gap: 0.25rem 0.75rem; font-size: 0.85rem; }
   .vp-survey__meta > span { gap: 0.4rem; }
-  /* All three facts will not share a line here. Rather than let each row break wherever
-     it happens to run out, the survey's number takes the first line and the other two
-     share the second. */
+  /* Survey number on its own line */
   .vp-survey__meta > :first-child { flex: 1 0 100%; }
-  /* The client's name is the one fact whose length changes from row to row, so it is the
-     one that gives way: cut with an ellipsis rather than wrapped, which means no name can
-     make its row taller than the rows around it. A zero basis is what stops it forcing a
-     wrap in the first place - flex lines are decided before anything shrinks. The full
-     name is still in the row's label for a screen reader. */
+  /* Long client names get an ellipsis instead of wrapping, so all rows stay the same height */
   .vp-survey__meta > span:nth-child(3) { display: block; flex: 1 1 0; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
-  /* As a block it lays its badge out inline rather than centring it, and an inline badge
-     sets a line box a pixel taller than the badge itself - enough to make a survey row a
-     pixel taller than a profiling one. The line is pinned to the badge instead. */
+  /* Pin the line height to the badge (otherwise this row ends up 1px taller) */
   .vp-survey__meta > span:nth-child(3) { height: var(--badge); line-height: var(--badge); }
   .vp-survey__meta > span:nth-child(3) .bi { display: inline-grid; vertical-align: top; margin-right: 0.4rem; }
 
@@ -2296,11 +2066,7 @@ a { color: var(--vp-blue); }
   .vp-game__facts { flex-direction: column; gap: 0.25rem; }
 }
 
-/* ---------- Signed-in screens: one shared vocabulary ---------- */
-/* Wallet and Invite are built from the same three pieces: a dark panel carrying the one
-   thing the screen is actually about, a row of small tiles under it for the supporting
-   figures, and a plain list below that. Keeping them to one vocabulary is what makes the
-   signed-in side read as a single product rather than two unrelated screens. */
+/* ---------- Signed-in screens (wallet, invite, profile) ---------- */
 .vp-screen { max-width: 46rem; }
 
 .vp-screen__head { margin: 0.4rem 0 1.15rem; }
@@ -2312,14 +2078,12 @@ a { color: var(--vp-blue); }
   overflow: hidden;
   padding: 2rem 2.1rem 1.9rem;
   border-radius: 28px;
-  /* Not flat navy: the light falls in from the top left, which is what keeps a dark block
-     from reading as a hole cut in the page. */
   background: radial-gradient(125% 150% at 10% -10%, #22376f 0%, #101c46 46%, #0a1233 100%);
   color: #fff;
   box-shadow: 0 26px 60px rgba(11, 20, 55, 0.3);
 }
 
-/* A wash of violet bleeding in from the far corner, behind everything else. */
+/* Corner glow */
 .vp-hero-panel::after {
   content: "";
   position: absolute;
@@ -2340,7 +2104,7 @@ a { color: var(--vp-blue); }
 .vp-hero-panel__line { margin: 1rem 0 0; max-width: 34rem; font-size: 1rem; line-height: 1.55; color: rgba(255, 255, 255, 0.76); }
 .vp-hero-panel__line strong { color: #fff; font-weight: 700; }
 
-/* The payout meter, on the dark ground. */
+/* Payout progress bar */
 .vp-meter { margin-top: 1.5rem; }
 .vp-meter__track { display: block; height: 7px; border-radius: 7px; background: rgba(255, 255, 255, 0.16); overflow: hidden; }
 .vp-meter__fill { display: block; width: var(--vp-meter, 0%); height: 100%; border-radius: 7px; background: linear-gradient(90deg, #4ea0ff, #8b6cf0); }
@@ -2365,16 +2129,13 @@ a { color: var(--vp-blue); }
   transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
 }
 .vp-act:hover:not(:disabled), .vp-act:focus-visible:not(:disabled) { transform: translateY(-2px); box-shadow: 0 14px 30px rgba(0, 0, 0, 0.28); color: var(--vp-dark); }
-/* Nothing is disabled today - cashing out leads to the list of rewards whatever the
-   balance is, and the bar above says how far off the minimum it still is. Kept because a
-   button that cannot act should look like it, not because anything uses it now. */
+/* Disabled state */
 .vp-act:disabled { background: rgba(255, 255, 255, 0.16); color: rgba(255, 255, 255, 0.66); cursor: not-allowed; }
 
 .vp-act--ghost { background: rgba(255, 255, 255, 0.1); color: #fff; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.24); }
 .vp-act--ghost:hover, .vp-act--ghost:focus-visible { background: rgba(255, 255, 255, 0.2); color: #fff; }
 
-/* The tiles. As many across as fit, so a screen with two of them fills the row instead of
-   leaving a column's worth of hole where a third used to be. */
+/* Stat tiles */
 .vp-bento { display: grid; grid-template-columns: repeat(auto-fit, minmax(13.5rem, 1fr)); gap: 0.8rem; margin-top: 0.8rem; }
 
 .vp-tile {
@@ -2392,14 +2153,12 @@ a { color: var(--vp-blue); }
 .vp-tile__label .bi { color: var(--vp-blue); }
 .vp-tile__value { font-size: clamp(1.25rem, 1.05rem + 0.7vw, 1.55rem); font-weight: 800; letter-spacing: -0.03em; color: var(--vp-dark); font-variant-numeric: tabular-nums; }
 .vp-tile__foot { margin-top: auto; padding-top: 0.35rem; font-size: 0.84rem; color: var(--vp-muted); }
-.vp-tile__foot--up { color: #0a7a4c; font-weight: 600; }
 
-/* A shape, not a chart: it says the month has been climbing, and claims nothing finer. */
+/* Decorative sparkline */
 .vp-spark { margin-top: 0.45rem; width: 100%; height: 30px; overflow: visible; }
 .vp-spark__area { fill: rgba(8, 116, 252, 0.12); stroke: none; }
 .vp-spark__line { fill: none; stroke: var(--vp-blue); stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
 
-/* Section headings within a screen. */
 .vp-screen__section { margin-top: 1.9rem; }
 .vp-screen__h { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; margin: 0 0 0.85rem; }
 .vp-screen__h h2 { margin: 0; font-size: 1.15rem; font-weight: 800; letter-spacing: -0.02em; color: var(--vp-dark); }
@@ -2426,30 +2185,23 @@ a { color: var(--vp-blue); }
 .vp-screen__more:hover, .vp-screen__more:focus-visible { color: var(--vp-blue); box-shadow: 0 16px 34px rgba(28, 82, 160, 0.12); }
 .vp-screen__more .bi { font-size: 0.95rem; transition: transform 0.25s ease; }
 
-/* The button says what it will do next, and Bootstrap's own aria-expanded is what
-   decides which of the two labels is showing - no JavaScript of ours involved. */
+/* Label swaps with Bootstrap's aria-expanded */
 .vp-screen__more[aria-expanded="false"] .vp-more__open,
 .vp-screen__more[aria-expanded="true"] .vp-more__shut { display: none; }
 .vp-screen__more[aria-expanded="true"] .bi { transform: rotate(180deg); }
 
-/* Two pills sharing the trough evenly, rather than two sized to their labels. */
+/* Two equal tabs */
 .vp-segments--pair { margin-bottom: 1.2rem; }
 .vp-segments--pair .vp-segments__list { overflow: visible; }
 .vp-segments--pair .nav-item { flex: 1 1 50%; }
 
-/* ---------- Wallet: what has paid, newest first ---------- */
-/* One row per thing that paid, in the order it happened. The older ones live in a second
-   list inside the same card, so the card reads as one list whether it is folded or not. */
+/* ---------- Wallet activity ---------- */
 .vp-ledger { background: #fff; border-radius: 20px; box-shadow: 0 8px 24px rgba(28, 82, 160, 0.05); overflow: hidden; }
 .vp-ledger li { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 0.15rem 0.9rem; padding: 0.85rem 1.25rem; }
-/* Every row rules off from the one above, including the first of the folded-away list -
-   and then the very first row of the card has its rule taken back off. */
+/* Row dividers, none above the first row */
 .vp-ledger li { border-top: 1px solid var(--vp-border); }
 .vp-ledger > .vp-ledger__list:first-child > li:first-child { border-top: 0; }
 
-/* The tiles carry the same colours as the lists the money came from on the dashboard, so
-   a row is recognised the same way in both places: a filled tile with a white glyph,
-   scaled down to suit a list of four. */
 .vp-ledger__icon {
   grid-row: 1 / span 2;
   display: grid;
@@ -2462,9 +2214,7 @@ a { color: var(--vp-blue); }
   font-size: 1.15rem;
 }
 
-/* Blue as the survey rows, green as the profiling rows, and one of the games' own
-   gradients - the purple, since blue and green are already spoken for. Referrals take
-   the gold of the coins on the invite screen. */
+/* Same category colours as the dashboard lists */
 .vp-ledger__icon--surveys   { --vp-tile: var(--vp-blue); }
 .vp-ledger__icon--profiling { --vp-tile: linear-gradient(145deg, #63b86f, #3f8c4e); }
 .vp-ledger__icon--games     { --vp-tile: linear-gradient(140deg, #9f7aea, #5b35e8); }
@@ -2472,11 +2222,8 @@ a { color: var(--vp-blue); }
 .vp-ledger__name { grid-column: 2; font-weight: 600; color: var(--vp-dark); }
 .vp-ledger__when { grid-column: 2; font-size: 0.88rem; color: var(--vp-muted); }
 .vp-ledger__sum { grid-column: 3; grid-row: 1 / span 2; font-weight: 800; color: var(--vp-dark); font-variant-numeric: tabular-nums; }
-.vp-ledger__sum--none { color: var(--vp-muted); font-weight: 600; }
 
 /* ---------- Invite ---------- */
-/* The link is what a friend actually uses, so it is the thing the panel is built around,
-   with the button that hands it over sitting inside the same box. */
 .vp-hero-panel__line--tight { margin-top: 1.1rem; color: rgba(255, 255, 255, 0.86); }
 
 .vp-linkbox {
@@ -2490,8 +2237,7 @@ a { color: var(--vp-blue); }
   border-radius: 16px;
 }
 
-/* A URL is one unbroken string with no spaces to wrap at, so it is told where it may
-   break rather than being allowed to push the panel wider than the screen. */
+/* Let long URLs break */
 .vp-linkbox__url {
   flex: 1;
   min-width: 0;
@@ -2516,15 +2262,8 @@ a { color: var(--vp-blue); }
 }
 .vp-linkbox__copy:hover, .vp-linkbox__copy:focus-visible { transform: translateY(-2px); background: var(--vp-blue); color: #fff; }
 
-/* The code is the other way in - for someone typing it into the profile screen - so it
-   sits beside the button rather than competing with the link above. */
-.vp-hero-panel__aside { font-size: 0.92rem; color: rgba(255, 255, 255, 0.66); }
-.vp-hero-panel__aside strong { color: #fff; font-weight: 700; letter-spacing: 0.12em; }
-
-/* Holds its line whether or not it is saying anything, so confirming a copy does not shove
-   what follows down the page. */
+/* Reserve the line so the layout doesn't jump */
 .vp-said { min-height: 1.35rem; margin: 0.7rem 0 0; font-size: 0.9rem; font-weight: 600; color: #8ff0c0; }
-/* The reserved line already supplies the gap; the buttons need not add a full one. */
 .vp-said + .vp-hero-panel__actions { margin-top: 0.85rem; }
 
 .vp-steps-row { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.8rem; }
@@ -2533,10 +2272,8 @@ a { color: var(--vp-blue); }
 .vp-step-card__t { margin: 0 0 0.2rem; font-size: 1rem; font-weight: 700; color: var(--vp-dark); }
 .vp-step-card__p { margin: 0; font-size: 0.92rem; line-height: 1.5; color: var(--vp-muted); }
 
-/* Coins drifting behind the panel's own glow - restrained, and decorative only. They are
-   spans rather than artwork: no requests, crisp at any size. */
-/* Above the corner glow, below the content: z-index 0 here would let the glow paint over
-   them, since the glow is an ::after and comes last in tree order. */
+/* Decorative coins */
+/* z-index 1: above the ::after glow, below the content */
 .vp-hero-panel__coins { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
 .vp-hero-panel__coins span {
   position: absolute;
@@ -2549,8 +2286,6 @@ a { color: var(--vp-blue); }
   font-weight: 800;
   line-height: 1;
 }
-/* Kept in the two corners the content never reaches: the paragraph is capped at 34rem and
-   the buttons are left-aligned, so nothing can collide with them as the panel reflows. */
 .vp-hero-panel__coins span:nth-child(1) { width: 44px; height: 44px; font-size: 1.2rem;  right: 6%;  top: 8%; }
 .vp-hero-panel__coins span:nth-child(2) { width: 26px; height: 26px; font-size: 0.75rem; right: 19%; top: 4%; opacity: 0.75; }
 .vp-hero-panel__coins span:nth-child(3) { width: 32px; height: 32px; font-size: 0.9rem;  right: 7%;  bottom: 9%; opacity: 0.85; }
@@ -2558,10 +2293,7 @@ a { color: var(--vp-blue); }
 .vp-fineprint { margin: 1rem 0 0; font-size: 0.88rem; color: var(--vp-muted); }
 .vp-fineprint a { color: var(--vp-blue); font-weight: 600; text-decoration: none; }
 
-/* ---------- Invite: who has joined ---------- */
-/* The same white card every other list on the signed-in side sits in, with a table
-   inside it rather than a list, because these rows have four things to say each and the
-   columns are what let them be compared. */
+/* ---------- Invite: friends table ---------- */
 .vp-table-card { background: #fff; border-radius: 20px; box-shadow: 0 8px 24px rgba(28, 82, 160, 0.05); overflow: hidden; }
 
 .vp-table { width: 100%; margin: 0; border-collapse: collapse; }
@@ -2572,39 +2304,30 @@ a { color: var(--vp-blue); }
 .vp-table__end { text-align: right; }
 
 .vp-table__who { font-weight: 600; color: var(--vp-dark); }
-/* The hidden characters are part of the name rather than a redaction mark, so they are
-   quieter than the letters but still on the same line. */
+/* Masked part of the username */
 .vp-mask { color: var(--vp-muted); letter-spacing: 0.08em; }
 
 .vp-table__sum { font-weight: 800; color: var(--vp-dark); font-variant-numeric: tabular-nums; }
 .vp-table__sum--none { font-weight: 600; color: var(--vp-muted); }
 
-/* Three stars that fill as the three surveys are finished, so a row shows how far along
-   somebody is rather than only whether they have finished. Same glyph throughout - only
-   the colour changes - which is what makes it read as filling up. */
+/* Survey progress stars */
 .vp-stars { display: inline-flex; gap: 0.3rem; }
 .vp-stars .bi { font-size: 1rem; color: var(--vp-border); }
 .vp-stars .is-on { color: #f5b301; }
 
 @media (max-width: 575.98px) {
-  /* Four columns will not fit a phone, and a table that scrolls sideways is worse than
-     one that stops being a table. Each row becomes a small card, with the column heading
-     carried down onto the cell it labels. */
+  /* Phones: each row becomes a card, labels come from data-label */
   .vp-table, .vp-table tbody, .vp-table tr, .vp-table td { display: block; }
   .vp-table thead { display: none; }
   .vp-table tr { padding: 0.9rem 1rem; }
   .vp-table td { padding: 0; display: flex; align-items: center; justify-content: space-between; gap: 1rem; text-align: right; }
   .vp-table td + td { margin-top: 0.45rem; }
   .vp-table td::before { content: attr(data-label); font-size: 0.85rem; font-weight: 500; color: var(--vp-muted); }
-  /* Qualified on the cell as well as the class: the rule above is `.vp-table td`, which
-     otherwise wins and pushes the masked characters to the far side of the row, away
-     from the name they belong to. */
+  /* Needs the td qualifier to beat .vp-table td */
   .vp-table td.vp-table__who { display: block; text-align: left; font-size: 1.02rem; margin-bottom: 0.2rem; }
 }
 
 /* ---------- Cash out ---------- */
-/* The balance sits opposite the page heading rather than under it: it is the figure the
-   whole screen is about, and that is where the eye lands before it starts down the list. */
 .vp-screen__head--split { display: flex; align-items: flex-start; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap; }
 .vp-screen__head--split > div { flex: 1 1 22rem; min-width: 0; }
 
@@ -2612,23 +2335,16 @@ a { color: var(--vp-blue); }
 .vp-balance-note__label { display: block; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--vp-muted); }
 .vp-balance-note__sum { display: block; margin-top: 0.15rem; font-size: clamp(1.9rem, 4vw, 2.45rem); font-weight: 800; letter-spacing: -0.03em; color: var(--vp-blue); font-variant-numeric: tabular-nums; }
 
-/* Every row is one choice, so the whole row has to be clickable. The control is a real
-   <button> in the first cell whose ::after is stretched across the row: one tab stop and
-   one spoken name per option, rather than seven bare hit areas that say nothing. */
+/* Whole row is clickable through the button's ::after */
 .vp-table--pick tbody tr { position: relative; }
 .vp-pick { display: flex; align-items: center; gap: 0.85rem; width: 100%; padding: 0; border: 0; background: none; font: inherit; color: inherit; text-align: left; }
 .vp-pick::after { content: ''; position: absolute; inset: 0; }
-/* The focus ring is drawn by the stretched layer rather than by the button, or it would
-   trace the first cell and stop halfway across the row it is selecting. */
+/* Focus ring on the stretched layer so it covers the whole row */
 .vp-pick:focus-visible { outline: none; }
 .vp-pick:focus-visible::after { box-shadow: inset 0 0 0 2px var(--vp-blue); }
 
-/* The same filled tile the wallet's ledger uses, so a reward is recognised the way an
-   earning is: one colour per kind of thing, a white glyph on top. */
 .vp-pick__icon { flex: none; display: grid; place-items: center; width: 42px; height: 42px; border-radius: 12px; background: var(--vp-tile, var(--vp-blue)); color: #fff; font-size: 1.15rem; }
 .vp-pick__name { font-weight: 600; color: var(--vp-dark); }
-/* "gift card" says what the thing is rather than whose it is, so it is said more quietly
-   than the brand beside it. */
 .vp-pick__kind { font-weight: 500; color: var(--vp-muted); }
 
 .vp-pick__icon--shop   { --vp-tile: linear-gradient(140deg, #ff8f57, #ef5b25); }
@@ -2643,16 +2359,12 @@ a { color: var(--vp-blue); }
 .vp-screen__note .bi { color: var(--vp-blue); }
 
 @media (max-width: 575.98px) {
-  /* Once the head has wrapped, a right-aligned balance is aligned to nothing. */
   .vp-balance-note { text-align: left; }
-  /* Qualified on the cell as well as the class, the way .vp-table__who is: the generic
-     rule turns every cell into a label-and-value row, and this one already carries its
-     own icon and name and wants the full width. */
+  /* td qualifier, same as .vp-table__who */
   .vp-table--pick td.vp-pick__cell { display: block; margin-bottom: 0.55rem; }
 }
 
 /* ---------- Profile ---------- */
-/* Who is signed in, on the same dark panel the balance and the referral code use. */
 .vp-whoami { display: flex; align-items: center; gap: 1.1rem; }
 
 .vp-whoami__avatar {
@@ -2671,25 +2383,10 @@ a { color: var(--vp-blue); }
 
 .vp-whoami__text { min-width: 0; }
 .vp-whoami__name { margin: 0; font-size: clamp(1.4rem, 1.15rem + 1vw, 1.9rem); font-weight: 800; letter-spacing: -0.03em; }
-/* An address is one unbroken string, and on a phone it is wider than the screen. */
+/* Long emails */
 .vp-whoami__mail { margin: 0.1rem 0 0; color: rgba(255, 255, 255, 0.7); overflow-wrap: anywhere; }
 
-.vp-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  margin-top: 0.6rem;
-  padding: 0.3rem 0.7rem;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.12);
-  font-size: 0.82rem;
-  font-weight: 600;
-  color: rgba(255, 255, 255, 0.85);
-}
-.vp-badge .bi { font-size: 0.9rem; }
-
-/* A sub-page of the profile: the way back is the first thing on it, above the title,
-   where a reader looks for it rather than at the foot of the page. */
+/* Back link on sub-pages */
 .vp-back {
   display: inline-flex;
   align-items: center;
@@ -2716,11 +2413,9 @@ a { color: var(--vp-blue); }
 .vp-back:hover, .vp-back:focus-visible { color: var(--vp-blue); }
 .vp-back:hover .vp-back__icon, .vp-back:focus-visible .vp-back__icon { transform: translateX(-3px); background: var(--vp-blue); color: #fff; }
 
-/* The lead-in under a sub-page title: what the list below is for, in one line. */
 .vp-screen__lead { max-width: 44rem; margin: 0.6rem 0 0; font-size: 1.02rem; line-height: 1.6; color: var(--vp-muted); }
 
-/* A list of settings rather than of earnings, so the tiles stay the quiet blue the
-   ledger's used to be - nothing here is a category with a colour of its own. */
+/* Settings list */
 .vp-rows { background: #fff; border-radius: 20px; box-shadow: 0 8px 24px rgba(28, 82, 160, 0.05); overflow: hidden; }
 
 .vp-row {
@@ -2745,16 +2440,13 @@ a { color: var(--vp-blue); }
 .vp-row__label { font-weight: 600; color: var(--vp-dark); }
 .vp-row__note { font-size: 0.88rem; color: var(--vp-muted); }
 
-/* What the field currently holds, beside its label rather than under it, so the screen
-   can be read down the right-hand edge without opening anything. */
+/* Current value on the right */
 .vp-row__value { flex: none; max-width: 45%; text-align: right; color: var(--vp-muted); overflow-wrap: anywhere; }
 
 .vp-row__go { flex: none; color: var(--vp-muted); font-size: 1.1rem; transition: transform 0.2s ease, color 0.2s ease; }
 .vp-row:hover .vp-row__go, .vp-row:focus-visible .vp-row__go { transform: translateX(3px); color: var(--vp-blue); }
 
-/* ---------- An outcome screen ---------- */
-/* One thing happened and there is one thing to do about it, so the screen is a single
-   centred column with nothing else competing for attention. */
+/* ---------- Outcome screens (completed / not qualified) ---------- */
 .vp-outcome__main { display: flex; align-items: center; }
 .vp-outcome { max-width: 34rem; margin: 0 auto; padding: 1rem 0 2rem; text-align: center; }
 
@@ -2782,7 +2474,7 @@ a { color: var(--vp-blue); }
 
 .vp-outcome__note { margin: 1.4rem auto 0; max-width: 30rem; font-size: 0.9rem; line-height: 1.55; color: var(--vp-muted); }
 
-/* ---------- The password dialog ---------- */
+/* ---------- Modals ---------- */
 .vp-modal { border: 0; border-radius: 24px; box-shadow: 0 30px 70px rgba(11, 20, 55, 0.28); }
 
 .vp-modal__head { display: flex; align-items: flex-start; gap: 0.9rem; padding: 1.5rem 1.6rem 0.9rem; }
@@ -2824,15 +2516,14 @@ a { color: var(--vp-blue); }
 .vp-modal__save { background: var(--vp-blue); color: #fff; box-shadow: 0 10px 24px rgba(8, 116, 252, 0.26); }
 .vp-modal__save:hover, .vp-modal__save:focus-visible { transform: translateY(-2px); background: var(--vp-blue-dark); color: #fff; }
 
-/* A dialog that asks before something irreversible looks like it. */
+/* Danger (delete account) */
 .vp-modal__icon--danger { background: #fdeaea; color: #c02c2c; }
-/* The other end of the same idea: green for the dialog that is telling you it worked. */
+/* Success */
 .vp-modal__icon--good { background: #e6f6ec; color: #2f8a4b; }
 .vp-modal__save--danger { background: #c02c2c; box-shadow: 0 10px 24px rgba(192, 44, 44, 0.26); }
 .vp-modal__save--danger:hover, .vp-modal__save--danger:focus-visible { background: #a72424; }
 
-/* The dialog's own icon sits at the top of the field, which is where the auth pages put
-   it; inside the dialog the label sits above the field, so the offset is the same. */
+/* Same icon offset as the auth forms */
 .vp-modal .vp-input__icon, .vp-modal .vp-input__toggle { top: 24px; }
 
 @media (max-width: 575.98px) {
@@ -2840,15 +2531,11 @@ a { color: var(--vp-blue); }
   .vp-modal__body { padding-inline: 1.2rem; }
   .vp-modal__foot { padding: 1rem 1.2rem 1.25rem; flex-wrap: wrap; }
   .vp-modal__cancel, .vp-modal__save { flex: 1 1 100%; }
-  /* The button that acts comes first when they are stacked. */
+  /* Primary button first when stacked */
   .vp-modal__save { order: -1; }
 }
 
-/* A state rather than something to press, so it is not dressed as a button. */
-.vp-state { flex: none; display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.2rem 0.65rem; border-radius: 999px; background: #e4f7ed; color: #0a7a4c; font-size: 0.8rem; font-weight: 700; }
-.vp-state .bi { font-size: 0.7rem; }
-
-/* Deleting an account cannot be undone, so it does not look like the rows above it. */
+/* Danger row (delete account) */
 .vp-row--danger .vp-row__icon { background: #fdeaea; color: #c02c2c; }
 .vp-row--danger .vp-row__label { color: #c02c2c; }
 .vp-row--danger:hover, .vp-row--danger:focus-visible { background: #fdeaea; }
@@ -2865,18 +2552,15 @@ a { color: var(--vp-blue); }
 
 @media (max-width: 767.98px) {
   .vp-bento, .vp-steps-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  /* An odd one out spans the row rather than leaving a gap beside it. */
+  /* Odd last tile spans the row */
   .vp-bento > :last-child:nth-child(odd),
   .vp-steps-row > :last-child:nth-child(odd) { grid-column: 1 / -1; }
   .vp-hero-panel { padding: 1.6rem 1.35rem 1.5rem; border-radius: 24px; }
-  /* The corner glow is sized off the panel, so on a narrow one it falls almost entirely
-     outside and the panel comes out flat. Bring it back in. */
+  /* Pull the glow back in on narrow panels */
   .vp-hero-panel::after { right: -30%; top: -26%; width: 95%; }
   .vp-hero-panel__actions .vp-act { flex: 1 1 100%; }
-  /* They would sit behind the figure at this width. */
   .vp-hero-panel__coins { display: none; }
-  /* The URL and a button will not share a line on a phone, so the button takes its own
-     and spans the box rather than being squeezed against the edge. */
+  /* Phones: button gets its own line */
   .vp-linkbox { flex-wrap: wrap; padding: 0.8rem 0.9rem; }
   .vp-linkbox__url { flex: 1 0 100%; font-size: 0.92rem; }
   .vp-linkbox__copy { flex: 1 0 100%; justify-content: center; }
@@ -2893,8 +2577,7 @@ a { color: var(--vp-blue); }
 .vp-app-footer__links a { color: var(--vp-muted); text-decoration: none; }
 .vp-app-footer__links a:hover { color: var(--vp-blue); }
 
-/* Between 992 and 1200 the welcome card is at its narrowest while still sharing the row
-   with the balance, and at full size she ran into the copy. She gives way here. */
+/* 992-1199px: card is too narrow for the illustration */
 @media (min-width: 992px) and (max-width: 1199.98px) {
   .vp-welcome__girl { width: clamp(150px, 17vw, 200px); right: 1rem; }
   .vp-welcome__text { max-width: 56%; }
@@ -2905,10 +2588,7 @@ a { color: var(--vp-blue); }
   .vp-welcome__girl { width: clamp(132px, 22vw, 190px); right: 0.75rem; }
   .vp-welcome__text { max-width: 60%; }
 
-  /* Four pills, a logo and the account controls will not share one line on a tablet, so
-     the menu takes a row of its own underneath and spreads across the full width.
-     Every child is placed by hand: left to auto-placement, the full-width menu cannot fit
-     beside the logo, drops to row two, and pushes the account controls onto a third. */
+  /* Tablet: menu moves to its own row. Grid areas are set explicitly, auto-placement breaks it */
   .vp-appbar__inner { grid-template-columns: 1fr auto; row-gap: 0.7rem; }
   .vp-appbar__brand { grid-area: 1 / 1; }
   .vp-appbar__actions { grid-area: 1 / 2; }
@@ -2916,8 +2596,7 @@ a { color: var(--vp-blue); }
     grid-area: 2 / 1 / 3 / -1;
     justify-content: space-between;
     gap: 0.2rem;
-    /* A safety valve only: at the widths where this applies the four pills fit. If a
-       longer word ever pushes them past the edge they scroll rather than wrap. */
+    /* Fallback in case a label ever gets too long */
     overflow-x: auto;
     scrollbar-width: none;
   }
@@ -2927,11 +2606,9 @@ a { color: var(--vp-blue); }
 @media (max-width: 767.98px) {
   .vp-appbar__brand img { height: 32px; }
   .vp-panel-card { padding: 1.35rem 1.25rem; }
-  /* She would crowd the copy at this width, so she steps aside. */
   .vp-welcome__girl { display: none; }
   .vp-welcome__text { max-width: none; }
   .vp-balance__icon { width: 54px; height: 54px; border-radius: 15px; font-size: 1.55rem; }
-
 
   .vp-appnav__item { padding: 0.5rem 0.75rem; gap: 0.4rem; font-size: 0.9rem; }
   .vp-appnav__item .bi { font-size: 1.05rem; }
@@ -2939,10 +2616,7 @@ a { color: var(--vp-blue); }
 }
 
 @media (max-width: 575.98px) {
-  /* The logo, the bell, the language name and the avatar together are wider than a phone,
-     and the avatar was the piece being pushed off the edge. The language name goes - the
-     globe still opens the same menu, which marks the current language - and everything
-     else tightens by a few pixels. */
+  /* Phones: hide the language name, tighten everything */
   .vp-appbar__brand img { height: 28px; }
   .vp-appbar__actions { gap: 0.15rem; }
   .vp-appbar .vp-lang__label { display: none; }
@@ -2950,41 +2624,27 @@ a { color: var(--vp-blue); }
   .vp-appbar__icon,
   .vp-avatar { width: 38px; height: 38px; font-size: 1.15rem; }
   .vp-appbar__dot { top: 5px; right: 5px; }
-  /* The pill is its avatar plus its padding, so the avatar has to come down too or the
-     account control ends up taller than the bell beside it. */
+  /* Avatar shrinks with the pill */
   .vp-account { gap: 0.25rem; padding: 2px 0.4rem 2px 2px; }
   .vp-account .vp-avatar { width: 34px; height: 34px; font-size: 0.9rem; }
 }
 
-/* Below this the four labelled pills are wider than the screen. The labels go and the
-   icons carry the row - each link still names its destination to a screen reader, and
-   the current one is still the filled pill.
- *
- * The threshold is measured, not guessed: the row needs 473px of inner width, which is
- * what a 540px viewport gives with room to spare and a 480px one does not. */
+/* Below 540px: icons only (the labelled row needs ~473px) */
 @media (max-width: 539.98px) {
-  /* Equal pills spread across the row rather than stretched to fill it: a pill four
-     times wider than the icon in it stops reading as a pill. */
   .vp-appnav__item { justify-content: center; min-width: 3.4rem; padding: 0.55rem 0.9rem; }
   .vp-appnav__item span { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
   .vp-appnav__item .bi { font-size: 1.3rem; }
 }
 
 /* ---------- 17. Scroll animation ---------- */
-/* The start state only applies while `.vp-anim` is on <html>, which the inline head
-   script adds and animations.js removes the instant it takes over. If GSAP never
-   arrives, a failsafe drops the class after 2.5s and the page renders normally. */
+/* .vp-anim is added in <head> and removed by animations.js (2.5s fallback if GSAP never loads) */
 .vp-anim [data-anim]:not([data-anim-group]),
 .vp-anim [data-anim-group] > * {
   opacity: 0;
   visibility: hidden;
 }
 
-/* Letters dropping into a headline. Each word is a box that hides what overflows it, so
-   a letter is invisible until it has fallen past the top of its own line. The padding
-   gives the mask room for ascenders and descenders, and the matching negative margin
-   takes that room back out of the layout, so the heading sets exactly as it did before
-   it was split. */
+/* Split headline letters. Padding + negative margin keep the layout unchanged */
 .vp-word {
   display: inline-block;
   overflow: hidden;
@@ -2995,14 +2655,13 @@ a { color: var(--vp-blue); }
 
 .vp-char { display: inline-block; will-change: transform; }
 
-/* Cards need a camera before a rotation reads as a hinge rather than a squash. Anything
-   holding children that arrive with `tilt` or `flip` needs one. */
+/* Perspective for the tilt / flip animations */
 .vp-steps,
 .vp-stats__list,
 [data-anim="tilt"],
 [data-anim="flip"] { perspective: 1200px; }
 
-/* How far down the page you are. */
+/* Scroll progress bar */
 .vp-progress {
   position: fixed;
   top: 0;
@@ -3016,10 +2675,7 @@ a { color: var(--vp-blue); }
   pointer-events: none;
 }
 
-/* An index of the page down the right-hand side: one mark per section, the current one
-   lit, its line filling as you travel through it. Built by animations.js from the
-   sections that carry `data-section-label`, and only on wide screens - there is no room
-   for it beside a phone, and nothing is lost without it. */
+/* Section rail on the right (built by animations.js, desktop only) */
 .vp-rail {
   position: fixed;
   top: 50%;
@@ -3031,8 +2687,6 @@ a { color: var(--vp-blue); }
   transform: translateY(-50%);
 }
 
-/* Reads right to left: label, number, line - so the lines stay flush with the edge of
-   the screen and the words open inward, into the page, rather than into the margin. */
 .vp-rail__item {
   display: flex;
   align-items: center;
@@ -3058,8 +2712,7 @@ a { color: var(--vp-blue); }
   transition: opacity 0.3s ease;
 }
 
-/* The line is the progress meter: a pale groove with a brand-coloured fill that grows
-   from the top as the section passes. */
+/* Line = progress through the section */
 .vp-rail__track {
   position: relative;
   width: 2px;
@@ -3078,8 +2731,7 @@ a { color: var(--vp-blue); }
   transform-origin: top center;
 }
 
-/* The label is held back until its section is the one being read, so the rail stays a
-   quiet column of marks rather than a wall of words. */
+/* Label only shows for the current section */
 .vp-rail__label {
   order: -2;
   max-width: 0;
@@ -3107,8 +2759,6 @@ a { color: var(--vp-blue); }
 }
 
 /* ---------- 18. Button ripples ---------- */
-/* The pointer is the system's own. All ripple.js adds is ink spreading inside a button from
-   the point it was pressed, clipped to the button's own edges. */
 .vp-rippling { overflow: hidden; }
 
 .vp-ripple {
@@ -3130,15 +2780,12 @@ a { color: var(--vp-blue); }
   html { scroll-behavior: auto; }
   *, *::before, *::after { transition: none !important; }
 
-  /* With the transitions off, the page-exit state would blank the content outright
-     instead of fading it. nav.js navigates immediately in this mode anyway, so there is
-     nothing for it to describe - leave the page as it is. */
+  /* Don't blank the page on exit - nav.js navigates straight away here */
   .vp-leaving main,
   .vp-leaving .vp-footer,
   .vp-leaving .vp-auth-footer { opacity: 1; transform: none; }
 
-  /* The offer rows keep their colour change on hover - that is information, not motion -
-     but not the lift, the tilted tile or the nudged chevron. */
+  /* No lift or tilt on the offer rows */
   .vp-survey:hover, .vp-survey:focus-visible,
   .vp-game:hover, .vp-game:focus-visible,
   .vp-survey:hover .vp-survey__icon, .vp-survey:focus-visible .vp-survey__icon,

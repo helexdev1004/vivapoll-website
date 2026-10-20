@@ -1,21 +1,6 @@
-/* VivaPoll – menu bar motion. Vanilla, no library, runs on every page.
- *
- * Clicking a tab used to be instant: the browser threw the old page away before anything
- * could be seen, so there was nothing to react to. Three things happen now instead.
- *
- *   · one underline is shared by the whole menu rather than one per tab. On a click it
- *     stretches to span both the old tab and the new one, then contracts onto the new
- *     one - so the mark travels and settles rather than blinking across.
- *   · the tab that was clicked lifts and takes the brand colour straight away, before
- *     the new page has even been asked for
- *   · the content of the page lifts away and fades while the menu bar itself stays put,
- *     which is what makes the two pages read as one place rather than two
- *
- * Navigation is held back for as long as that takes and no longer. The delay is a plain
- * timer that always fires, so a mistake here can at worst make a tab feel slow - it can
- * never strand somebody on a half-faded page. Modifier-clicks, middle-clicks, new-tab
- * links and anchors are all left alone for the browser to handle as it normally would.
- */
+// Menu bar: sliding underline, pressed state, and a short exit transition before
+// navigating. The delay is a plain timeout so navigation always happens.
+// Modifier/middle clicks, new-tab links and #anchors are left to the browser.
 (function () {
   'use strict';
 
@@ -23,12 +8,10 @@
   var nav = document.querySelector('.vp-nav');
   var still = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // Coming back through the browser's back button can restore this page from cache with
-  // whatever classes it had when it was left. Clear the leaving state, or the visitor
-  // lands on a page that faded itself out and never came back.
+  // Back/forward cache can restore the page mid-exit, so clear it
   window.addEventListener('pageshow', function () { root.classList.remove('vp-leaving'); });
 
-  /* ------------------------------------------------------ the shared underline */
+  // --- shared underline ---
 
   var wide = window.matchMedia('(min-width: 768px)');
   var links = nav ? Array.prototype.slice.call(nav.querySelectorAll('.nav-link')) : [];
@@ -38,8 +21,7 @@
   function measure(link) {
     var n = nav.getBoundingClientRect();
     var b = link.getBoundingClientRect();
-    // 6px below the text, matching where the plain CSS underline sits, so nothing shifts
-    // when this takes over from it.
+    // 6px under the text, same as the CSS underline
     return { left: b.left - n.left, width: b.width, top: b.bottom - n.top + 6 };
   }
 
@@ -49,9 +31,7 @@
     rail.style.top = box.top + 'px';
   }
 
-  // Deliberately no fallback to the first tab. The legal pages and the two account pages
-  // are not in the menu at all, so on those nothing is current - and parking the mark
-  // under "Home" there would claim the visitor is somewhere they are not.
+  // No fallback to the first tab - legal/account pages aren't in the menu
   function current() {
     return document.querySelector('.vp-nav .nav-link.active');
   }
@@ -60,8 +40,7 @@
     if (!rail || !link) return;
     var to = measure(link);
 
-    // Arriving from a page with no tab selected: there is nowhere to travel from, so
-    // bring the mark up on the tab that was chosen instead.
+    // Nothing to slide from, just place it
     if (!nav.classList.contains('vp-nav--live')) {
       put(to);
       nav.classList.add('vp-nav--live');
@@ -70,9 +49,7 @@
 
     if (still) { put(to); return; }
 
-    // Checked against NaN rather than falsiness: the first tab sits at left 0, and `||`
-    // would throw that away and take the destination as the origin - which quietly turns
-    // the whole stretch into a plain slide.
+    // isNaN, not ||, because the first tab sits at left 0
     var fl = parseFloat(rail.style.left);
     var fw = parseFloat(rail.style.width);
     var from = {
@@ -80,8 +57,7 @@
       width: isNaN(fw) ? to.width : fw
     };
 
-    // Stretch across both tabs first, then collect onto the new one. Two steps, one
-    // transition - that is the whole trick, and it is what stops it reading as a jump.
+    // Stretch over both tabs, then shrink onto the new one
     window.clearTimeout(settle);
     put({
       left: Math.min(from.left, to.left),
@@ -102,11 +78,11 @@
     }
     var link = current();
     if (!link) { nav.classList.remove('vp-nav--live'); return; }
-    // Placed without a transition on the first run, so it does not fly in from nowhere.
+    // No transition on the first placement
     var keep = rail.style.transition;
     rail.style.transition = 'none';
     put(measure(link));
-    rail.offsetHeight;                      // force the change to take before animating again
+    rail.offsetHeight;                      // force reflow
     rail.style.transition = keep;
     nav.classList.add('vp-nav--live');
   }
@@ -118,16 +94,14 @@
       window.clearTimeout(timer);
       timer = window.setTimeout(reset, 140);
     });
-    // The tabs are translated after this file runs, and a longer word is a wider tab.
+    // Re-measure after the labels are translated
     document.addEventListener('vp:languagechange', function () { window.setTimeout(reset, 40); });
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(reset);
   }
 
-  /* ------------------------------------------------- the app bar, once it is stuck */
+  // --- sticky app bar ---
 
-  // A sticky bar that looks identical to the page behind it is not readable as a bar.
-  // The shadow arrives the moment the page moves, which is what tells the eye the menu
-  // is in front of the content rather than part of it.
+  // Add a shadow once the page has scrolled
   var appbar = document.querySelector('.vp-appbar');
   if (appbar) {
     var stuck = false;
@@ -141,10 +115,9 @@
     check();
   }
 
-  /* ------------------------------------------------------------- leaving a page */
+  // --- leaving a page ---
 
-  // Anything in the header that goes somewhere else on this site: the tabs, the log in /
-  // sign up buttons beside them, and on the signed-in pages the four menu pills.
+  // Header links that go to another page on this site
   var LEAVES = '.vp-nav .nav-link, .vp-nav-actions a[href], .vp-appnav__item';
   var HOLD = 300;
 
@@ -155,7 +128,7 @@
     if (link.hasAttribute('download')) return false;
     var href = link.getAttribute('href');
     if (!href || href.charAt(0) === '#') return false;
-    // Only our own pages - an outside link should leave immediately, as expected.
+    // Same-origin only, external links navigate straight away
     return new URL(href, location.href).origin === location.origin;
   }
 
@@ -164,13 +137,11 @@
     if (!link || !ordinary(e, link)) return;
 
     var tab = link.matches('.vp-nav .nav-link') ? link : null;
-    // The signed-in menu. It has no travelling underline - the pill itself marks where
-    // the visitor is - but it takes the same press and the same page exit.
+    // App menu pill: no underline, same press + exit
     var pill = link.matches('.vp-appnav__item') ? link : null;
     var here = (tab && tab.classList.contains('active')) || (pill && pill.classList.contains('is-active'));
 
-    // Already here: give it its press and stop, rather than reloading the page the
-    // visitor is looking at.
+    // Already on this page - just play the press
     if (here) {
       e.preventDefault();
       var mark = tab || pill;

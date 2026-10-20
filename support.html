@@ -16,10 +16,7 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
   <link href="assets/css/style.css" rel="stylesheet">
 
-  <!-- Arms the scroll animations before first paint, so nothing flashes into place.
-       Skipped entirely when the visitor asks for reduced motion, and a failsafe drops
-       the class again if GSAP has not started within 2.5s - the page must never be
-       left with hidden content because a CDN was slow or blocked. -->
+  <!-- Hide [data-anim] elements until GSAP starts (skipped for reduced motion, 2.5s fallback) -->
   <script>
     (function () {
       if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
@@ -96,8 +93,7 @@
               <h1 id="vp-support-title" class="vp-legal-hero__title" data-anim="chars" data-i18n-html="sp.title">How can we <span class="vp-text-blue">help?</span></h1>
               <p class="vp-legal-hero__lead" data-anim="mask" data-anim-delay="0.38" data-i18n="sp.lead">Find answers to common questions or get in touch with our support team. We’re here to help you get the most out of VivaPoll.</p>
             </div>
-            <!-- Reveal on the column, drift on the visual: they would fight over `y` on
-                 the same element. -->
+            <!-- Reveal on the column, parallax on the visual (both use y) -->
             <div class="col-12 col-lg-6" data-anim="focus" data-anim-delay="0.28">
               <div class="vp-legal-hero__visual" data-parallax="-44">
                 <img src="assets/images/hero-support.png" class="vp-legal-hero__img" width="500" height="318"
@@ -136,9 +132,7 @@
             </li>
           </ul>
 
-          <!-- Animated as one block, never item by item: the inactive tab panes are
-               display:none, so anything measured inside them would be measured wrong and
-               could be left hidden when its tab is finally opened. -->
+          <!-- Animated as one block - inactive tab panes are display:none and can't be measured -->
           <div class="tab-content" data-anim="mask" data-anim-delay="0.2">
             <!-- FAQ -->
             <div class="tab-pane fade show active" id="vp-pane-faq" role="tabpanel" aria-labelledby="vp-tab-faq" tabindex="0">

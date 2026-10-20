@@ -6,7 +6,7 @@
   <title>Cash out – VivaPoll</title>
   <meta name="description" content="Choose how you want your VivaPoll balance paid out: gift cards, PayPal or a virtual Visa.">
   <meta name="theme-color" content="#0874fc">
-  <!-- Signed-in pages are nobody's business but the account holder's. -->
+  <!-- Signed-in pages: keep out of search engines -->
   <meta name="robots" content="noindex, nofollow">
   <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32.png">
   <link rel="apple-touch-icon" href="assets/images/apple-touch-icon.png">
@@ -51,9 +51,7 @@
           <a href="dashboard.html" class="vp-appnav__item">
             <i class="bi bi-house-door" aria-hidden="true"></i><span>Home</span>
           </a>
-          <!-- Cashing out belongs to the wallet, so the wallet stays lit while you are
-               here. "location" rather than "page": this marks the section you are in, and
-               saying "page" of a link that goes somewhere else is simply untrue. -->
+          <!-- Wallet stays active on this sub-page -->
           <a href="wallet.html" class="vp-appnav__item is-active" aria-current="location">
             <i class="bi bi-wallet2" aria-hidden="true"></i><span>My Wallet</span>
           </a>
@@ -101,9 +99,6 @@
     <main id="main" class="vp-app__main">
       <div class="container vp-screen">
 
-        <!-- The balance sits opposite the heading, the way it does on the reference: it is
-             the number the whole screen is about, and it belongs where the eye lands
-             before it starts down the list. -->
         <div class="vp-screen__head vp-screen__head--split" data-anim="up">
           <div>
             <a href="wallet.html" class="vp-back">
@@ -123,11 +118,8 @@
           </p>
         </div>
 
-        <!-- ============ THE OPTIONS ============ -->
-        <!-- A table rather than a list: two things are said about each option and the
-             columns are what let them be compared. Every row is one choice, so the whole
-             row is the control - see .vp-pick in the stylesheet for how that is done
-             without giving a screen reader seven unlabelled hit areas. -->
+        <!-- ============ REWARDS ============ -->
+        <!-- Whole row is clickable (see .vp-pick) -->
         <section class="vp-screen__section" aria-labelledby="vp-rewards-title" data-anim="up" data-anim-delay="0.08">
           <div class="vp-screen__h">
             <h2 id="vp-rewards-title">Available rewards</h2>
@@ -231,14 +223,10 @@
     </footer>
   </div>
 
-  <!-- Outside .vp-page on purpose: that element sets isolation:isolate, and a dialog
-       inside it cannot rise above the backdrop Bootstrap appends to the body - every
-       click inside the dialog lands on the backdrop instead. -->
+  <!-- Modals live outside .vp-page - its isolation:isolate would put them under the backdrop -->
 
   <!-- ============ CONFIRM A REWARD ============ -->
-  <!-- One dialog with two faces. It opens on the question, naming the reward the row that
-       opened it carries; confirming turns the same dialog into the answer. Two dialogs
-       would mean two backdrops and a visible flicker between them. -->
+  <!-- One modal, two steps: confirm, then thank you (payout.js) -->
   <div class="modal fade" id="vpPayoutModal" tabindex="-1" aria-labelledby="vpPayoutTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content vp-modal">

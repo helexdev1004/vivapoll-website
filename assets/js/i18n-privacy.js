@@ -1,4 +1,4 @@
-/* VivaPoll – Privacy Policy page translations (English comes from the HTML). */
+// Privacy Policy translations (English comes from the HTML)
 window.VP_I18N_PAGE = {
   nl: {
     "meta.title": `Privacybeleid – VivaPoll`,

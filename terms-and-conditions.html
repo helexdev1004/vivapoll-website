@@ -16,10 +16,7 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
   <link href="assets/css/style.css" rel="stylesheet">
 
-  <!-- Arms the scroll animations before first paint, so nothing flashes into place.
-       Skipped entirely when the visitor asks for reduced motion, and a failsafe drops
-       the class again if GSAP has not started within 2.5s - the page must never be
-       left with hidden content because a CDN was slow or blocked. -->
+  <!-- Hide [data-anim] elements until GSAP starts (skipped for reduced motion, 2.5s fallback) -->
   <script>
     (function () {
       if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
@@ -98,8 +95,7 @@
               <p class="vp-legal-hero__lead" data-anim="mask" data-anim-delay="0.42" data-i18n="tc.lead">Please read the following Terms and Conditions carefully before using this website.</p>
               <p class="vp-legal-hero__updated" data-anim="up" data-anim-delay="0.56" data-i18n="tc.updated">These Terms and Conditions were last updated on October 5, 2026</p>
             </div>
-            <!-- Reveal on the column, drift on the visual: they would fight over `y` on
-                 the same element. -->
+            <!-- Reveal on the column, parallax on the visual (both use y) -->
             <div class="col-12 col-lg-5" data-anim="focus" data-anim-delay="0.24">
               <div class="vp-legal-hero__visual" data-parallax="-40">
                 <img src="assets/images/hero-terms.png" class="vp-legal-hero__img" width="436" height="324"
@@ -117,8 +113,7 @@
         <div class="container">
           <div class="row g-3 g-lg-4">
             <div class="col-12 col-lg-3">
-              <!-- fade, not a slide: this panel is sticky, and a plain opacity change
-                   leaves its positioning alone. -->
+              <!-- Fade only - the TOC is sticky -->
               <nav class="vp-toc" aria-label="On this page" data-anim="fade" data-anim-once data-i18n-attr="aria-label:legal.toc">
                 <button class="vp-toc__toggle d-lg-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#vpTocList" aria-expanded="false" aria-controls="vpTocList">
                   <span data-i18n="legal.toc">On this page</span>

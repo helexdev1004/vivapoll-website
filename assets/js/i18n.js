@@ -1,6 +1,5 @@
-/* VivaPoll homepage – translations.
-   Keys are referenced from index.html via data-i18n (text), data-i18n-html (markup)
-   and data-i18n-attr="attribute:key;attribute:key". */
+// Homepage translations. Used through data-i18n (text), data-i18n-html (markup)
+// and data-i18n-attr="attribute:key;attribute:key".
 window.VP_I18N = {
   en: {
     "meta.title": `VivaPoll – Make money in your spare time`,

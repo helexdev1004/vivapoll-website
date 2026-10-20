@@ -1,4 +1,4 @@
-/* VivaPoll – Support page translations (English comes from the HTML). */
+// Support page translations (English comes from the HTML)
 window.VP_I18N_PAGE = {
   nl: {
     "meta.title": `Support – VivaPoll`,

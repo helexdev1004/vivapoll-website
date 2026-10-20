@@ -6,7 +6,7 @@
   <title>Profile data – VivaPoll</title>
   <meta name="description" content="The topics VivaPoll matches surveys on: answer the ones that apply to you and you will be offered more work.">
   <meta name="theme-color" content="#0874fc">
-  <!-- Signed-in pages are nobody's business but the account holder's. -->
+  <!-- Signed-in pages: keep out of search engines -->
   <meta name="robots" content="noindex, nofollow">
   <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32.png">
   <link rel="apple-touch-icon" href="assets/images/apple-touch-icon.png">
@@ -57,7 +57,7 @@
           <a href="invite.html" class="vp-appnav__item">
             <i class="bi bi-person-plus" aria-hidden="true"></i><span>Invite Friends</span>
           </a>
-          <!-- Still the profile section, one level down, so the pill stays lit. -->
+          <!-- Profile stays active on this sub-page -->
           <a href="profile.html" class="vp-appnav__item is-active" aria-current="location">
             <i class="bi bi-person-fill" aria-hidden="true"></i><span>My Profile</span>
           </a>
@@ -68,8 +68,7 @@
             <i class="bi bi-bell" aria-hidden="true"></i>
             <span class="vp-appbar__dot" aria-hidden="true"></span>
           </a>
-          <!-- The avatar and the chevron are one control, and it opens the account menu.
-               Bootstrap's dropdown handles Escape, click-outside and focus. -->
+          <!-- Account menu (Bootstrap dropdown) -->
           <div class="dropdown">
             <button type="button" class="vp-account" data-bs-toggle="dropdown" data-bs-offset="0,14" aria-expanded="false" aria-label="Your account">
               <span class="vp-avatar" aria-hidden="true">A</span>
@@ -115,8 +114,7 @@
         </div>
 
         <!-- ============ TOPICS ============ -->
-        <!-- Alphabetical, because there is no useful order to a list of subjects and the
-             reader is looking for one in particular rather than reading it through. -->
+        <!-- Alphabetical -->
         <section class="vp-screen__section" aria-labelledby="vp-topics-title" data-anim="up" data-anim-delay="0.06">
           <div class="vp-screen__h">
             <h2 id="vp-topics-title">About you</h2>
@@ -187,9 +185,8 @@
           </div>
         </section>
 
-        <!-- ============ WHAT THE ACCOUNT ALREADY KNOWS ============ -->
-        <!-- These three are not questions: two of them are collected rather than answered,
-             so they are kept apart from the topics above and labelled as what they are. -->
+        <!-- ============ ACCOUNT INFO ============ -->
+        <!-- Collected info, not questions - kept apart from the topics -->
         <section class="vp-screen__section" aria-labelledby="vp-basics-title" data-anim="up" data-anim-delay="0.1">
           <div class="vp-screen__h">
             <h2 id="vp-basics-title">Your account and device</h2>

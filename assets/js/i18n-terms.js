@@ -1,4 +1,4 @@
-/* VivaPoll – Terms & Conditions page translations (English comes from the HTML). */
+// Terms & Conditions translations (English comes from the HTML)
 window.VP_I18N_PAGE = {
   nl: {
     "meta.title": `Algemene voorwaarden – VivaPoll`,

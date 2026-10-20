@@ -16,10 +16,7 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
   <link href="assets/css/style.css" rel="stylesheet">
 
-  <!-- Arms the scroll animations before first paint, so nothing flashes into place.
-       Skipped entirely when the visitor asks for reduced motion, and a failsafe drops
-       the class again if GSAP has not started within 2.5s - the page must never be
-       left with hidden content because a CDN was slow or blocked. -->
+  <!-- Hide [data-anim] elements until GSAP starts (skipped for reduced motion, 2.5s fallback) -->
   <script>
     (function () {
       if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
@@ -98,8 +95,7 @@
               <p class="vp-legal-hero__lead" data-anim="mask" data-anim-delay="0.38" data-i18n="ab.lead">VivaPoll is a rewards platform that gives you different ways to earn — from sharing your opinions through surveys to discovering and playing games.</p>
               <p class="vp-about-owner" data-anim="up" data-anim-delay="0.54"><i class="bi bi-building" aria-hidden="true"></i> <span data-i18n="ab.owner">The website is owned and operated by Main Frame Ltd.</span></p>
             </div>
-            <!-- The reveal sits on the column, not on the visual: below 992px the visual
-                 itself carries a CSS translateX that a tween would overwrite. -->
+            <!-- Reveal on the column - below 992px the visual has a CSS translateX a tween would overwrite -->
             <div class="col-12 col-lg-6" data-anim="focus" data-anim-delay="0.28">
               <div class="vp-legal-hero__visual vp-legal-hero__visual--about">
                 <img src="assets/images/hero-about.png" class="vp-legal-hero__img" width="859" height="1044"

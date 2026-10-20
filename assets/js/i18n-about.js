@@ -1,4 +1,4 @@
-/* VivaPoll – About us page translations (English comes from the HTML). */
+// About us translations (English comes from the HTML)
 window.VP_I18N_PAGE = {
   nl: {
     "meta.title": `Over ons – VivaPoll`,

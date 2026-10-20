@@ -1,12 +1,5 @@
-/* VivaPoll – the cash-out screen. Vanilla, and only on the page that has the dialog.
- *
- * One dialog serves all seven rewards and has two faces: the question, naming whichever
- * reward was chosen, and the answer. Bootstrap hands us the row that opened it, so the
- * markup does not have to carry seven near-identical dialogs that could drift apart.
- *
- * Nothing is sent anywhere - there is no back end behind this yet. The dialog says what
- * would happen, and says it in the same words the real one will.
- */
+// Cash-out dialog: confirm step, then the thank-you message.
+// One modal for all rewards, filled from the row that opened it. No backend yet.
 (function () {
   'use strict';
 
@@ -28,12 +21,11 @@
       var sum = pick.getAttribute('data-value') || '';
       name.textContent = reward;
       value.textContent = sum;
-      // Repeated under the heading of the second face, so that after confirming it still
-      // says what was confirmed - by then the question is gone.
+      // Keep the choice visible after confirming
       echo.textContent = reward.replace(/^an? /, '') + ', ' + sum;
     }
 
-    // Always opens on the question, however it was left the last time.
+    // Always start on the confirm step
     ask.hidden = false;
     done.hidden = true;
     modal.setAttribute('aria-labelledby', 'vpPayoutTitle');
@@ -42,8 +34,7 @@
   confirm.addEventListener('click', function () {
     ask.hidden = true;
     done.hidden = false;
-    // The dialog has been replaced underneath anyone reading it with a screen reader.
-    // Renaming it and moving focus into the new face is what announces that.
+    // Point aria-labelledby at the new title and move focus into it
     modal.setAttribute('aria-labelledby', 'vpPayoutDoneTitle');
     var close = modal.querySelector('[data-payout-close]');
     if (close) close.focus();

@@ -6,7 +6,7 @@
   <title>Invite &amp; Earn – VivaPoll</title>
   <meta name="description" content="Invite friends to VivaPoll and earn €1.00 for every one of them who joins and completes three surveys.">
   <meta name="theme-color" content="#0874fc">
-  <!-- Signed-in pages are nobody's business but the account holder's. -->
+  <!-- Signed-in pages: keep out of search engines -->
   <meta name="robots" content="noindex, nofollow">
   <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32.png">
   <link rel="apple-touch-icon" href="assets/images/apple-touch-icon.png">
@@ -67,8 +67,7 @@
             <i class="bi bi-bell" aria-hidden="true"></i>
             <span class="vp-appbar__dot" aria-hidden="true"></span>
           </a>
-          <!-- The avatar and the chevron are one control, and it opens the account menu.
-               Bootstrap's dropdown handles Escape, click-outside and focus. -->
+          <!-- Account menu (Bootstrap dropdown) -->
           <div class="dropdown">
             <button type="button" class="vp-account" data-bs-toggle="dropdown" data-bs-offset="0,14" aria-expanded="false" aria-label="Your account">
               <span class="vp-avatar" aria-hidden="true">A</span>
@@ -106,14 +105,10 @@
         </div>
 
         <!-- ============ YOUR LINK ============ -->
-        <!-- The link is what a friend actually uses, so it is the thing the panel is
-             built around, with the two ways of handing it over right beside it. -->
         <section class="vp-hero-panel" aria-labelledby="vp-link-title" data-anim="mask" data-anim-delay="0.06">
           <h2 id="vp-link-title" class="visually-hidden">Your invitation link</h2>
 
-          <!-- Drawn rather than drafted in as artwork: each coin is a span the stylesheet
-               places and sizes, so it costs no requests and stays crisp at any size.
-               Decorative only, so it is hidden from the reader. -->
+          <!-- Decorative coins (CSS) -->
           <span class="vp-hero-panel__coins" aria-hidden="true">
             <span>€</span><span>€</span><span>€</span>
           </span>
@@ -136,7 +131,7 @@
             </button>
           </div>
 
-          <!-- Announced politely so the confirmation is heard without stealing focus. -->
+          <!-- Copy / share confirmation -->
           <p class="vp-said" data-invite-said role="status" aria-live="polite"></p>
 
           <div class="vp-hero-panel__actions">
@@ -201,10 +196,7 @@
         </section>
 
         <!-- ============ WHO HAS JOINED ============ -->
-        <!-- Usernames are shown with their last five characters masked: enough for the
-             reader to recognise who they invited, not enough to identify a stranger. The
-             stars fill as each of the three surveys is finished, so a row shows how close
-             that person is to earning the bonus rather than only whether they have. -->
+        <!-- Usernames masked (last 5 chars), stars = surveys completed out of 3 -->
         <section class="vp-screen__section" aria-labelledby="vp-friends-title" data-anim="up" data-anim-delay="0.2">
           <div class="vp-screen__h">
             <h2 id="vp-friends-title">Friends who joined</h2>

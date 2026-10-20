@@ -1,9 +1,4 @@
-/* VivaPoll – the invite page's two buttons.
- *
- * Both are entirely the browser's own work: copying to the clipboard and opening the
- * share sheet need nothing from a server. Neither invents a referral that exists
- * anywhere; they hand over the code that is already on the page.
- */
+// Invite page: copy link and share buttons (clipboard / Web Share, no backend).
 (function () {
   'use strict';
 
@@ -14,8 +9,7 @@
   var said = document.querySelector('[data-invite-said]');
   if (!linkEl && !codeEl) return;
 
-  // The link is what a friend actually uses, so it is what the buttons hand over. The
-  // code is kept for the sentence the share sheet sends, where a bare URL reads as spam.
+  // Buttons share the link; the code is used in the share text
   var link = linkEl ? linkEl.textContent.trim() : '';
   var code = codeEl ? codeEl.textContent.trim() : '';
   var timer;
@@ -27,9 +21,7 @@
     timer = window.setTimeout(function () { said.textContent = ''; }, 3200);
   }
 
-  // navigator.clipboard is unavailable on an insecure origin and can be refused even on a
-  // secure one, so the older selection trick is kept as a fallback rather than leaving the
-  // button silently dead.
+  // navigator.clipboard needs a secure origin and can be denied, so fall back to execCommand
   function copy(text) {
     if (navigator.clipboard && window.isSecureContext) {
       return navigator.clipboard.writeText(text);
@@ -63,11 +55,10 @@
       var text = 'Join me on VivaPoll and earn real rewards for your opinions.' +
                  (code ? ' My code is ' + code + '.' : '');
 
-      // The share sheet where there is one - phones, mostly - and the clipboard
-      // everywhere else, which is what a desktop visitor can actually use.
+      // Native share sheet if available (mostly phones), clipboard otherwise
       if (navigator.share) {
         navigator.share({ title: 'VivaPoll', text: text, url: invite })
-          .catch(function () { /* dismissed; nothing to report */ });
+          .catch(function () { /* dismissed */ });
         return;
       }
       copy(text + ' ' + invite).then(function () { say('Invite copied - paste it to a friend'); },

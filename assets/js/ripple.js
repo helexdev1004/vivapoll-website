@@ -1,11 +1,4 @@
-/* VivaPoll – button ripples. Vanilla, no library, so it can run on every page.
- *
- * Pressing a button spreads a ring of ink from the point that was pressed, clipped to the
- * button's own edges. It is feedback on the control, not decoration around the pointer -
- * the pointer itself is the system's own.
- *
- * Only for a real mouse, and never for anyone who asked for reduced motion.
- */
+// Button ripples. Mouse only, skipped for reduced motion.
 (function () {
   'use strict';
 
@@ -20,8 +13,7 @@
     var host = e.target.closest && e.target.closest(RIPPLES);
     if (!host) return;
 
-    // The ripple is absolutely placed inside the control, so the control has to be a
-    // containing block.
+    // The ripple is absolutely positioned inside the button
     if (getComputedStyle(host).position === 'static') host.style.position = 'relative';
     host.classList.add('vp-rippling');
 

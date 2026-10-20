@@ -6,7 +6,7 @@
   <title>My profile – VivaPoll</title>
   <meta name="description" content="Your VivaPoll account: your profile data, your settings, and everything you have earned so far.">
   <meta name="theme-color" content="#0874fc">
-  <!-- Signed-in pages are nobody's business but the account holder's. -->
+  <!-- Signed-in pages: keep out of search engines -->
   <meta name="robots" content="noindex, nofollow">
   <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32.png">
   <link rel="apple-touch-icon" href="assets/images/apple-touch-icon.png">
@@ -67,8 +67,7 @@
             <i class="bi bi-bell" aria-hidden="true"></i>
             <span class="vp-appbar__dot" aria-hidden="true"></span>
           </a>
-          <!-- The avatar and the chevron are one control, and it opens the account menu.
-               Bootstrap's dropdown handles Escape, click-outside and focus. -->
+          <!-- Account menu (Bootstrap dropdown) -->
           <div class="dropdown">
             <button type="button" class="vp-account" data-bs-toggle="dropdown" data-bs-offset="0,14" aria-expanded="false" aria-label="Your account">
               <span class="vp-avatar" aria-hidden="true">A</span>
@@ -106,8 +105,6 @@
         </div>
 
         <!-- ============ WHO IS SIGNED IN ============ -->
-        <!-- The same dark panel the balance and the referral code sit on, carrying the one
-             thing this screen is about: the account itself. -->
         <section class="vp-hero-panel" aria-labelledby="vp-account-title" data-anim="mask" data-anim-delay="0.06">
           <h2 id="vp-account-title" class="visually-hidden">Signed in as</h2>
 
@@ -120,9 +117,8 @@
           </div>
         </section>
 
-        <!-- ============ WHAT THE ACCOUNT HAS DONE ============ -->
-        <!-- The same three figures the wallet and the invite screen report, so the account
-             adds up wherever it is read. -->
+        <!-- ============ ACCOUNT STATS ============ -->
+        <!-- Same figures as the wallet and invite pages -->
         <div class="vp-bento" data-anim="up" data-anim-delay="0.1" data-anim-stagger="0.07" data-anim-group>
           <article class="vp-tile">
             <span class="vp-tile__label"><i class="bi bi-check2-circle" aria-hidden="true"></i>Completed</span>
@@ -144,9 +140,7 @@
         </div>
 
         <!-- ============ YOUR DETAILS ============ -->
-        <!-- Each row shows what it currently holds, so the screen can be read without
-             opening anything. Password is the exception: what it holds is not something
-             to display, so it shows its length and opens the dialog instead. -->
+        <!-- Each row shows its current value; password opens its own dialog -->
         <section class="vp-screen__section" aria-labelledby="vp-details-title" data-anim="up" data-anim-delay="0.14">
           <div class="vp-screen__h">
             <h2 id="vp-details-title">Your details</h2>
@@ -260,13 +254,10 @@
     </footer>
   </div>
 
-  <!-- Outside .vp-page on purpose: that element sets isolation:isolate, and a dialog
-       inside it cannot rise above the backdrop Bootstrap appends to the body - every
-       click inside the dialog lands on the backdrop instead. -->
+  <!-- Modals live outside .vp-page - its isolation:isolate would put them under the backdrop -->
 
   <!-- ============ DELETE ACCOUNT ============ -->
-  <!-- Asked before anything happens, and the safe way out is the one that reads as the
-       obvious button: deleting is the red one, and it is not the default. -->
+  <!-- Cancel is the default, delete is red -->
   <div class="modal fade" id="vpDeleteModal" tabindex="-1" aria-labelledby="vpDeleteTitle" aria-describedby="vpDeleteBody" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content vp-modal">
@@ -297,8 +288,7 @@
   </div>
 
   <!-- ============ EDIT A FIELD ============ -->
-  <!-- One dialog for all seven, filled in by profile.js from the row that opened it.
-       Seven near-identical dialogs would be seven places to keep in step. -->
+  <!-- One dialog for all fields, filled in by profile.js -->
   <div class="modal fade" id="vpEditModal" tabindex="-1" aria-labelledby="vpEditTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content vp-modal">
@@ -315,8 +305,7 @@
 
         <form class="vp-modal__body" novalidate>
           <label class="vp-form-label" for="vpEditInput" data-edit-label>Value</label>
-          <!-- The control itself is replaced when the dialog opens: a text box, a list or
-               a date picker, depending on the field. -->
+          <!-- Input is swapped in by profile.js (text, select or date) -->
           <div data-edit-control></div>
           <p class="vp-form-hint" data-edit-hint hidden></p>
         </form>
@@ -330,9 +319,7 @@
   </div>
 
   <!-- ============ CHANGE PASSWORD ============ -->
-  <!-- Bootstrap's dialog, so Escape, the backdrop, the focus trap and returning focus
-       to the row that opened it all come for free. Nothing is sent anywhere: there is
-       no back end behind this yet, and the form does not pretend otherwise. -->
+  <!-- No backend yet - nothing is submitted -->
   <div class="modal fade" id="vpPasswordModal" tabindex="-1" aria-labelledby="vpPasswordTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content vp-modal">

@@ -1,13 +1,9 @@
-/* VivaPoll – the countries and regions the product offers.
- *
- * Lifted out of auth.js so the sign-up form and the profile screen offer the same lists.
- * Two copies of this would drift the first time one of them was edited.
- */
+// Countries and regions, shared by the sign-up form and the profile page.
 window.VP_GEO = {
-  // Names are localised at render time with Intl.DisplayNames, so only the codes live here.
+  // Names are localised with Intl.DisplayNames, so only codes are stored here
   COUNTRIES: ['AR', 'AT', 'AU', 'BE', 'BR', 'CA', 'CH', 'CO', 'DE', 'ES', 'FR', 'GB', 'IE', 'IN', 'IT', 'MX', 'NL', 'PT', 'US'],
 
-  // Regions for the most common countries; the rest get a single "Not applicable" option.
+  // Regions for the main countries; the rest get "Not applicable"
   REGIONS: {
     NL: ['Drenthe', 'Flevoland', 'Friesland', 'Gelderland', 'Groningen', 'Limburg', 'Noord-Brabant', 'Noord-Holland', 'Overijssel', 'Utrecht', 'Zeeland', 'Zuid-Holland'],
     BE: ['Brussels', 'Flanders', 'Wallonia'],

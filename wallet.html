@@ -6,7 +6,7 @@
   <title>Wallet – VivaPoll</title>
   <meta name="description" content="Your VivaPoll wallet: your balance, how close you are to a payout, and what you have earned this month.">
   <meta name="theme-color" content="#0874fc">
-  <!-- Signed-in pages are nobody's business but the account holder's. -->
+  <!-- Signed-in pages: keep out of search engines -->
   <meta name="robots" content="noindex, nofollow">
   <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32.png">
   <link rel="apple-touch-icon" href="assets/images/apple-touch-icon.png">
@@ -67,8 +67,7 @@
             <i class="bi bi-bell" aria-hidden="true"></i>
             <span class="vp-appbar__dot" aria-hidden="true"></span>
           </a>
-          <!-- The avatar and the chevron are one control, and it opens the account menu.
-               Bootstrap's dropdown handles Escape, click-outside and focus. -->
+          <!-- Account menu (Bootstrap dropdown) -->
           <div class="dropdown">
             <button type="button" class="vp-account" data-bs-toggle="dropdown" data-bs-offset="0,14" aria-expanded="false" aria-label="Your account">
               <span class="vp-avatar" aria-hidden="true">A</span>
@@ -100,16 +99,12 @@
     <main id="main" class="vp-app__main">
       <div class="container vp-screen">
 
-        <!-- No headline over the panel: the balance below is the headline, and a line of
-             prose above it only said the same thing in words. The eyebrow carries the
-             page's heading so the document still has exactly one h1. -->
+        <!-- Page title is the eyebrow, the balance is the headline -->
         <div class="vp-screen__head" data-anim="up">
           <h1 class="vp-screen__eyebrow">My wallet</h1>
         </div>
 
         <!-- ============ BALANCE ============ -->
-        <!-- One panel carrying the only figure that matters on this screen, the distance
-             left to a payout, and the button that acts on it. Everything else is support. -->
         <section class="vp-hero-panel" aria-labelledby="vp-balance-title" data-anim="mask" data-anim-delay="0.06">
           <h2 id="vp-balance-title" class="visually-hidden">Your balance</h2>
 
@@ -119,9 +114,7 @@
             <span class="vp-hero-panel__unit">EUR</span>
           </p>
 
-          <!-- The same reading as the bar on the dashboard: how much of the minimum payout
-               has been reached. One custom property carries it, so a single number changes
-               when there is a back end behind this. -->
+          <!-- Payout progress - set --vp-meter from the backend later -->
           <div class="vp-meter" style="--vp-meter: 37.5%">
             <span class="vp-meter__track" role="img" aria-label="€3.75 of the €10.00 minimum payout, 38 per cent">
               <span class="vp-meter__fill"></span>
@@ -133,22 +126,18 @@
           </div>
 
           <div class="vp-hero-panel__actions">
-            <!-- Both lead to the same screen, which is the one that lists what a balance
-                 can be turned into. The bar above has already said how far off the
-                 minimum this balance is, so a disabled button would only repeat it. -->
+            <!-- Both go to the payout methods page -->
             <a href="payout-methods.html" class="vp-act">Cash out</a>
             <a href="payout-methods.html" class="vp-act vp-act--ghost">Payout methods <i class="bi bi-arrow-right" aria-hidden="true"></i></a>
           </div>
         </section>
 
-        <!-- ============ THE SUPPORTING FIGURES ============ -->
+        <!-- ============ TILES ============ -->
         <div class="vp-bento" data-anim="up" data-anim-delay="0.1" data-anim-stagger="0.07" data-anim-group>
           <article class="vp-tile">
             <span class="vp-tile__label"><i class="bi bi-graph-up-arrow" aria-hidden="true"></i>This month</span>
             <strong class="vp-tile__value">€3.75</strong>
-            <!-- A shape, not a chart: it says the month has been climbing and claims
-                 nothing finer than that. The stroke is kept at an even weight while the
-                 box stretches, which is what non-scaling-stroke is for. -->
+            <!-- Decorative sparkline (non-scaling-stroke keeps the line width even) -->
             <svg class="vp-spark" viewBox="0 0 100 30" preserveAspectRatio="none" aria-hidden="true">
               <path class="vp-spark__area" d="M0,25 L20,21 L40,23 L60,13 L80,15 L100,5 L100,30 L0,30 Z" />
               <path class="vp-spark__line" d="M0,25 L20,21 L40,23 L60,13 L80,15 L100,5" vector-effect="non-scaling-stroke" />
@@ -181,10 +170,7 @@
 
           <div class="tab-content">
             <div class="tab-pane fade show active" id="vp-pane-activity" role="tabpanel" aria-labelledby="vp-seg-activity" tabindex="0">
-              <!-- One thing that paid, per row, newest first, whatever it was. Grouping by
-                   category answered a question nobody was asking here - the tiles above
-                   already say what the month came to, and the lists on the dashboard are
-                   where categories belong. The tile colour still says which kind it was. -->
+              <!-- Latest activity, newest first, all categories mixed -->
               <div class="vp-ledger">
                 <ul class="vp-ledger__list list-unstyled mb-0">
                   <li>
@@ -213,8 +199,7 @@
                   </li>
                 </ul>
 
-                <!-- Everything older, folded away until it is asked for. Bootstrap's own
-                     collapse does the work, so this needs no JavaScript of ours. -->
+                <!-- Older entries (Bootstrap collapse) -->
                 <div class="collapse" id="vp-all-activity">
                   <ul class="vp-ledger__list list-unstyled mb-0">
                     <li>

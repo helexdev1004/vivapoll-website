@@ -1,7 +1,5 @@
-/* VivaPoll – Log in / Sign up translations.
-   Keys are referenced from signin.html and signup.html via data-i18n (text),
-   data-i18n-html (markup), data-i18n-attr="attribute:key" and data-i18n-title.
-   Only auth.* keys live here; shared keys (nav., footer., skip) are in i18n.js. */
+// Log in / Sign up translations (signin.html, signup.html).
+// Only auth.* keys here; shared keys (nav., footer., skip) are in i18n.js.
 window.VP_I18N_PAGE = {
   en: {
     "auth.in.metaTitle": `Log in – VivaPoll`,

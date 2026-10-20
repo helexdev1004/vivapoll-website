@@ -6,7 +6,7 @@
   <title>Survey complete – VivaPoll</title>
   <meta name="description" content="Thank you for completing this survey. There may be more waiting for you.">
   <meta name="theme-color" content="#0874fc">
-  <!-- Signed-in pages are nobody's business but the account holder's. -->
+  <!-- Signed-in pages: keep out of search engines -->
   <meta name="robots" content="noindex, nofollow">
   <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32.png">
   <link rel="apple-touch-icon" href="assets/images/apple-touch-icon.png">
@@ -48,7 +48,7 @@
         </a>
 
         <nav class="vp-appnav" aria-label="Sections">
-          <!-- Reached from the offers on the home screen, so that is where it belongs. -->
+          <!-- Home stays active (reached from the dashboard offers) -->
           <a href="dashboard.html" class="vp-appnav__item is-active" aria-current="location">
             <i class="bi bi-house-door-fill" aria-hidden="true"></i><span>Home</span>
           </a>
@@ -68,8 +68,7 @@
             <i class="bi bi-bell" aria-hidden="true"></i>
             <span class="vp-appbar__dot" aria-hidden="true"></span>
           </a>
-          <!-- The avatar and the chevron are one control, and it opens the account menu.
-               Bootstrap's dropdown handles Escape, click-outside and focus. -->
+          <!-- Account menu (Bootstrap dropdown) -->
           <div class="dropdown">
             <button type="button" class="vp-account" data-bs-toggle="dropdown" data-bs-offset="0,14" aria-expanded="false" aria-label="Your account">
               <span class="vp-avatar" aria-hidden="true">A</span>
@@ -102,17 +101,14 @@
       <div class="container">
         <section class="vp-outcome" aria-labelledby="vp-outcome-title" data-anim="up">
 
-          <!-- The same composition as the screen that turns somebody away, so the pair
-               read as two answers to the same question rather than two designs. Drawn in
-               the markup: no request, crisp at any size, and hidden from a reader who
-               cannot see it because the heading says the same thing. -->
+          <!-- Illustration (inline SVG, decorative) - same layout as the not-qualified page -->
           <svg class="vp-outcome__art" viewBox="0 0 320 240" aria-hidden="true" focusable="false">
             <circle cx="160" cy="112" r="96" fill="#e6f6ed" />
             <circle cx="52" cy="54" r="9" fill="#c8ebd7" />
             <circle cx="272" cy="176" r="13" fill="#c8ebd7" />
             <circle cx="268" cy="52" r="6" fill="#a8dec0" />
 
-            <!-- The survey that was finished, every question answered. -->
+            <!-- survey sheet -->
             <g transform="rotate(-8 160 112)">
               <rect x="96" y="40" width="128" height="150" rx="16" fill="#fff" />
               <rect x="96" y="40" width="128" height="150" rx="16" fill="none" stroke="#d5eade" stroke-width="2" />
@@ -127,7 +123,7 @@
               <rect x="146" y="141" width="58" height="8" rx="4" fill="#dbe8f5" />
             </g>
 
-            <!-- The mark that says it is done. -->
+            <!-- check mark -->
             <circle cx="218" cy="176" r="32" fill="#fff" />
             <circle cx="218" cy="176" r="26" fill="#3f8c4e" />
             <path d="M207 176 l7 8 l14 -17" stroke="#fff" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round" fill="none" />
@@ -135,8 +131,7 @@
           <h1 id="vp-outcome-title" class="vp-outcome__title">Thank you for completing this survey!</h1>
           <p class="vp-outcome__sub">Click on the button below to see if there are more surveys available for you</p>
 
-          <!-- Straight to the surveys list rather than the top of the home screen: the
-               hash names the tab, and the dashboard opens it on arrival. -->
+          <!-- Back to the surveys tab (dashboard.js opens it from the hash) -->
           <a href="dashboard.html#surveys" class="vp-outcome__go">Continue</a>
 
           <p class="vp-outcome__note">
